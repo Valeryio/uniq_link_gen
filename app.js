@@ -1,6 +1,9 @@
 
 const express = require("express");
 const cors = require("cors");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const notesRouter = require("./routes/noteRoutes");
 const app = express();
@@ -18,7 +21,7 @@ app.get("/", (req, res) => {
 app.use("/notes", notesRouter);
 
 
-app.listen(8080, () => {
-  console.log("The server is listening ...");
+app.listen(process.env.PORT, () => {
+  console.log(`The server is listening on ${process.env.PORT} ...`);
 });
 
