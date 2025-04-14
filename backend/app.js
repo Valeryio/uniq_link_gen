@@ -14,7 +14,7 @@ app.use(cors());
 
 
 app.get("/", (req, res) => {
-  res.send("Hello world");
+  res.send("Hello world, the notes api is on the route : /notes\n Enjoy ! 🎉");
 });
 
 // Route api towards the note's route
