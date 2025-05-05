@@ -1,6 +1,9 @@
 
+
 const Card = require("../models/card.model");
-const joi = require("joi");
+const services = require("../services/card.services");
+const validators = require("../services/card.validators");
+const responseHandlers = require("../utils/response.helper");
 
 /**
  * @function getAllCards
@@ -13,14 +16,19 @@ const getAllCards = async (req, res) => {
 
 	Card.find()
 	.then((docs) => {
-		return res.send(docs)
+		return responseHandlers.successResponse(
+			res,
+			"User created successfully",
+			docs,
+		);
 	})
 	.catch((err) => {
 		console.error(`Error while fetching all the cards : ${err.message}`);
-		return res.json({
-			status: "fail",
-			message: err.message
-		});
+
+		return responseHandlers.errorResponse(
+			res,
+			err,
+		);
 	})
 
 };
@@ -30,41 +38,43 @@ const getAllCards = async (req, res) => {
  * @param {*} req 
  * @param {*} res 
  */
-const getCard = (req, res) => {
+const getCard = async (req, res) => {
 
 	const cardId = req.params.id;
 
-	Card.find({_id: cardId})
-	.then((docs) => {
-		console.log(docs);
-		return res.send(docs);
-	})
-	.catch((err) => {
+	try {
+		const result = await services.findById(cardId);
+		console.log("The result : ", result);
+		return responseHandlers.successResponse(
+			res,
+			"User retrieved successfully!",
+			result
+		)
+	} catch(err) {
 		console.error(err);
-		return res.send(err.message);
-	});
+		return responseHandlers.errorResponse(
+			res,
+			err
+		)
+	}
 
 };
 
-const addCard = (req, res) => {
+/**
+ * @function addCard - add a new card in the database
+ * @param {*} req - express request object
+ * @param {*} res - express response object
+ * @returns {void} - An error, or the updated object
+ */
+const addCard = async (req, res) => {
 
-	const cardElementValidationSchema = joi.object({
-		label: joi.string().required(),
-		type: joi.string().valid("firstName", "lastName", "phone", "email", "file")
-		.required(),
-		value: joi.alternatives().try(joi.string(), joi.number(), joi.object(), joi.array())
-	});
-
-	const cardValidationSchema = joi.object({
-		title: joi.string().min(3).required(),
-		user_id: joi.string().required(),
-		elements: joi.array().items(cardElementValidationSchema).required()
-	});
-
-	const {error, value} = cardValidationSchema.validate(req.body)
+	const {error, value} = validators.validateCard(req.body)
 
 	if (error) {
-		return res.send(error.details[0].message);
+		return responseHandlers.failResponse(
+			res,
+			error.details[0].message
+		);
 	}
 	
 	const card = new Card({...req.body});
@@ -72,20 +82,82 @@ const addCard = (req, res) => {
 	card.save()
 	.then((docs) => {
 		console.log("New card added successfully!");
-		return res.send(docs)
+		return responseHandlers.successResponse(
+			res,
+			"New card added successfully",
+			docs
+		);
 	})
 	.catch((err) => {
 		console.log(`Error while adding the card`);
-		return res.send(err)
+		return responseHandlers.errorResponse(
+			res,
+			err
+		);
 	})
 };
 
-const updateCard = (req, res) => {
+/**
+ * @function updateCard - update a card in the database
+ * @param {*} req - express request object
+ * @param {*} res - express response object
+ * @returns {void} - A successfull message or an error
+ */
+const updateCard = async (req, res) => {
+
+	let cardId = req.params.id;
+	let result;
+
+	try {
+		result = await Card.findByIdAndUpdate(cardId, req.body,
+			{new: true, runValidators: true}
+		);
+	} catch(err) {
+		console.log(err);
+		return responseHandlers.errorResponse(
+			res,
+			err
+		);
+	}
+
+	console.log(result);
+	return responseHandlers.successResponse(
+		res,
+		"Card updated successfully!",
+		result
+	);
 
 };
 
-const removeCard = (req, res) => {
+/**
+ * @function removeCard - remove a specific card from the database
+ * @param {*} req - express request object
+ * @param {*} res - express response object
+ * @returns {void} - A successful message or an error
+ */
+const removeCard = async (req, res) => {
 
+	const cardId = req.params.id;
+	let result;
+
+	try {
+		result = await Card.findByIdAndDelete(cardId);
+	} catch (err) {
+		return responseHandlers.errorResponse(
+			res,
+			err
+		);
+	}
+
+	console.log(result);
+	return responseHandlers.successResponse(
+		res,
+		"Card deleted successfully!",
+		result
+	);
 };
+
+
+
 
 module.exports = {getAllCards, getCard, addCard, updateCard, removeCard};

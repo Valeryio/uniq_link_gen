@@ -13,8 +13,10 @@ router.get("/:id", cardControllers.getCard);
 router.post("/add", cardControllers.addCard);
 
 // This route allow us to update a specific user
-router.put("/:id", );
-router.delete("/:id", );
+router.put("/:id", cardControllers.updateCard);
+
+
+router.delete("/:id", cardControllers.removeCard);
 
 
 module.exports = router;
