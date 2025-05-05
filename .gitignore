@@ -1,4 +1,6 @@
 backend/.env
+backend/comments.exemple.js
+
 frontend/.env
 backend/node_modules/
 frontend/node_modules/
