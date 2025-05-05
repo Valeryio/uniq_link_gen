@@ -21,7 +21,7 @@ const userRouter = require("./routes/user.routes");
 const cardRouter = require("./routes/card.routes");
 
 app.get("/", (req, res) => {
-  res.send("Hello world, the notes api is on the route : /notes\n Enjoy ! 🎉");
+  res.send("Hello world, the business card api is on the route : /notes\n Enjoy ! 🎉");
 });
 
 // API to interact with the users
