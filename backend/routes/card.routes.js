@@ -1,9 +1,10 @@
 
 const router = require("express").Router();
+const auth = require("../middleware/auth");
 const cardControllers = require("../controllers/card.controllers");
 
 // This route allow us to get all the users
-router.get("/", cardControllers.getAllCards);
+router.get("/", auth.auth, auth.authAdmin, cardControllers.getAllCards);
 
 // This route allow tus to get the informations 
 // of one specific user

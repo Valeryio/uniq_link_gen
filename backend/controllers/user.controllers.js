@@ -120,9 +120,11 @@ const login = async (req, res) => {
 	}
 
 	// Create and use token
-	const token = jwt.sign( {_id: existingUser._id}, process.env.TOKEN_SECRET, { 
+	const token = jwt.sign( {_id: existingUser._id, role: existingUser.role}, process.env.TOKEN_SECRET, { 
 		expiresIn: "1h"
 	});
+
+	console.log(existingUser);
 
 	res.header("Authorization", `Bearer ${token}`);
 

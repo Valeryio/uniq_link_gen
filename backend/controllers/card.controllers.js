@@ -14,22 +14,20 @@ const responseHandlers = require("../utils/response.helper");
  */
 const getAllCards = async (req, res) => {
 
-	Card.find()
-	.then((docs) => {
+	try {
+		const cards = await services.findAll();
 		return responseHandlers.successResponse(
 			res,
-			"User created successfully",
-			docs,
+			"Card retrieved successfully",
+			cards,
 		);
-	})
-	.catch((err) => {
+	} catch(err) {
 		console.error(`Error while fetching all the cards : ${err.message}`);
-
 		return responseHandlers.errorResponse(
 			res,
 			err,
 		);
-	})
+	}
 
 };
 
@@ -77,8 +75,8 @@ const addCard = async (req, res) => {
 		);
 	}
 	
-	const card = new Card({...req.body});
-	
+	const card = new Card({...value});
+
 	card.save()
 	.then((docs) => {
 		console.log("New card added successfully!");
@@ -120,7 +118,13 @@ const updateCard = async (req, res) => {
 		);
 	}
 
-	console.log(result);
+	if (!result) {
+		return responseHandlers.failResponse(
+			res,
+			"Card not found",
+			404
+		);
+	}
 	return responseHandlers.successResponse(
 		res,
 		"Card updated successfully!",
@@ -149,6 +153,14 @@ const removeCard = async (req, res) => {
 		);
 	}
 
+	if (!result) {
+		return responseHandlers.failResponse(
+			res,
+			"Card not found",
+			404
+		);
+	}
+
 	console.log(result);
 	return responseHandlers.successResponse(
 		res,
@@ -156,7 +168,6 @@ const removeCard = async (req, res) => {
 		result
 	);
 };
-
 
 
 

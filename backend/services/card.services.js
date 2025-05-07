@@ -12,5 +12,15 @@ const findById = async (cardId) => {
 	}
 };
 
+const findAll = async () => {
+	try {
+		const result = await Card.find();
+		console.log("The docs : ", result);
+		return result;
+	} catch (err) {
+		throw new Error(err.message);
+	}
+}
 
-module.exports = {findById};
+
+module.exports = {findAll, findById};
