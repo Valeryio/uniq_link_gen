@@ -20,6 +20,14 @@ const findAllUsers = async (limit = 0) => {
 	}
 };
 
+const findUser = async (userId) => {
+	try {
+		const user = User.findById(userId);
+		return user;
+	} catch (err) {
+		return err;
+	}
+};
 
 const checkExistingUser = async (user) => {
 	try {
@@ -33,4 +41,4 @@ const checkExistingUser = async (user) => {
 };
 
 
-module.exports = {findAllUsers, checkExistingUser};
+module.exports = {findAllUsers, findUser, checkExistingUser};

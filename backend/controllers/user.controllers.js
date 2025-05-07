@@ -3,15 +3,20 @@ const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 const services = require("../services/user.services");
 const hashModule = require("../services/hashModule");
-const joi = require("joi");
+// const joi = require("joi");
 const responseHandlers = require("../utils/response.helper");
 const validators = require("../services/user.validators");
 
 
+/**
+ * @function getAllUsers
+ * @description - Fetches all the users registered in the database
+ * @param {*} req - the express request object
+ * @param {*} res - the express response object
+ * @returns - An array of user registered, or an error object
+ */
 const getAllUsers = async (req, res) => {
-
 	let limit = req.query.limit || null;
-
 	try {
 		const users = await services.findAllUsers(limit)
 
@@ -19,34 +24,45 @@ const getAllUsers = async (req, res) => {
 			res,
 			"Users retrieved successfully!",
 			users
-		)
+		);
 	} catch (err) {
 		responseHandlers.errorResponse(
 			res,
 			err
 		);
 	}
-	/*
-	if (limit) {
-		User.find()
-		.limit(limit)
-		.then((users) => {res.send(users)})
-		.catch((err) => {res.send(`Error while fetching all the users : ${err}`)});
-	} else {
-		User.find()
-		.then((users) => {res.send(users)})
-		.catch((err) => {res.send(`Error while fetching all the users : ${err}`)});
-	}
-*/
-
 };
 
-const getUser = (req, res) => {
+/**
+ * @function getUser
+ * @description - It retrieves a single user from the database
+ * @param {*} req - the express request object
+ * @param {*} res - the express response object
+ * @returns - The user Object if it's found or an error object
+ */
+const getUser = async (req, res) => {
 	let userId = req.params.id || null;
 
+	try {
+		const user = await services.findUser(userId);
+		return responseHandlers.successResponse(
+			res,
+			"User retrieved successfully!",
+			user
+		);
+	} catch (err) {
+		return responseHandlers.errorResponse(
+			res,
+			err
+		);
+	}
+
+	/*
 	User.findById(userId)
 	.then((user) => {res.send(user)})
 	.catch((err) => {res.send(`Error while fetching the users : ${err}`)});
+*/
+
 };
 
 const register = async (req, res) => {
