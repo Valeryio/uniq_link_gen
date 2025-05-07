@@ -8,5 +8,20 @@
 	"name": "admin",
 	"email": "admin@gmail.com",
 	"password": "admin"
+},
+{
+  "name": "fifa",
+  "email": "fifa@gmail.com",
+  "password": "fifa"
+},
+{
+  "name": "Valery",
+  "email": "val@gmail.com",
+  "password": "valery"
+},
+{
+  "name": "yon",
+  "email": "yon@gmail.com",
+  "password": "yonn"
 }
 ]

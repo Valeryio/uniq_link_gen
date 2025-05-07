@@ -28,6 +28,9 @@ const auth = (req, res, next) => {
 		next();
 
 	} catch (err) {
+
+		// if (Token)
+
 		return responseHandlers.errorResponse(
 			res,
 			err,
@@ -35,7 +38,6 @@ const auth = (req, res, next) => {
 		);
 	}
 };
-
 
 /**
  * @function authAdmin
@@ -86,7 +88,6 @@ const authAdmin = (req, res, next) => {
  * 				behaviors.
  */
 const authorizeRoles = (...authorizedRoles) => {
-
 	return (req, res, next) => {
 		try {
 			const { role } = req.user;
@@ -107,7 +108,6 @@ const authorizeRoles = (...authorizedRoles) => {
 		}
 	};
 };
-
 
 
 module.exports = { authAdmin, auth, authorizeRoles };

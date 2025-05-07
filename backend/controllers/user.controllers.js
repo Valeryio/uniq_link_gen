@@ -3,6 +3,8 @@ const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 const hashModule = require("../services/hashModule");
 const joi = require("joi");
+const responseHandlers = require("../utils/response.helper");
+const validators = require("../services/user.validators");
 
 
 const getAllUsers = async (req, res) => {
@@ -32,30 +34,15 @@ const getUser = (req, res) => {
 const register = async (req, res) => {
 	console.log("The user : ", req.body);
 
-	// Create the validation schema
-	const userValidationSchema = joi.object({
-		name: joi.string().min(3).required(),
-		email: joi.string()
-		.email()
-		.required(),
-		password: joi
-		.string()
-		.min(4)
-		.pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
-	});
+	const {error, value} = validators.validateUserRegister(req.body);
 
-	const user = {
-		...req.body
-	};
-
-	const {error, value} = userValidationSchema.validate(user);
 	console.log("BY HERRE : : : !")
 	if (error) {
 		return res.send(`${error}`);
 	} else {
 
 		try {
-			const existingUser = await User.findOne({email: user.email});
+			const existingUser = await User.findOne({email: value.email});
 			console.log("The existing : ", existingUser);
 			if (existingUser) {
 				console.log("The existing user ~: ", existingUser);
@@ -90,20 +77,7 @@ const login = async (req, res) => {
 
 	console.log(req.body);
 
-	// Validation of the user's schema
-	const userValidationSchema = joi.object({
-		email: joi.string()
-		.email()
-		.required(),
-		password: joi.string()
-		.pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
-	});
-
-	const user = {
-		...req.body
-	};
-
-	const {err, value} = userValidationSchema.validate(user);
+	const {err, value} = validators.validateUserLogin(req.body);
 
 	if(err) {
 		return res.send(err.message);
