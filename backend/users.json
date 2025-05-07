@@ -23,5 +23,15 @@
   "name": "yon",
   "email": "yon@gmail.com",
   "password": "yonn"
+},
+{
+  "name": "ruby",
+  "email": "ruby@gmail.com",
+  "password": "ruby"
+},
+{
+  "name": "coco",
+  "email": "coco@gmail.com",
+  "password": "coco"
 }
 ]

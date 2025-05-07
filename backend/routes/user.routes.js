@@ -17,9 +17,9 @@ router.post("/register", userControllers.register);
 router.post("/login", userControllers.login);
 
 // UPDATE /users/:id - update a specific user
-router.put("/update/:id", userControllers.update);
+router.put("/update/:id", userControllers.updateUser);
 
 // DELETE /users/#:id - delete a specific user
-router.delete("/delete/:id", userControllers.remove);
+router.delete("/delete/:id", userControllers.removeUser);
 
 module.exports = router;

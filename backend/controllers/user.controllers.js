@@ -65,96 +65,182 @@ const getUser = async (req, res) => {
 
 };
 
+/**
+ * @function register
+ * @desctiption Allow the user to login after verification of its credentials
+ * @param {*} req - an express request object
+ * @param {*} res - an express response object
+ * @returns A success response object, or an error object
+ */
 const register = async (req, res) => {
-	console.log("The user : ", req.body);
-
+	// Validate the user's input
 	const {error, value} = validators.validateUserRegister(req.body);
-
-	console.log("BY HERRE : : : !")
 	if (error) {
-		return res.send(`${error}`);
-	} else {
-
-		try {
-			const existingUser = await User.findOne({email: value.email});
-			// console.log("The existing : ", existingUser);
-			if (existingUser) {
-				// console.log("The existing user ~: ", existingUser);
-				return res.json({status: "fail", message: "The user is already registered!"});
-			}
-		} catch (err) {
-			console.error(`${err}`);
-			return res.json({message: err.message});
-		}
-
-		console.log(`The user schema validation is : ${value}, password : ${req.body.password}`);
-		let password = await hashModule.hashPassword(req.body.password)
-
-		const userObj = new User({
-			...req.body,
-			password: password
-		});
+		return responseHandlers.errorResponse(
+			res,
+			error
+		);
 	
-		userObj.save()
-		.then((docs) => {
-			console.log(`Document saved successfully ${docs}!`);
-			res.send(docs);
-		})
-		.catch((err) => {
-			console.log(`Error while saving the document : ${err}`);
-			res.send(err);
-		});
 	}
+
+	// Verify if the user already exists
+	try {
+		const existingUser = await services.findUserByEmail(value.email);
+		console.log(existingUser);
+		if (existingUser) {
+			return responseHandlers.failResponse(
+				res,
+				"The user is already registered!"
+			);
+		}	
+	} catch (err) {
+		console.error(`${err}`);
+		return responseHandlers.errorResponse(
+				res,
+				err
+		);
+	}
+
+	const userObj = new User({
+		...value,
+		password: await hashModule.hashPassword(req.body.password)
+	});
+
+	userObj.save()
+	.then((docs) => {
+		console.log(`Document saved successfully ${docs}!`);
+		res.send(docs);
+	})
+	.catch((err) => {
+		console.log(`Error while saving the document : ${err}`);
+		res.send(err);
+	});
+
 };
 
+/**
+ * @function login
+ * @description Allow the user to login after verifiying its credentials
+ * @param {*} req - an express request object
+ * @param {*} res - an express response object
+ * @returns  A success response object, or an error object
+ */
 const login = async (req, res) => {
-
-	console.log(req.body);
-
-	const {err, value} = validators.validateUserLogin(req.body);
-
-	if(err) {
-		return res.send(err.message);
+	// Validation of the user's input
+	const {error, value} = validators.validateUserLogin(req.body);
+	if (error) {
+		return responseHandlers.errorResponse(
+			res,
+			error
+		);
 	}
 
 	// Verify if the user exist
-	const existingUser = await User.findOne({"email": req.body.email});
+	const existingUser = await services.findUserByEmail(value.email);
 	if (!existingUser) {
-		return res.send(`The user is not registered in our system!`);
-	}
-	
-	if (err) {                   
-		return res.send(`${err}`);
+		return responseHandlers.failResponse(
+			res,
+			"The user is not registered!"
+		);	
 	}
 
 	// Create and use token
 	const token = jwt.sign( {_id: existingUser._id, role: existingUser.role}, process.env.TOKEN_SECRET, { 
 		expiresIn: "1h"
 	});
-
-	console.log(existingUser);
-
 	res.header("Authorization", `Bearer ${token}`);
 
-	res.status(200).json({
-		status: "success",
-		message: "Login successful!", 
-		infos: {
+	const userInfos = {
 		id: existingUser._id,
 		email: existingUser.email,
 		role: existingUser.role
+	};
+
+	return responseHandlers.successResponse(
+		res,
+		"Login successful!",
+		userInfos
+	);
+};
+
+/**
+ * @function updateUser
+ * @description Update the user's infos
+ * @param {*} req - the express request object
+ * @param {*} res - the express response object
+ * @returns - The updated object if there is a real user
+ * 					an object error otherwise
+ */
+const updateUser = async (req, res) => {
+
+	let userId = req.params.id;
+	let updatedUser;
+
+	try {
+		updatedUser = await User.findByIdAndUpdate(userId, req.body,
+			{new: true, runValidators: true}
+		);
+	} catch (err) {
+		return responseHandlers.errorResponse(
+			res,
+			err
+		);
 	}
-});
+
+	if (!updatedUser) {
+		return responseHandlers.failResponse(
+			res,
+			"User not found",
+			404
+		);
+	}
+
+	return responseHandlers.successResponse(
+		res,
+		"User updated successfully",
+		updatedUser
+	);
 
 };
 
-const update = (req, res) => {
+/**
+ * @function removeUser
+ * @description Remove the user's infos
+ * @param {*} req - the express request object
+ * @param {*} res - the express response object
+ * @returns - The removed object if there is a real user
+ * 					an object error otherwise
+ */
+const removeUser = async (req, res) => {
+
+	let userId = req.params.id;
+	let removedUser;
+
+	console.log("THE ID : ", userId);
+	try {
+		removedUser = await User.findByIdAndDelete(userId);
+	} catch (err) {
+		return responseHandlers.errorResponse(
+			res,
+			err
+		);
+	}
+
+	if (!removedUser) {
+		return responseHandlers.failResponse(
+			res,
+			"User not found",
+			404
+		);
+	}
+
+	return responseHandlers.successResponse(
+		res,
+		"User removed successfully!",
+		removedUser
+	);
 
 };
 
-const remove = (req, res) => {
 
-};
-
-
-module.exports = { getAllUsers, getUser, register, login, update, remove};
+module.exports = { getAllUsers, getUser, register, login, updateUser, removeUser};

@@ -12,8 +12,7 @@ const registrationSchema = joi.object({
 	.string()
 	.min(4)
 	.max(30)
-	.pattern(new RegExp('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/'))
-	.message("Password must contain upper/lowercase letters and numbers")
+	.pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
 	.required()
 }).unknown(false);
 
