@@ -29,7 +29,9 @@ const auth = (req, res, next) => {
 
 	} catch (err) {
 
-		// if (Token)
+		if (err.name === "TokenExpiredError") {
+			return responseHandlers.failResponse(res, "Session expired, please log in again", 401);
+		}
 
 		return responseHandlers.errorResponse(
 			res,

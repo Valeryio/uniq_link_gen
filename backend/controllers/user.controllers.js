@@ -1,6 +1,7 @@
 
 const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
+const services = require("../services/user.services");
 const hashModule = require("../services/hashModule");
 const joi = require("joi");
 const responseHandlers = require("../utils/response.helper");
@@ -11,6 +12,21 @@ const getAllUsers = async (req, res) => {
 
 	let limit = req.query.limit || null;
 
+	try {
+		const users = await services.findAllUsers(limit)
+
+		return responseHandlers.successResponse(
+			res,
+			"Users retrieved successfully!",
+			users
+		)
+	} catch (err) {
+		responseHandlers.errorResponse(
+			res,
+			err
+		);
+	}
+	/*
 	if (limit) {
 		User.find()
 		.limit(limit)
@@ -21,6 +37,8 @@ const getAllUsers = async (req, res) => {
 		.then((users) => {res.send(users)})
 		.catch((err) => {res.send(`Error while fetching all the users : ${err}`)});
 	}
+*/
+
 };
 
 const getUser = (req, res) => {
@@ -43,9 +61,9 @@ const register = async (req, res) => {
 
 		try {
 			const existingUser = await User.findOne({email: value.email});
-			console.log("The existing : ", existingUser);
+			// console.log("The existing : ", existingUser);
 			if (existingUser) {
-				console.log("The existing user ~: ", existingUser);
+				// console.log("The existing user ~: ", existingUser);
 				return res.json({status: "fail", message: "The user is already registered!"});
 			}
 		} catch (err) {
