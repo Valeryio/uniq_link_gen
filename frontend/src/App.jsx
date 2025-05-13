@@ -14,7 +14,6 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Header />
           <Routes>
             <Route path='/' element={<Home />}></Route>
             <Route path='/home' element={<Home />}></Route>
@@ -24,7 +23,6 @@ function App() {
             <Route path='/profil' element={<Profil />} ></Route>
             <Route path='/register' element={<Register />} ></Route>
           </Routes>
-        <Footer />
       </BrowserRouter>
     </>
   )

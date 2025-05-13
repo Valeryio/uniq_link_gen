@@ -1,2 +1,19 @@
 
 @import "tailwindcss";
+
+@theme {
+
+	/* Custom colors properties added to tailwind*/
+	--color-primary-purple: #6A64F6;
+	--color-darkest-purple: #080721;
+	--color-dark-purple: #272556;
+	--color-medium-purple: #9291B6;
+	--color-light-purple: #B2AFE9;
+	--color-lightest-purple: #F0F0FA;
+
+	--color-primary-red: #CC3229;
+
+
+	--font-sans: Roboto, ui-sans-serif, system-ui, sans-serif, "Segoe UI Symbol";
+  
+}
