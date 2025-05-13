@@ -5,7 +5,7 @@ import { Link } from "react-router";
 
 const PrimaryHeader = () => {
     return (
-        <header className="flex justify-between items-center py-[1rem] px-[2rem] border border-medium-purple " >
+        <header className="flex justify-between items-center py-[1rem] px-[2rem] border border-light-purple " >
             <div className="flex items-center gap-[2rem]">
                 <Link to="/" className="w-[8rem]">
                     <img src="./logo.svg" alt="" />
@@ -27,7 +27,7 @@ const PrimaryHeader = () => {
 
             <div className="flex items-center gap-[2rem]">
                 <Link to="/login" >
-                    <Button type="secondary" >Connexion</Button>
+                    <Button styleType="secondary" >Connexion</Button>
                 </Link>
                 <Link to="/register" >
                     <Button>Inscription</Button>
@@ -44,7 +44,7 @@ const PrimaryHeader = () => {
  */
 const SecondaryHeader = () => {
     return (
-        <header className="flex justify-center items-center py-[1rem] px-[2rem] border border-medium-purple">
+        <header className="flex justify-center items-center py-[1.5rem] px-[2rem] border border-light-purple">
             <Link to="/" className="w-[8rem]">
                 <img src="./logo.svg" alt="" />
             </Link>

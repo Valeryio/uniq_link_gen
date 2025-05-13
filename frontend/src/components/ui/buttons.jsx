@@ -1,15 +1,18 @@
 
 
-const Button = ({children, onClick, styleType="primary", size="small"}) => {
+const Button = ({children, onClick, type="submit", styleType="primary", size="small"}) => {
 
 	let content = children || "Default text";
 	let btnStyle = "";
 	let btnSize = "";
 
+	// Define the differents size of buttons
 	let largeBtn = "w-full";
-	let smallBtn = "";
+	let smallBtn = "w-fit";
+
+	// Define the differents styles of buttons
 	let primaryBtn = "bg-primary-purple text-white font-semibold";
-	let secondaryBtn = "border border-primary-purple text-primary-purple"
+	let secondaryBtn = "border border-primary-purple text-primary-purple";
 
 	switch(styleType) {
 		case "primary":
@@ -27,15 +30,16 @@ const Button = ({children, onClick, styleType="primary", size="small"}) => {
 	
 	switch(size) {
 		case "large":
-			btnStyle = largeBtn;
+			btnSize = largeBtn;
 		break;
 
 		default:
-			btnStyle = smallBtn;
+			btnSize = smallBtn;
 	}
 
+
 	return (
-		<button className={`cursor-pointer ${btnStyle} ${btnSize} px-[20px] py-[8px] rounded-[8px]`} >
+		<button type={type} onClick={onClick} className={`cursor-pointer ${btnStyle} ${btnSize} px-[20px] py-[8px] rounded-[8px]`} >
 			{content}
 		</button>
 	)
