@@ -1,5 +1,4 @@
 
-import React from "react";
 import Button from "./ui/buttons";
 import { Link } from "react-router";
 
@@ -50,7 +49,7 @@ const SecondaryHeader = () => {
             </Link>
         </header>
     )
-}
+};
 
 const Header = ({type}) => {
 
