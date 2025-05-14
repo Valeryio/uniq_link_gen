@@ -35,7 +35,7 @@ const Home = () => {
 				<img src="./images/login.png" alt="" />
 			</picture>
 
-			<div className="flex flex-col h-fit  gap-[1rem] w-[40rem]">
+			<div className="flex flex-col h-fit gap-[1rem] w-[40rem]">
 				<p className="text-tagline font-bold">
 					1. Vos cartes business, repensées pour l’ère numérique.
 				</p>
@@ -122,7 +122,7 @@ const Home = () => {
 				Passez au digital sans complexité
 			</h2>
 
-			<p className="text-p text-center w-[42rem] font-regular">
+			<p className="text-p text-center max-w-[42rem] font-regular">
 				Démarquez-vous avec une carte business élégante, interactive 
 				et toujours à portée de main. Votre image professionnelle 
 				mérite mieux qu’un simple bout de papier.
