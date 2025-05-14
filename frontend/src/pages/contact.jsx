@@ -27,11 +27,11 @@ const Contact = () => {
 		<>
     <Header />
 		
-		<section className="flex border justify-center items-center gap-[2rem] px-[2rem] py-[3rem]">
+		<section className="flex items-center gap-[2rem] px-[2rem] py-[3rem]">
 
-			<div className="flex flex-col border h-fit gap-[1rem] w-[33rem]">
+			<div className="flex flex-col h-fit gap-[1rem] w-[33rem]">
 
-				<div className=" border">
+				<div className=" ">
 					<p className="text-tagline font-bold">
 						1. Vos cartes business, repensées pour l’ère numérique.
 					</p>
@@ -80,7 +80,7 @@ const Contact = () => {
 							</div>
 
 							<textarea name="" id="" placeholder="Entrez votre message..."
-								className="border h-[4rem] px-[.8rem] py-[.5rem] w-full rounded-[.25rem]" >
+								className="border resize-none h-[8rem] px-[.8rem] py-[.5rem] w-full rounded-[.25rem]" >
 							</textarea>
 					
 						</div>
@@ -90,7 +90,7 @@ const Contact = () => {
 				</form>
 			</div>
 
-			<picture className=" w-[28rem]" >
+			<picture className=" w-[40rem]" >
 				<img src="./images/login.png" alt="" />
 			</picture>
 
