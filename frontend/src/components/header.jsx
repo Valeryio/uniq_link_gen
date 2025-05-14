@@ -4,7 +4,7 @@ import { Link } from "react-router";
 
 const PrimaryHeader = () => {
     return (
-        <header className="flex justify-between items-center py-[1rem] px-[2rem] border border-light-purple " >
+        <header className=" m-auto max-w-[88rem] flex justify-between items-center py-[1rem] px-[2rem] border border-light-purple " >
             <div className="flex items-center gap-[2rem]">
                 <Link to="/" className="w-[8rem]">
                     <img src="./logo.svg" alt="" />

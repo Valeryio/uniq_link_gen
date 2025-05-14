@@ -12,8 +12,11 @@
 	--color-lightest-purple: #F0F0FA;
 
 	--color-primary-red: #CC3229;
-
-
 	--font-sans: Roboto, ui-sans-serif, system-ui, sans-serif, "Segoe UI Symbol";
+
+	--text-h1: 52px;
+	--text-h2: 48px;
+	--text-p: 18px;
+	--text-tagline: 16px;
   
 }
