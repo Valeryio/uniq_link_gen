@@ -66,13 +66,14 @@ const Login = () => {
 		const inputValidator = inputValidators.filter((validator) => 
 			validator.type === e.target.type)[0];
 
+		
+		setFormData({
+			...formData,
+			[name]: value
+		});
+
 		if(inputValidator.validator(value))
 		{
-			setFormData({
-				...formData,
-				[name]: value
-			});
-
 			setValidated({
 				...validated,
 				[name]: true
@@ -80,13 +81,9 @@ const Login = () => {
 
 			setErrorMessage({
 				...errorMessage,
-				[name]: inputValidator.errorMessage
+				[name]: ""
 			});
 		} else {
-			setFormData({
-				...formData,
-				[name]: value
-			});
 			
 			setValidated({
 				...validated,
@@ -143,39 +140,12 @@ const Login = () => {
 						</p>
 					</div>
 
-					<FormInput type="email" label="Email" required={true} name="email" validated={validated}
-					onChange={handleChange} errorMessage={errorMessage} value={formData.email} extralabel="" />
+					<FormInput type="email" label="Email" required={true} name="email" validated={validated.email}
+					onChange={handleChange} errorMessage={errorMessage.email} value={formData.email} extralabel="" />
 
-					{/* 
-					<div className="flex flex-col gap-[.25rem]">
-						<label htmlFor="email" className="text-[.9rem] font-medium" >Email
-							<span className="text-primary-red"> *</span>
-						</label>
-						<input id="email" name="emal" type="email" value={formData.email} onChange={handleChange} 
-						className="border px-[.8rem] py-[.5rem] w-full rounded-[.25rem]" />
-					</div> */
-					}
-
-
-					<FormInput type="password"  label="Mot de passe" required={true} name="password" validated={validated}
-					value={formData.password} extralabel="Mot de passe oublié ?" errorMessage={errorMessage} 
+					<FormInput type="password"  label="Mot de passe" required={true} name="password" validated={validated.password}
+					value={formData.password} extralabel="Mot de passe oublié ?" errorMessage={errorMessage.password} 
 					onChange={handleChange}/>
-{/* 
-					<div className="flex flex-col gap-[.25rem]">
-						<div className="flex justify-between" >
-							<label htmlFor="passwod" className="text-[.9rem] font-medium" >Mot de passe 
-								<span className="text-primary-red"> *</span>
-							</label>
-							<Link>
-								<p className="text-[.9rem] font-regular text-primary-purple underline underline-offset-2" >
-									Mot de passe oublié ?
-								</p>
-							</Link>
-						</div>
-
-						<input id="password" name="password" type="password" value={formData.password} onChange={handleChange} 
-						className="border px-[.8rem] py-[.5rem] w-full rounded-[.25rem]" />
-					</div> */}
 
 					<Button size="large" type="submit" onClick={handleSubmit} >Connexion</Button>
 					<Button size="large" styleType="secondary" type="submit" >Connexion avec Google</Button>

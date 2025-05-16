@@ -14,13 +14,7 @@ const FormInput = ({
 	extralabel="",
 }) => {
 
-	const isValidEmail = (email) => {
-		const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-		return emailRegex.test(email);
-	}
-
 	let borderStyle = "";
-	console.log("HERE   --- :::  ",required)
 
 	if (!validated) {
 		borderStyle = "hover:border-red-400 hover:outline hover:outline-red-400";
