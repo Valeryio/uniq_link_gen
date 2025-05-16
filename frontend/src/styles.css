@@ -18,6 +18,8 @@
 	--text-h1: 52px;
 	--text-h2: 48px;
 	--text-p: 18px;
+	--text-input: 0.9rem;
+	--text-input-error: 0.8rem;
 	--text-tagline: 16px;
   
 }

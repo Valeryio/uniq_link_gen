@@ -128,7 +128,9 @@ const Home = () => {
 				mérite mieux qu’un simple bout de papier.
 			</p>
 
-			<Button>Commencer</Button>
+			<Link to="/register ">
+				<Button>Commencer</Button>
+			</Link>
 
 		</section>
 
