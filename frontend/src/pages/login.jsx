@@ -52,8 +52,8 @@ const Login = () => {
 	});
 
 	const [validated, setValidated] = useState({
-		email: false,
-		password: false
+		email: null,
+		password: null
 	});
 
 	const [formData, setFormData] = useState({
@@ -66,7 +66,8 @@ const Login = () => {
 		const inputValidator = inputValidators.filter((validator) => 
 			validator.type === e.target.type)[0];
 
-		
+		console.log("The validator : ", e.target.type, e.target, inputValidator)
+
 		setFormData({
 			...formData,
 			[name]: value
@@ -140,10 +141,10 @@ const Login = () => {
 						</p>
 					</div>
 
-					<FormInput type="email" label="Email" required={true} name="email" validated={validated.email}
+					<FormInput inputType="email" label="Email" required={true} name="email" validated={validated.email}
 					onChange={handleChange} errorMessage={errorMessage.email} value={formData.email} extralabel="" />
 
-					<FormInput type="password"  label="Mot de passe" required={true} name="password" validated={validated.password}
+					<FormInput inputType="password"  label="Mot de passe" required={true} name="password" validated={validated.password}
 					value={formData.password} extralabel="Mot de passe oublié ?" errorMessage={errorMessage.password} 
 					onChange={handleChange}/>
 
