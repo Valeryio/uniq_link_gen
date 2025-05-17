@@ -50,15 +50,20 @@ const FormInput = ({
 				</Link>}
 			</div>
 
-			<div className={`flex border red ${borderStyle} rounded-[.25rem] px-[.8rem] py-[.5rem]`}>
+			<div className={`flex border ${borderStyle} rounded-[.25rem] px-[.8rem] py-[.5rem]`}>
 				<input type={updatedType} name={name} id={name} value={value} required={required} onChange={onChange}
 				placeholder={placeholder} className={`outline-none  w-full`} />
 
 				{
 					name === "password" ?
 						updatedType === "password" ?
-							<img src="./icons/show.svg" onClick={handleShow} className="w-[1rem]" alt="" />
-						: <img src="./icons/hide.svg" onClick={handleShow} className="w-[1rem]" alt="" />
+							<button onClick={handleShow} type="button">
+								<img src="./icons/show.svg" className="w-[1rem]" alt="" />
+							</button>
+						: 
+							<button onClick={handleShow} type="button">
+								<img src="./icons/hide.svg" className="w-[1rem]" alt="" />
+							</button>
 					: null
 				}
 			</div>

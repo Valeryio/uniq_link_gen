@@ -2,7 +2,7 @@
 import Input from "../components/ui/input";
 import { useState } from "react";
 import Header from "../components/header";
-import Button from "../components/ui/buttons";
+import Button from "../components/ui/button";
 import { Link, useNavigate } from "react-router";
 import StepLoader from "../components/stepLoader";
 

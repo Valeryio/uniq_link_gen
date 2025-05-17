@@ -2,50 +2,17 @@
 import { Link, useNavigate } from "react-router";
 import FormInput from "../components/ui/input";
 import Header from "../components/header";
-import { useState } from "react";
-import Button from "../components/ui/buttons";
-
-
-const isValidEmail = (email) => {
-	const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-	return emailRegex.test(email);
-};
-
-const isValidPassword = (password) => {
-	const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{3,15}$/;
-	return passwordRegex.test(password);
-};
-
-const isValidName = (name) => {
-	name = name.trim();
-	if (!name) {
-		return false;
-	}
-	return true;
-};
-
-const inputValidators = [
-	{
-		type: "name",
-		validator: isValidName,
-		errorMessage: "Le nom ne peut pas être vide",
-	},
-	{
-		type: "email",
-		validator: isValidEmail,
-		errorMessage: "L'email n'est pas valide",
-	},
-	{
-		type: "password",
-		validator: isValidPassword,
-		errorMessage: "Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial !",
-	},
-];
+import { useState, useEffect } from "react";
+import Button from "../components/ui/button";
+import inputValidators from "../components/helpers/validators";
 
 
 const Login = () => {
 
 	const navigate = useNavigate();
+
+	const [disabled, setDisabled] = useState(true);
+
 	const [errorMessage, setErrorMessage] = useState({
 		email: "",
 		password: ""
@@ -61,14 +28,24 @@ const Login = () => {
 		password: ""
 	});
 
+	useEffect(() => {
+	let formIsValid = true;
+		for (const key in validated) {
+			console.log(`${key}: ${validated[key]}`);
+			if (!validated[key]) {
+				formIsValid = false;
+			}
+		}
+	
+		console.log("Before disabling : ", formIsValid);
+  setDisabled(!formIsValid);
+}, [validated]);
+
 	const handleChange = (e) => {
 		const {name, value} = e.target;
 		const inputValidator = inputValidators.filter((validator) => 
 			validator.type === e.target.type)[0];
-
-		console.log("The validator : ", e.target.type, e.target, inputValidator)
-
-		setFormData({
+			setFormData({
 			...formData,
 			[name]: value
 		});
@@ -96,6 +73,20 @@ const Login = () => {
 				[name]: inputValidator.errorMessage
 			});
 		}
+
+		// console.log("The form data : ", formData, validated);
+
+		// verify if all the form is validated and disable the button otherwise
+
+
+		// Set the state of the submit button
+		// if (formIsValid) {
+		// 	setDisabled(false);
+		// } else {
+		// 	setDisabled(true);
+		// }
+	
+		// console.log("tHE VALIDATED STATE IS : ", formIsValid);
 
 	};
 
@@ -148,12 +139,12 @@ const Login = () => {
 					value={formData.password} extralabel="Mot de passe oublié ?" errorMessage={errorMessage.password} 
 					onChange={handleChange}/>
 
-					<Button size="large" type="submit" onClick={handleSubmit} >Connexion</Button>
+					<Button size="large" disabled={disabled} type="submit" onClick={handleSubmit} >Connexion</Button>
 					<Button size="large" styleType="secondary" type="submit" >Connexion avec Google</Button>
 
 					<p className="text-[.9rem]" >
 						Vous n'avez pas de compte ?			
-						<Link to="/register" className="text-primary-purple underline ml-[.2rem]">
+						<Link to="/register"  className="text-primary-purple underline ml-[.2rem]">
 							Inscription
 						</Link>
 					</p>

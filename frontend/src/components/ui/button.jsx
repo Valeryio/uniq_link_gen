@@ -1,8 +1,18 @@
 
 
-const Button = ({children, onClick, type="submit", styleType="primary", size="small"}) => {
+const Button = ({
+	onClick,
+	children,
+	size="small",
+	type="submit",
+	disabled=false,
+	styleType="primary"
+}) => {
 
 	let content = children || "Default text";
+
+	let disabledStyle = disabled ? "bg-medium-purple" : "bg-primary-purple";
+
 	let btnStyle = "";
 	let btnSize = "";
 
@@ -11,7 +21,7 @@ const Button = ({children, onClick, type="submit", styleType="primary", size="sm
 	let smallBtn = "w-fit";
 
 	// Define the differents styles of buttons
-	let primaryBtn = "bg-primary-purple text-white font-semibold";
+	let primaryBtn = `${disabledStyle} text-white font-semibold`;
 	let secondaryBtn = "border border-primary-purple text-primary-purple";
 
 	switch(styleType) {
@@ -39,7 +49,8 @@ const Button = ({children, onClick, type="submit", styleType="primary", size="sm
 
 
 	return (
-		<button type={type} onClick={onClick} className={`cursor-pointer ${btnStyle} ${btnSize} px-[20px] py-[8px] rounded-[8px]`} >
+		<button type={type} disabled={disabled} onClick={onClick} 
+		className={`cursor-pointer ${btnStyle} ${btnSize} px-[20px] py-[8px] rounded-[8px]`} >
 			{content}
 		</button>
 	)

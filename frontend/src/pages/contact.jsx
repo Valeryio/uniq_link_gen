@@ -2,7 +2,7 @@
 import Header from "../components/header";
 import Footer from "../components/footer";
 import { Link } from "react-router";
-import Button from "../components/ui/buttons";
+import Button from "../components/ui/button";
 import { useState } from "react";
 
 

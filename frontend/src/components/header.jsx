@@ -1,5 +1,5 @@
 
-import Button from "./ui/buttons";
+import Button from "./ui/button";
 import { Link } from "react-router";
 
 const PrimaryHeader = () => {
