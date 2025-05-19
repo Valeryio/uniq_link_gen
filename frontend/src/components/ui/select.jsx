@@ -3,13 +3,13 @@ import { useState } from "react";
 import { Link } from "react-router";
 
 
-const FormInput = ({
+const FormSelect = ({
 	name,
 	label,
 	value,
 	onChange,
 	validated,
-	inputType,
+	SelectType,
 	errorMessage,
 	required=false,
 	placeholder="",
@@ -17,16 +17,8 @@ const FormInput = ({
 }) => {
 
 	let borderStyle = "border-gray-300";
-	const [updatedType, setUpdatedType] = useState(inputType);
+	const [updatedType, setUpdatedType] = useState(SelectType);
 
-	const handleShow = () => {
-
-		if (updatedType === "text") {
-			setUpdatedType("password");
-		} else {
-			setUpdatedType("text");
-		}
-	}
 
 	if (validated === true) {
 		borderStyle = "border-green-400 hover:outline outline-green-400";
@@ -39,7 +31,7 @@ const FormInput = ({
 	return (
 		<div className="flex flex-col gap-[.25rem]">
 			<div className="flex justify-between">
-				<label htmlFor={name} className="text-input font-medium" >
+				<label htmlFor={name} className="text-Select font-medium" >
 					{label}
 					{required && <span className="text-primary-red"> * </span>}
 				</label>
@@ -51,27 +43,20 @@ const FormInput = ({
 			</div>
 
 			<div className={`flex border ${borderStyle} rounded-[.25rem] px-[.8rem] py-[.5rem]`}>
-				<input type={updatedType} name={name} id={name} value={value} required={required} onChange={onChange}
+
+				<select name="" id="">
+					<option value=""></option>
+				</select>
+
+				<Select type={updatedType} name={name} id={name} value={value} required={required} onChange={onChange}
 				placeholder={placeholder} className={`outline-none  w-full`} />
 
-				{
-					name === "password" ?
-						updatedType === "password" ?
-							<button onClick={handleShow} type="button">
-								<img src="./icons/show.svg" className="w-[1rem]" alt="" />
-							</button>
-						: 
-							<button onClick={handleShow} type="button">
-								<img src="./icons/hide.svg" className="w-[1rem]" alt="" />
-							</button>
-					: null
-				}
 			</div>
 
-			{ validated === false && <p className="text-input-error mt-[.5rem] text-red-400"
+			{ validated === false && <p className="text-Select-error mt-[.5rem] text-red-400"
 			>{errorMessage}</p>}
 		</div>
 	)
 };
 
-export default FormInput;
+export default FormSelect;
