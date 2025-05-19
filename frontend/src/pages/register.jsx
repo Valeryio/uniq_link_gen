@@ -5,6 +5,7 @@ import Header from "../components/header";
 import Button from "../components/ui/button";
 import { Link, useNavigate } from "react-router";
 import StepLoader from "../components/stepLoader";
+import React from "react";
 
 
 const RegisterFirstStep = () => {
@@ -141,9 +142,6 @@ const RegisterThirdStep = () => {
 	)
 };
 
-
-const Register = () => {
-
 	const steps = [
 		{
 			step: "1",
@@ -159,7 +157,25 @@ const Register = () => {
 		}
 	];
 
-	const [stepCounter, setStepCounter] = useState(1);
+const Register = () => {
+
+	const [stepCounter, setStepCounter] = useState(0);
+
+	const setStepBackward = () => {
+		setStepCounter((prev) => {
+				if (prev - 1 < 0) { return (prev); }
+			return (prev - 1);
+		});
+	};
+
+	const setStepForward = () => {
+		setStepCounter((prev) => {
+			if (prev + 1 > 2) { return (prev); }
+			return (prev + 1);
+		});
+	};
+
+	const StepComponent = steps[stepCounter].formStep;
 
 	const navigate = useNavigate();
 	const [formData, setFormData] = useState({
@@ -210,9 +226,16 @@ const Register = () => {
 
 				<StepLoader />
 
-				<RegisterFirstStep />
+				<StepComponent />
 
-				<Button size="large" type="submit" onClick={handleSubmit} >Inscription</Button>
+				{/* {React.createElement(steps[stepCounter].formStep)} */}
+
+				<div className="flex justify-between">
+					<Button size="" styleType="secondary" type="submit" onClick={setStepBackward} >Retour</Button>
+					{stepCounter < 2 && <Button size="" type="submit" onClick={setStepForward} >Continuer</Button>}
+					
+					{stepCounter === 2 && <Button size="" type="submit" className="hidden" onClick={handleSubmit} >Inscription</Button>}
+				</div>
 			</form>
 
 				<div className=" w-[30rem]" >
