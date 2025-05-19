@@ -2,12 +2,14 @@
 import Header from "../components/header";
 import Footer from "../components/footer";
 import { Link } from "react-router";
+import Alert from "../components/ui/alert";
 import Button from "../components/ui/button";
 
 const Home = () => {
 	return (
 		<>
     <Header />
+
 
 		<section className="flex justify-center gap-[2rem] px-[2rem] py-[3rem]">
 			<div className="flex flex-col gap-[1rem] w-[40rem]">

@@ -5,46 +5,78 @@ import Header from "../components/header";
 import { useState, useEffect } from "react";
 import Button from "../components/ui/button";
 import inputValidators from "../components/helpers/validators";
+import Alert from "../components/ui/alert";
 
+/**
+ * @component Login
+ * @description - This component manage the login to the backend through
+ * 							a secured form.
+ * 							It valids user entries, before the submission and show
+ * 							alert in case of errors.
+ */
 
 const Login = () => {
 
 	const navigate = useNavigate();
 
+	/**
+	 * disabled - Boolean state to enable or disable the submit button
+	 */
 	const [disabled, setDisabled] = useState(true);
 
+	/**
+	 * errorMessage - Store the error message for each input component
+	 */
 	const [errorMessage, setErrorMessage] = useState({
 		email: "",
 		password: ""
 	});
 
+	/**
+	 * validated - Store the validation state of each input of the form
+	 */
 	const [validated, setValidated] = useState({
 		email: null,
 		password: null
 	});
 
+	/**
+	 * formData - contains all the data of each input field
+	 */
 	const [formData, setFormData] = useState({
 		email: "",
 		password: ""
 	});
 
 	useEffect(() => {
-	let formIsValid = true;
+		let formIsValid = true;
 		for (const key in validated) {
-			console.log(`${key}: ${validated[key]}`);
 			if (!validated[key]) {
 				formIsValid = false;
 			}
 		}
 	
-		console.log("Before disabling : ", formIsValid);
+	/**
+	 * @summary
+	 * false for the validation ~ means ~ true for the disabled 
+	 * state of the button
+	 * 
+	 * If one of the form input are not valid, then, all the form
+	 * is invalid and the submit button is disabled!
+	 */
   setDisabled(!formIsValid);
 }, [validated]);
 
+	/**
+	 * @function handleChange
+	 * @description - Update formData, validate input changes and update
+	 * 							error messages
+	 * @param {*} e - event object of javascript
+	 */
 	const handleChange = (e) => {
 		const {name, value} = e.target;
-		const inputValidator = inputValidators.filter((validator) => 
-			validator.type === e.target.type)[0];
+		const inputValidator = inputValidators.find((validator) => 
+			validator.type === e.target.type);
 			setFormData({
 			...formData,
 			[name]: value
@@ -74,22 +106,13 @@ const Login = () => {
 			});
 		}
 
-		// console.log("The form data : ", formData, validated);
-
-		// verify if all the form is validated and disable the button otherwise
-
-
-		// Set the state of the submit button
-		// if (formIsValid) {
-		// 	setDisabled(false);
-		// } else {
-		// 	setDisabled(true);
-		// }
-	
-		// console.log("tHE VALIDATED STATE IS : ", formIsValid);
-
 	};
 
+	/**
+	 * @function handleSubmit
+	 * @description - POST the form by calling the backend API
+	 * @param {*} e 
+	 */
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -108,9 +131,9 @@ const Login = () => {
 			response = await response.json();
 			console.log(response);
 
-
 		} catch (err) {
-			console.error(`Error while getting the user : ${err}`);
+
+			// console.error(`Error while getting the user : ${err}`);
 			return err;
 		}
 	}
@@ -118,6 +141,7 @@ const Login = () => {
 	return (
 		<>
 			<Header type="secondary" />
+
 			<section className=" p-[2rem] h-full gap-[2rem] flex justify-center" >
 
 				<form action="" className=" w-[24rem] hover:shadow-lg border border-lightest-purple flex flex-col gap-[1rem] 
