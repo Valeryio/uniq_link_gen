@@ -6,6 +6,7 @@ import Button from "../components/ui/button";
 import FormInput from "../components/ui/input";
 import { Link, useNavigate } from "react-router";
 import StepLoader from "../components/stepLoader";
+import FormSelect from "../components/ui/select";
 import inputValidators from "../components/helpers/validators";
 
 
@@ -87,24 +88,9 @@ const RegisterThirdStep = ({formData, validated, errorMessages, handleChange}) =
 						résidence !
 					</p>
 				</div>
-
-				<FormInput label="Quel est votre pays de résidence ?" required={true} name="country" />
-				<div>
-					<label htmlFor="name" className="text-[.9rem] font-medium" >
-						Quel est votre pays de résidence ?
-						<span className="text-primary-red"> *</span>
-					</label>
-					<input id="name" required name="name" type="text" value={formData.name} onChange={handleChange}
-						className="border px-[.8rem] py-[.5rem] w-full rounded-[.25rem]" />
-				</div>
-				<div>
-					<label htmlFor="email" className="text-[.9rem] font-medium" >
-						Quel est votre numéro de téléphone ?
-						<span className="text-primary-red"> *</span>
-					</label>
-					<input id="email" required name="email" type="email" value={formData.email} onChange={handleChange} 
-					className="border px-[.8rem] py-[.5rem] w-full rounded-[.25rem]" />
-				</div>
+					<FormSelect label={"Quel est votre pays de résidence ?"} required={true}  />
+					<FormInput label={"Quel est votre numéro de téléphone ?"} required={true} onChange={handleChange}
+						name={"phone"} value={formData.phone} updatedType="tel" />
 			</div>
 		</>
 	)
@@ -134,14 +120,17 @@ const Register = () => {
 		name: "",
 		email: "",
 		password: "",
-		retypedPassword: ""
+		retypedPassword: "",
+		country: "",
+		telephone: ""
 	});
 
 	const [validated, setValidated] = useState({
 		name: false,
 		email: false,
 		password: false,
-		retypedPassword: false
+		retypedPassword: false,
+		telephone: false
 	});
 
 	// This is the dynamic component rendered inside the 
@@ -176,6 +165,9 @@ const Register = () => {
 
 	const handleChange = (e) => {
 		const {name, value} = e.target;
+
+		
+
 		setFormData({
 				...formData,
 			[name]: value
@@ -218,8 +210,6 @@ const Register = () => {
 			p-[2rem]">
 
 				<StepComponent formData={formData} validated={validated} handleChange={handleChange} />
-
-				{/* {React.createElement(steps[stepCounter].formStep)} */}
 
 				<div className="flex justify-between">
 					<Button size="" styleType="secondary" type="submit" onClick={setStepBackward} >Retour</Button>

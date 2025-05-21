@@ -3,6 +3,15 @@ import { useState } from "react";
 import { Link } from "react-router";
 
 
+let allCountries;
+try {
+	allCountries = await fetch("/countries.json");
+	allCountries = await allCountries.json();
+	console.log(allCountries);
+} catch (err) {
+	console.log("tHIS IS THE ERROR", err);
+}
+
 const FormSelect = ({
 	name,
 	label,
@@ -12,8 +21,7 @@ const FormSelect = ({
 	SelectType,
 	errorMessage,
 	required=false,
-	placeholder="",
-	extralabel="",
+	placeholder=""
 }) => {
 
 	let borderStyle = "border-gray-300";
@@ -31,25 +39,27 @@ const FormSelect = ({
 	return (
 		<div className="flex flex-col gap-[.25rem]">
 			<div className="flex justify-between">
-				<label htmlFor={name} className="text-Select font-medium" >
+				<label htmlFor={name} className="text-input font-medium" >
 					{label}
 					{required && <span className="text-primary-red"> * </span>}
 				</label>
-				{ extralabel && <Link>
-					<p className="text-[.9rem] font-regular text-primary-purple underline underline-offset-2" >
-						{extralabel}
-					</p>
-				</Link>}
 			</div>
 
 			<div className={`flex border ${borderStyle} rounded-[.25rem] px-[.8rem] py-[.5rem]`}>
 
-				<select name="" id="">
-					<option value=""></option>
+				<select name={name} id={name} className={`outline-none  w-full`} >
+					<option value={value}>Selectionnez un pays</option>
+					{
+						allCountries.map(countryObj => (
+							<option value={countryObj.country} key={countryObj.countryCode}>
+								{countryObj.country}
+							</option>
+						))
+					}
 				</select>
-
+{/* 
 				<Select type={updatedType} name={name} id={name} value={value} required={required} onChange={onChange}
-				placeholder={placeholder} className={`outline-none  w-full`} />
+				placeholder={placeholder} className={`outline-none  w-full`} /> */}
 
 			</div>
 
