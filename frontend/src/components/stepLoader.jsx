@@ -9,7 +9,7 @@ const StepLoader = ({step=1}) => {
 		<div className="flex flex-col gap-[1rem]">
 			
 			<div className=" w-[20rem] h-[6px] border rounded-[8px] " >
-				<div className={` ${currentStep} rounded-[8px] h-[5px] bg-dark-purple`} >
+				<div className={` step-loader ${currentStep} rounded-[8px] h-[5px] bg-dark-purple`} >
 				</div>
 			</div>
 			<p className="">

@@ -7,9 +7,8 @@ let allCountries;
 try {
 	allCountries = await fetch("/countries.json");
 	allCountries = await allCountries.json();
-	console.log(allCountries);
 } catch (err) {
-	console.log("tHIS IS THE ERROR", err);
+	console.log(err);
 }
 
 const FormSelect = ({
@@ -57,10 +56,6 @@ const FormSelect = ({
 						))
 					}
 				</select>
-{/* 
-				<Select type={updatedType} name={name} id={name} value={value} required={required} onChange={onChange}
-				placeholder={placeholder} className={`outline-none  w-full`} /> */}
-
 			</div>
 
 			{ validated === false && <p className="text-Select-error mt-[.5rem] text-red-400"

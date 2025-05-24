@@ -7,6 +7,7 @@ import Button from "../components/ui/button";
 import inputValidators from "../components/helpers/validators";
 import Alert from "../components/ui/alert";
 
+
 /**
  * @component Login
  * @description - This component manage the login to the backend through
@@ -57,7 +58,7 @@ const Login = () => {
 		}
 	
 	/**
-	 * @summary
+	 * @argument
 	 * false for the validation ~ means ~ true for the disabled 
 	 * state of the button
 	 * 
@@ -76,7 +77,7 @@ const Login = () => {
 	const handleChange = (e) => {
 		const {name, value} = e.target;
 		const inputValidator = inputValidators.find((validator) => 
-			validator.type === e.target.type);
+			validator.type === e.target.name);
 			setFormData({
 			...formData,
 			[name]: value

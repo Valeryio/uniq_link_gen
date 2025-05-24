@@ -1,5 +1,5 @@
 
-import Input from "../components/ui/input";
+
 import { useEffect, useState } from "react";
 import Header from "../components/header";
 import Button from "../components/ui/button";
@@ -10,11 +10,8 @@ import FormSelect from "../components/ui/select";
 import inputValidators from "../components/helpers/validators";
 
 
-const RegisterFirstStep = ({formData, validated, handleChange, errorMessages}) => {
 
-	useEffect(() => {
-	console.log("I got it here : ", formData);
-	});
+const RegisterFirstStep = ({formData, validated, handleChange, errorMessages}) => {
 
 	return (
 		<>
@@ -32,12 +29,12 @@ const RegisterFirstStep = ({formData, validated, handleChange, errorMessages}) =
 				</div>
 				
 			<FormInput label="Entrez votre nom" required={true} type="text" name="name" validated={validated.name}
-			id="name" value={formData.name} onChange={handleChange} />
+			id="name" value={formData.name} errorMessage={errorMessages.name} onChange={handleChange} />
 
 			<FormInput label="Entrez votre mail" required={true} type="email" validated={validated.email} id="email"
-			value={formData.email} onChange={handleChange} name="email" />
+			value={formData.email} errorMessage={errorMessages.email} onChange={handleChange} name="email" />
 
-		</div>
+			</div>
 		</>
 	)
 };
@@ -60,13 +57,13 @@ const RegisterSecondStep = ({formData, validated, handleChange, errorMessages}) 
 				</p>
 			</div>
 
-			<FormInput label="Entrez votre mot de passe" required={true} name="password" type="password"
-			id="password" value={formData.password} validated={validated.retypedPassword}	
+			<FormInput label="Entrez votre mot de passe" required={true} name="password" inputType="password"
+			id="password" value={formData.password} errorMessage={errorMessages.password} validated={validated.password}	
 			onChange={handleChange} />
 
-			<FormInput label="Reconfirmez votre mot de passe" required={true} name="retypedPassword" type="password"
-			id="retypedPassword" value={formData.retypedPassword} validated={validated.retypedPassword}	
-			onChange={handleChange} />
+			<FormInput label="Reconfirmez votre mot de passe" required={true} name="retypedPassword" inputType="password"
+			id="retypedPassword" value={formData.retypedPassword} errorMessage={errorMessages.retypedPassword}
+			 validated={validated.retypedPassword} onChange={handleChange} />
 			</div>
 		</>
 
@@ -90,39 +87,42 @@ const RegisterThirdStep = ({formData, validated, errorMessages, handleChange}) =
 				</div>
 					<FormSelect label={"Quel est votre pays de résidence ?"} required={true}  />
 					<FormInput label={"Quel est votre numéro de téléphone ?"} required={true} onChange={handleChange}
-						name={"phone"} value={formData.phone} updatedType="tel" />
+						name={"phone"} value={formData.phone} validated={validated.phone} errorMessage={errorMessages.phone}
+						updatedType="tel" />
 			</div>
 		</>
 	)
 };
 
-	const steps = [
-		{
-			step: "1",
-			formStep: RegisterFirstStep
-		},
-		{
-			step: "2",
-			formStep: RegisterSecondStep
-		},
-		{
-			step: "3",
-			formStep: RegisterThirdStep
-		}
-	];
+const steps = [
+	{
+		step: "1",
+		formStep: RegisterFirstStep
+	},
+	{
+		step: "2",
+		formStep: RegisterSecondStep
+	},
+	{
+		step: "3",
+		formStep: RegisterThirdStep
+	}
+];
 
 const Register = () => {
 
+	const [disabled, setDisabled] = useState(true);
 	const [stepCounter, setStepCounter] = useState(0);
 
 	const navigate = useNavigate();
+
 	const [formData, setFormData] = useState({
 		name: "",
 		email: "",
 		password: "",
 		retypedPassword: "",
 		country: "",
-		telephone: ""
+		phone: ""
 	});
 
 	const [validated, setValidated] = useState({
@@ -130,12 +130,26 @@ const Register = () => {
 		email: false,
 		password: false,
 		retypedPassword: false,
-		telephone: false
+		phone: false
 	});
 
-	// This is the dynamic component rendered inside the 
-	// form to update the ui rendering of the step
-	const StepComponent = steps[stepCounter].formStep;
+	const [errorMessages, setErrorMessages] = useState({
+		name: "",
+		email: "",
+		password: "",
+		retypedPassword: "",
+		phone: ""
+	});
+
+	useEffect(() => {
+		let isFormValid = true;
+			for (const key in validated) {
+			if (!validated[key]) {
+				isFormValid = false;
+			}
+		}
+		setDisabled(!isFormValid);
+	}, [validated])
 
 	/**
 	 * @function setStepBaclward
@@ -166,16 +180,57 @@ const Register = () => {
 	const handleChange = (e) => {
 		const {name, value} = e.target;
 
-		
+		// find the right validator for the current input
+		const inputValidator = inputValidators.find((validator) => 
+		validator.type === e.target.name);
+	
+		let validationResult = false;
+		if (inputValidator.type === "retypedPassword") {
+			validationResult = inputValidator
+			.validator(formData.password, value);
+		} else {
+			validationResult = inputValidator.validator(value);
+		}
+
+		if(validationResult) {
+			setValidated({
+				...validated,
+				[name]: true
+			});
+
+			setErrorMessages({
+				...errorMessages,
+				[name]: ""
+			});
+		} else {
+			setValidated({
+				...validated,
+				[name]: false
+			})
+
+			setErrorMessages({
+				...errorMessages,
+				[name]: inputValidator.errorMessage
+			});
+		};
 
 		setFormData({
 				...formData,
 			[name]: value
 		});
-	};
+	}
+
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+		const registerInfo = {
+			name: formData.name,
+			email: formData.email,
+			password: formData.password,
+			country: formData.country,
+			phone: formData.phone
+		};
 
 		console.log("This is the formData : ", formData);
 
@@ -186,7 +241,7 @@ const Register = () => {
 					headers: {
 						"content-type": "application/json"
 					},
-					body: JSON.stringify(formData)
+					body: JSON.stringify(registerInfo)
 				}
 			);
 	
@@ -197,25 +252,30 @@ const Register = () => {
 			return (`Error while registering the new user : ${err}`);
 		}
 	};
-
 	
-	console.log("THE FORM DATA : ", formData);
+	// This is the dynamic component rendered inside the 
+	// form to update the ui rendering of the step
+	const StepComponent = steps[stepCounter].formStep;
 
 	return (
-		<>		
+		<>
 			<Header type="secondary" />
+
 			<section className=" p-[2rem] flex border justify-center gap-[2rem]" >
 
 			<form action=""className="border border-gray-200  flex flex-col gap-[1rem]
 			p-[2rem]">
 
-				<StepComponent formData={formData} validated={validated} handleChange={handleChange} />
+				<StepComponent formData={formData} errorMessages={errorMessages} validated={validated} handleChange={handleChange} />
 
 				<div className="flex justify-between">
-					<Button size="" styleType="secondary" type="submit" onClick={setStepBackward} >Retour</Button>
-					{stepCounter < 2 && <Button size="" type="submit" onClick={setStepForward} >Continuer</Button>}
+					<Button size="" styleType="secondary" type="button" onClick={setStepBackward} >Retour</Button>
+					{stepCounter < 2 && <Button size="" type="button" onClick={setStepForward} >Continuer</Button>}
 					
-					{stepCounter === 2 && <Button size="" type="submit" className="hidden" onClick={handleSubmit} >Inscription</Button>}
+					{stepCounter === 2 && 
+					<Button size="" type="submit" className="hidden" onClick={handleSubmit} disabled={disabled}>
+						Inscription
+					</Button>}
 				</div>
 			</form>
 

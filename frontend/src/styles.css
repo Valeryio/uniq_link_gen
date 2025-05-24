@@ -23,3 +23,9 @@
 	--text-tagline: 16px;
   
 }
+
+.step-loader
+{
+	/* border: 1px solid red; */
+	/* transition: width 1px ease-in; */
+}
