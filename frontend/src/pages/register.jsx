@@ -70,7 +70,7 @@ const RegisterSecondStep = ({formData, validated, handleChange, errorMessages}) 
 	)
 };
 
-const RegisterThirdStep = ({formData, validated, errorMessages, handleChange}) => {
+const RegisterThirdStep = ({formData, validated, errorMessages, handleChange, handleSelect}) => {
 
 	return (
 		<>
@@ -85,7 +85,7 @@ const RegisterThirdStep = ({formData, validated, errorMessages, handleChange}) =
 						résidence !
 					</p>
 				</div>
-					<FormSelect label={"Quel est votre pays de résidence ?"} required={true}  />
+					<FormSelect label={"Quel est votre pays de résidence ?"} name="country" formData={formData} onChange={handleSelect} required={true}  />
 					<FormInput label={"Quel est votre numéro de téléphone ?"} required={true} onChange={handleChange}
 						name={"phone"} value={formData.phone} validated={validated.phone} errorMessage={errorMessages.phone}
 						updatedType="tel" />
@@ -218,6 +218,20 @@ const Register = () => {
 				...formData,
 			[name]: value
 		});
+
+		console.log("We have : ", e.target.name);
+
+		console.log("This is the formData : ", formData);
+	}
+
+	const handleSelect = (e) => {
+		
+		const {name, value} = e.target;
+				setFormData({
+				...formData,
+			[name]: value
+		});
+		console.log("This is the select formData : ", formData);
 	}
 
 
@@ -266,7 +280,7 @@ const Register = () => {
 			<form action=""className="border border-gray-200  flex flex-col gap-[1rem]
 			p-[2rem]">
 
-				<StepComponent formData={formData} errorMessages={errorMessages} validated={validated} handleChange={handleChange} />
+				<StepComponent formData={formData} errorMessages={errorMessages} handleSelect={handleSelect} validated={validated} handleChange={handleChange} />
 
 				<div className="flex justify-between">
 					<Button size="" styleType="secondary" type="button" onClick={setStepBackward} >Retour</Button>

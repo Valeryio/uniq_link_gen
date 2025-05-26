@@ -14,7 +14,7 @@ try {
 const FormSelect = ({
 	name,
 	label,
-	value,
+	formData,
 	onChange,
 	validated,
 	SelectType,
@@ -24,16 +24,16 @@ const FormSelect = ({
 }) => {
 
 	let borderStyle = "border-gray-300";
-	const [updatedType, setUpdatedType] = useState(SelectType);
+	// const [updatedType, setUpdatedType] = useState(SelectType);
 
 
-	if (validated === true) {
-		borderStyle = "border-green-400 hover:outline outline-green-400";
-	} else if (validated === false) {
-		borderStyle = "hover:border-red-400 hover:outline hover:outline-red-400";
-	} else {
-		borderStyle = "border-gray-800";
-	}
+	// if (validated === true) {
+	// 	borderStyle = "border-green-400 hover:outline outline-green-400";
+	// } else if (validated === false) {
+	// 	borderStyle = "hover:border-red-400 hover:outline hover:outline-red-400";
+	// } else {
+	// 	borderStyle = "border-gray-800";
+	// }
 
 	return (
 		<div className="flex flex-col gap-[.25rem]">
@@ -44,10 +44,11 @@ const FormSelect = ({
 				</label>
 			</div>
 
-			<div className={`flex border ${borderStyle} rounded-[.25rem] px-[.8rem] py-[.5rem]`}>
+			<div className={`flex border rounded-[.25rem] px-[.8rem] py-[.5rem]`}>
 
-				<select name={name} id={name} className={`outline-none  w-full`} >
-					<option value={value}>Selectionnez un pays</option>
+				<select name={name} id={name} onChange={onChange} value={formData.country}
+				className={`outline-none  w-full`} >
+					<option >Selectionnez un pays</option>
 					{
 						allCountries.map(countryObj => (
 							<option value={countryObj.country} key={countryObj.countryCode}>

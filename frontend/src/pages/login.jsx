@@ -123,7 +123,8 @@ const Login = () => {
 				headers: {
 					"content-type": "application/json"
 				},
-				body: JSON.stringify(formData)
+				body: JSON.stringify(formData),
+				credentials: "include"
 			});
 
 			const token = response.headers["token"];
@@ -131,6 +132,8 @@ const Login = () => {
 
 			response = await response.json();
 			console.log(response);
+
+			navigate("/dashboard");
 
 		} catch (err) {
 

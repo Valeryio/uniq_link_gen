@@ -2,6 +2,7 @@
 const Dashboard = () => {
 	return (
 		<>
+		This is the dashboard
 		</>
 	)
 };
