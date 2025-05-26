@@ -1,26 +1,51 @@
 
 
 const User = require("../models/user.model");
-const responseHandlers = require("../utils/response.helper");
+
+/**
+ * @function reviseUserObject
+ * @description - Revise a user Object to clean the unecessary informations
+ * 								and update the object, to be more secure and light.
+ * @param {*} user
+ * @returns An user object or nul if the input is invalid
+ */
+const reviseUserObject = (user) => {
+	delete user.password;
+	delete user.__v
+	return user;
+}
 
 
 /**
  * @function findAllUsers
- * @description - find all the user's in the database, if there's no
- * 								limit. Otherwise, just take the number of user's limited
+ * @description - find all the user's in the database, with an optional
+ * 								limit.
  * @param {*} limit 
  * @returns 
  */
-const findAllUsers = async (limit = 0) => {
+const findAllUsers = async (page = 0, limit = 0) => {
 	try {
-		if (!limit) {
-			const users = await User.find();
+		if (!page) {
+			let users = await User.find().lean();
+
+			if (users) {
+				users = users.map((user) => reviseUserObject(user));
+			}
+
 			return users;
 		} else {
-			const users = await User
+
+			const usersPerPage = 2;
+			let users = await User
 			.find()
-			.limit(limit);
-			return users;
+			.skip((page - 1) * usersPerPage)
+			.limit(usersPerPage)
+			.lean();
+
+			if (users && users.length) {
+				users = users.map((user) => reviseUserObject(user));
+			}
+			return users || [];
 		}
 	} catch (err) {
 		throw new Error(`Error retrieving existing users: ${err.message}`);
@@ -35,8 +60,12 @@ const findAllUsers = async (limit = 0) => {
  */
 const findUserById = async (userId) => {
 	try {
-		const user = await User.findById(userId);
-		return user;
+		let user = await User.findById(userId).lean();
+
+		if (user) {
+			user = reviseUserObject(user);
+		}
+		return user || null;
 	} catch (err) {
 		throw new Error(`Error checking existing user: ${err}`);
 	}
@@ -50,9 +79,13 @@ const findUserById = async (userId) => {
  */
 const findUserByEmail = async (email) => {
 	try {
-		const existingUser = await User.findOne({email});
+		let existingUser = await User.findOne({email});
 		console.log("The existing : ", existingUser);
-		return existingUser;
+
+		if (existingUser) {
+			existingUser = reviseUserObject(existingUser);
+		}
+		return existingUser || null;
 	} catch (err) {
 		throw new Error(`Error checking existing user: ${err.message}`);
 	}
@@ -66,4 +99,4 @@ const updateUser = async (userId) => {
 }
 */
 
-module.exports = {findAllUsers, findUserById, findUserByEmail};
+module.exports = { reviseUserObject, findAllUsers, findUserById, findUserByEmail };

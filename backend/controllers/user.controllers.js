@@ -3,7 +3,6 @@ const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 const services = require("../services/user.services");
 const hashModule = require("../services/hashModule");
-// const joi = require("joi");
 const responseHandlers = require("../utils/response.helper");
 const validators = require("../services/user.validators");
 
@@ -17,8 +16,9 @@ const validators = require("../services/user.validators");
  */
 const getAllUsers = async (req, res) => {
 	let limit = req.query.limit || null;
+	let page = req.query.p || null;
 	try {
-		const users = await services.findAllUsers(limit)
+		const users = await services.findAllUsers(page);
 
 		return responseHandlers.successResponse(
 			res,
@@ -44,7 +44,7 @@ const getUser = async (req, res) => {
 	let userId = req.params.id || null;
 
 	try {
-		const user = await services.findUser(userId);
+		const user = await services.findUserById(userId);
 		return responseHandlers.successResponse(
 			res,
 			"User retrieved successfully!",
@@ -56,13 +56,6 @@ const getUser = async (req, res) => {
 			err
 		);
 	}
-
-	/*
-	User.findById(userId)
-	.then((user) => {res.send(user)})
-	.catch((err) => {res.send(`Error while fetching the users : ${err}`)});
-*/
-
 };
 
 /**
@@ -150,6 +143,14 @@ const login = async (req, res) => {
 	});
 	res.header("Authorization", `Bearer ${token}`);
 
+	// Storing the token into cookie parser
+	res.cookie("token", `Bearer ${token}`, {
+		httpOnly: true,
+		secure: true,
+		sameSite: "strict",
+		maxAge: 24 * 60 * 60 * 1000
+	});
+
 	const userInfos = {
 		id: existingUser._id,
 		email: existingUser.email,
@@ -162,6 +163,13 @@ const login = async (req, res) => {
 		userInfos
 	);
 };
+
+
+const logout = async (req, res) => {
+	res.clearCookie("token");
+}
+
+
 
 /**
  * @function updateUser
@@ -179,7 +187,7 @@ const updateUser = async (req, res) => {
 	try {
 		updatedUser = await User.findByIdAndUpdate(userId, req.body,
 			{new: true, runValidators: true}
-		);
+		).lean();
 	} catch (err) {
 		return responseHandlers.errorResponse(
 			res,
@@ -195,6 +203,7 @@ const updateUser = async (req, res) => {
 		);
 	}
 
+	updatedUser =	services.reviseUserObject(updatedUser);
 	return responseHandlers.successResponse(
 		res,
 		"User updated successfully",
@@ -218,7 +227,7 @@ const removeUser = async (req, res) => {
 
 	console.log("THE ID : ", userId);
 	try {
-		removedUser = await User.findByIdAndDelete(userId);
+		removedUser = await User.findByIdAndDelete(userId).lean();
 	} catch (err) {
 		return responseHandlers.errorResponse(
 			res,
@@ -234,6 +243,7 @@ const removeUser = async (req, res) => {
 		);
 	}
 
+	removedUser = services.reviseUserObject(removedUser);
 	return responseHandlers.successResponse(
 		res,
 		"User removed successfully!",
@@ -243,4 +253,4 @@ const removeUser = async (req, res) => {
 };
 
 
-module.exports = { getAllUsers, getUser, register, login, updateUser, removeUser};
+module.exports = { getAllUsers, getUser, register, login, logout, updateUser, removeUser};

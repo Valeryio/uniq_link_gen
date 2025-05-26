@@ -1,7 +1,8 @@
 
 const joi = require("joi");
 
-
+//	.pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
+// ^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{3,}$
 // Create the validation schema
 const registrationSchema = joi.object({
 	name: joi.string().min(3).required(),
@@ -12,8 +13,10 @@ const registrationSchema = joi.object({
 	.string()
 	.min(4)
 	.max(30)
-	.pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
-	.required()
+	.pattern(new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{3,15}$/))
+	.required(),
+	country: joi.string(),
+	phone: joi.number()
 }).unknown(false);
 
 // Validation of the user's schema
@@ -22,7 +25,7 @@ const userValidationSchema = joi.object({
 	.email()
 	.required(),
 	password: joi.string()
-	.pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
+	.pattern(new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{3,15}$/))
 }).unknown(false);
 
 

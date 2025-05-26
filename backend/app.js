@@ -1,7 +1,10 @@
 
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
+const corsOptions = require("./config/allowedOrigins"); 
 
 // Loading the environment files
 dotenv.config();
@@ -13,16 +16,18 @@ require("./models/dbConfig");
 // and configurations
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cookieParser());
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+}));
+
+app.use("/", express.static(path.join(__dirname, "/public")));
 
 
 // Configuration of different API for objects
 const userRouter = require("./routes/user.routes");
 const cardRouter = require("./routes/card.routes");
-
-app.get("/", (req, res) => {
-  res.send("Hello world, the business card api is on the route : /notes\n Enjoy ! 🎉");
-});
 
 // API to interact with the users
 app.use("/users", userRouter);

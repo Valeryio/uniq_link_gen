@@ -15,7 +15,8 @@ const auth = (req, res, next) => {
 
 	try {
 		// verification of the existence of the token
-		let token = req.header("Authorization");
+		// let token = req.header("Authorization");
+		let token = req.cookies.token;
 
 		if (!token || !token.startsWith("Bearer ")) {
 			throw new Error("Unauthorized: your session has expired or your token is invalid.");
@@ -56,7 +57,6 @@ const auth = (req, res, next) => {
 const authAdmin = (req, res, next) => {
 	try {
 		let { role } = req.user;
-		console.log(role);
 
 		if (role === "admin") {
 			next();
