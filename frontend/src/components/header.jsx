@@ -43,7 +43,7 @@ const PrimaryHeader = () => {
  */
 const SecondaryHeader = () => {
     return (
-        <header className="flex justify-center items-center py-[1.5rem] px-[2rem] border border-light-purple">
+        <header className="flex justify-center items-center w-full h-fit py-[1.5rem] px-[2rem] border border-light-purple">
             <Link to="/" className="w-[8rem]">
                 <img src="./logo.svg" alt="" />
             </Link>

@@ -5,8 +5,10 @@ const Button = ({
 	children,
 	size="small",
 	type="submit",
+	addIcon=false,
 	disabled=false,
-	styleType="primary"
+	styleType="primary",
+	imgSrc,
 }) => {
 
 	let content = children || "Default text";
@@ -50,8 +52,9 @@ const Button = ({
 
 	return (
 		<button type={type} disabled={disabled} onClick={onClick} 
-		className={`cursor-pointer ${btnStyle} ${btnSize} px-[20px] py-[8px] rounded-[8px]`} >
+		className={`flex gap-[1rem] cursor-pointer ${btnStyle} ${btnSize} px-[20px] py-[10px] rounded-[8px]`} >
 			{content}
+			{imgSrc && <img src={imgSrc} alt="" />}
 		</button>
 	)
 };
