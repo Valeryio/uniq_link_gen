@@ -52,7 +52,7 @@ const Button = ({
 
 	return (
 		<button type={type} disabled={disabled} onClick={onClick} 
-		className={`flex gap-[1rem] cursor-pointer ${btnStyle} ${btnSize} px-[20px] py-[10px] rounded-[8px]`} >
+		className={`flex gap-[1rem] cursor-pointer justify-center ${btnStyle} ${btnSize} px-[20px] py-[10px] rounded-[8px]`} >
 			{content}
 			{imgSrc && <img src={imgSrc} alt="" />}
 		</button>

@@ -19,12 +19,12 @@ const Sidebar = () => {
 								<p>Accueil</p>
 							</Link>
 						</li>
-						<li className="">
+						{/* <li className="">
 							<Link className="flex gap-[1rem]">
 								<img src="./icons/pie-chart.svg" alt="" />
 								<p>Dashboard</p>
 							</Link>
-						</li>
+						</li> */}
 						<li className="">
 							<Link className="flex gap-[1rem]">
 								<img src="./icons/layer.svg" alt="" />
@@ -48,6 +48,12 @@ const Sidebar = () => {
 						<Link className="flex gap-[1rem]">
 							<img src="./icons/settings.svg" alt="" />
 							<p>Settings</p>
+						</Link>
+					</li>
+					<li className="">
+						<Link className="flex gap-[1rem] hover:text-primary-red hover:font-medium">
+							<img src="./icons/log-out.svg" alt="" />
+							<p>Logout</p>
 						</Link>
 					</li>
 				</ul>

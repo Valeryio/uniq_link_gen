@@ -2,14 +2,14 @@ import { useState } from 'react';
 import {BrowserRouter, Routes, Route} from "react-router";
 import Header from './components/header';
 import Footer from "./components/footer";
-import Register from './pages/register';
-import Login from './pages/login';
+import Register from './pages/public/register';
+import Login from './pages/public/login';
 import Home from './pages/home';
-import Profil from './pages/profil';
-import About from './pages/about';
+import Profil from './pages/user/profil';
+import About from './pages/public/about';
 import Contact from './pages/contact';
-import Dashboard from './pages/dashboard';
-import SuccessfulLogin from './pages/successfulLogin';
+import Dashboard from './pages/user/dashboard';
+import SuccessfulLogin from './pages/public/successfulLogin';
 import SuccessfulResetPassword from './pages/successfulResetPassword';
 
 function App() {

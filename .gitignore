@@ -1,5 +1,6 @@
 backend/.env
 backend/comments.exemple.js
+backend/genericMsg.txt
 
 frontend/.env
 backend/node_modules/
