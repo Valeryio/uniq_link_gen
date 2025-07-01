@@ -4,9 +4,8 @@ import { useEffect, useState } from "react";
 import Header from "../../components/header";
 import Button from "../../components/ui/button";
 import FormInput from "../../components/ui/input";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import StepLoader from "../../components/stepLoader";
-import FormSelect from "../../components/ui/select";
 import inputValidators from "../../components/helpers/validators";
 
 
@@ -70,29 +69,7 @@ const RegisterSecondStep = ({formData, validated, handleChange, errorMessages}) 
 	)
 };
 
-const RegisterThirdStep = ({formData, validated, errorMessages, handleChange, handleSelect}) => {
 
-	return (
-		<>
-			<StepLoader step={3} />
-			<div className="border border-gray-200  flex flex-col gap-[1rem] w-[20rem]">
-				<div className="flex flex-col gap-[.5rem]">
-					<h2 className="font-bold text-[27px]">
-						Comment vous joindre ?
-					</h2>
-					<p className=" text-[15px] font-medium text-dark-purple">
-						Passez votre numéro le plus actif, ainsi que votre pays de 
-						résidence !
-					</p>
-				</div>
-					<FormSelect label={"Quel est votre pays de résidence ?"} name="country" formData={formData} onChange={handleSelect} required={true}  />
-					<FormInput label={"Quel est votre numéro de téléphone ?"} required={true} onChange={handleChange}
-						name={"phone"} value={formData.phone} validated={validated.phone} errorMessage={errorMessages.phone}
-						updatedType="tel" />
-			</div>
-		</>
-	)
-};
 
 const steps = [
 	{
@@ -102,10 +79,6 @@ const steps = [
 	{
 		step: "2",
 		formStep: RegisterSecondStep
-	},
-	{
-		step: "3",
-		formStep: RegisterThirdStep
 	}
 ];
 
@@ -116,6 +89,7 @@ const Register = () => {
 
 	const navigate = useNavigate();
 
+	/*
 	const [formData, setFormData] = useState({
 		name: "",
 		email: "",
@@ -139,6 +113,30 @@ const Register = () => {
 		password: "",
 		retypedPassword: "",
 		phone: ""
+	});
+
+
+	*/
+
+		const [formData, setFormData] = useState({
+		name: "",
+		email: "",
+		password: "",
+		retypedPassword: ""
+	});
+
+	const [validated, setValidated] = useState({
+		name: false,
+		email: false,
+		password: false,
+		retypedPassword: false
+	});
+
+	const [errorMessages, setErrorMessages] = useState({
+		name: "",
+		email: "",
+		password: "",
+		retypedPassword: ""
 	});
 
 	useEffect(() => {
@@ -172,7 +170,7 @@ const Register = () => {
 	 */
 	const setStepForward = () => {
 		setStepCounter((prev) => {
-			if (prev + 1 > 2) { return (prev); }
+			if (prev + 1 > 1) { return (prev); }
 			return (prev + 1);
 		});
 	};
@@ -237,13 +235,11 @@ const Register = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
+		
 		const registerInfo = {
 			name: formData.name,
 			email: formData.email,
-			password: formData.password,
-			country: formData.country,
-			phone: formData.phone
+			password: formData.password
 		};
 
 		console.log("This is the formData : ", formData);
@@ -292,9 +288,9 @@ const Register = () => {
 
 				<div className="flex justify-between">
 					<Button size="" styleType="secondary" type="button" onClick={setStepBackward} >Retour</Button>
-					{stepCounter < 2 && <Button size="" type="button" onClick={setStepForward} >Continuer</Button>}
+					{stepCounter < 1 && <Button size="" type="button" onClick={setStepForward} >Continuer</Button>}
 					
-					{stepCounter === 2 && 
+					{stepCounter === 1 && 
 					<Button size="" type="submit" className="hidden" onClick={handleSubmit} disabled={disabled}>
 						Inscription
 					</Button>}

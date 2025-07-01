@@ -2,7 +2,8 @@
 
 const StepLoader = ({step=1}) => {
 
-	const steps = ["w-[7rem]", "w-[14rem]", "w-[20rem]"];
+	// const steps = ["w-[7rem]", "w-[14rem]", "w-[20rem]"];
+	const steps = ["w-[10rem]", "w-[20rem]"];
 	const currentStep = steps[step - 1];
 
 	return (

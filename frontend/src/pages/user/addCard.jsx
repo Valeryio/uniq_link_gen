@@ -1,10 +1,19 @@
 
 import Button from "@/components/ui/button";
 import { Link } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FieldPopUp from "@/components/ui/fieldPopPup";
 import FieldInfoButton from "@/components/ui/fieldInfoButton";
 import useAuth from "@/hooks/useAuth";
+
+
+let fieldInfos = {};
+try {
+	fieldInfos = await fetch("/fieldInfos.json");
+	fieldInfos = await fieldInfos.json();
+} catch (err) {
+	console.log(`Error while fetching the field's data ${err}`);
+}
 
 
 const AddCard = () => {
@@ -24,7 +33,7 @@ const AddCard = () => {
 
 	return (
 		<>
-			<FieldPopUp />
+			{ show && <FieldPopUp />}
 			<div className=" flex justify-between items-center px-[1rem] py-[.5rem]">
 
 				<div className="flex gap-[1rem]">
@@ -35,7 +44,7 @@ const AddCard = () => {
 
 				<div className="flex gap-[1rem]">
 					<Button styleType="secondary">Abandonner la carte</Button>
-					<Button >Enregistrer la carte</Button>
+					<Button type="button">Enregistrer la carte</Button>
 				</div>
 			</div>
 
@@ -48,22 +57,26 @@ const AddCard = () => {
 					<p className="font-bold text-h5 ">
 						{user.name}
 					</p>
-					<p className="">
+
+					{/* <p className="">
 						UX Designer
 					</p>
 					<p className="">
 						Yoka Softwares Solutions
-					</p>
+					</p> 
+					
+					<div className=" flex gap-[1rem]">
+						<img src="../icons/phone.svg" alt="" />
+						<p>+229 0125268952</p>
+					</div>
+					
+					*/}
 
 					<div className=" flex gap-[1rem]">
 						<img src="../icons/mail.svg" alt="" />
 						<p>{user.email}</p>
 					</div>
 
-					<div className=" flex gap-[1rem]">
-						<img src="../icons/phone.svg" alt="" />
-						<p>+229 0125268952</p>
-					</div>
 
 					<Button styleType="secondary" imgSrc="/icons/share-alt.svg" >Partager votre carte</Button>
 				</div>
@@ -87,44 +100,20 @@ const AddCard = () => {
 						</h6>
 
 						<div className=" flex gap-[1rem] flex-wrap">
-							<FieldInfoButton source="/icons/colored-facebook.svg"
-							onClick={showPopUp}>
-								Facebook
-							</FieldInfoButton>
-							<FieldInfoButton source="/icons/colored-social_x.svg" >
-								Twitter
-							</FieldInfoButton>
-							<FieldInfoButton source="/icons/colored-tiktok.svg" >
-								Tiktok
-							</FieldInfoButton>
-							<FieldInfoButton source="/icons/colored-instagram.svg" >
-								Instagram
-							</FieldInfoButton>
-							<FieldInfoButton source="/icons/colored-threads.svg" >
-								Threads
-							</FieldInfoButton>
-							<FieldInfoButton source="/icons/colored-linkedin.svg" >
-								LinkedIn
-							</FieldInfoButton>
-							<FieldInfoButton source="./icons/colored-snapchat.svg" >
-								SnapChat
-							</FieldInfoButton>
-							<FieldInfoButton source="/icons/colored-discord.svg" >
-								Discord
-							</FieldInfoButton>
-							<FieldInfoButton source="/icons/colored-github.svg" >
-								Github
-							</FieldInfoButton>
-							<FieldInfoButton source="/icons/colored-pinterest.svg" >
-								Pinterest
-							</FieldInfoButton>
-							<FieldInfoButton source="/icons/colored-telegram.svg" >
-								Telegram
-							</FieldInfoButton>
-							<FieldInfoButton source="/icons/colored-whatsapp.svg" >
-								Whatsapp
-							</FieldInfoButton>
+
+							{
+								fieldInfos.map(infos => (
 									
+									infos.type === "social-network" 
+									?
+										<FieldInfoButton source={infos.source} key={infos.id}
+										handleClick={showPopUp} >
+											{infos.fieldName}
+										</FieldInfoButton>
+									:
+									null
+								))
+							}								
 						</div>
 					</div>
 
@@ -134,21 +123,20 @@ const AddCard = () => {
 						</h6>
 
 						<div className=" flex gap-[1rem] flex-wrap">
-							<FieldInfoButton source="/icons/website.svg" >
-								Site web
-							</FieldInfoButton>
-							<FieldInfoButton source="/icons/link.svg" >
-								Liens
-							</FieldInfoButton>
-							<FieldInfoButton source="/icons/file.svg" >
-								PDF
-							</FieldInfoButton>
-							<FieldInfoButton source="/icons/upload.svg" >
-								Fichiers
-							</FieldInfoButton>
-							<FieldInfoButton source="/icons/blue-mail-icon.svg" >
-								Email
-							</FieldInfoButton>
+
+							{
+								fieldInfos.map(infos => (
+									
+									infos.type === "media" 
+									?
+										<FieldInfoButton source={infos.source} key={infos.id}
+										handleClick={showPopUp} >
+											{infos.fieldName}
+										</FieldInfoButton>
+									:
+									null
+								))
+							}		
 
 						</div>
 					</div>

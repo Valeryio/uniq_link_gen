@@ -3,24 +3,19 @@
 import { useState } from "react";
 import Button from "./button";
 
-const FieldPopUp = ({
-	show=true
-	}) => {
-
+const FieldPopUp = ({source}) => {
 
 	const [close, setClose] = useState(false);
 
 	const handleClose = () => {
-		show = !show;
 		setClose(!close);
-		console.log(show);
 	}
 
 
 
 	return (
 		<form className={`${!close? "flex" : "hidden"} bg-white p-[1.5rem] shadow-2xl rounded-9x border w-[22rem]
-		absolute h-[16rem] flex-col gap-[1rem] `} >
+		absolute h-[20rem] flex-col gap-[1rem] `} >
 
 			<div className="flex justify-between" >
 				<h2 className="text-h6 font-semibold" >
@@ -32,6 +27,13 @@ const FieldPopUp = ({
 					<img src="/icons/cross-x.svg" alt="" />
 				</button>
 
+			</div>
+
+			
+			<div className="">
+				<img src={source} alt="" className=""/>
+				<input type="text" disabled placeholder="Entrez le lien du champ" 
+				className=" border w-full border-secondary-purple outline-primary-purple rounded-[.25rem] px-[.8rem] py-[.5rem]" />
 			</div>
 
 			<p className="text-medium-purple " >
