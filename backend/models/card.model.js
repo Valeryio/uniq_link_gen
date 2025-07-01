@@ -8,7 +8,7 @@ const cardElementSchema = mongoose.Schema({
 	},
 	type: {
 		type: String,
-		enum: ["firstName", "lastName", "phone", "phone", "email", "file"],
+		enum: ["firstName", "lastName", "country", "phone", "email", "file"],
 		required: true
 	},
 	value: {

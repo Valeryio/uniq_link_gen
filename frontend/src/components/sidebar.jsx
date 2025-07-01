@@ -1,33 +1,31 @@
 
+import useAuth from "@/hooks/useAuth";
 import { Link } from "react-router";
 
 const Sidebar = () => {
 
-	return (
-		<aside className="flex flex-col px-[1rem] py-[2rem] justify-between border min-w-[10rem] w-[14rem] h-full" >
+	const { logout } = useAuth();
 
-			<div className="flex flex-col gap-[2rem]" >
+	return (
+		<aside className="flex flex-col px-[1rem] py-[2rem] justify-between min-w-[10rem] w-[14rem]" >
+
+			<div className="flex flex-col  border border-red-600 gap-[2rem]" >
 				<button className="cursor-pointer" >
-					<img src="./icons/menu.svg" alt="menu icon" />
+					<img src="/icons/menu.svg" alt="menu icon" />
 				</button>
 
 				<div className=" ">
 					<ul className=" flex flex-col gap-[1rem]">
 						<li className="">
-							<Link className="flex gap-[1rem]">
-								<img src="./icons/home.svg" alt="" />
+							<Link className="flex gap-[1rem]" to="home">
+								<img src="/icons/home.svg" alt="" />
 								<p>Accueil</p>
 							</Link>
 						</li>
-						{/* <li className="">
-							<Link className="flex gap-[1rem]">
-								<img src="./icons/pie-chart.svg" alt="" />
-								<p>Dashboard</p>
-							</Link>
-						</li> */}
+
 						<li className="">
-							<Link className="flex gap-[1rem]">
-								<img src="./icons/layer.svg" alt="" />
+							<Link className="flex gap-[1rem]" to="card" >
+								<img src="/icons/layer.svg" alt="" />
 								<p>Cards</p>
 							</Link>
 						</li>
@@ -40,24 +38,26 @@ const Sidebar = () => {
 				<ul className=" flex flex-col gap-[1rem] ">
 					<li className="">
 						<Link className="flex gap-[1rem]">
-							<img src="./icons/help-circle.svg" alt="" />
+							<img src="/icons/help-circle.svg" alt="" />
 							<p>Support</p>
 						</Link>
 					</li>
 					<li className="">
 						<Link className="flex gap-[1rem]">
-							<img src="./icons/settings.svg" alt="" />
+							<img src="/icons/settings.svg" alt="" />
 							<p>Settings</p>
 						</Link>
 					</li>
 					<li className="">
-						<Link className="flex gap-[1rem] hover:text-primary-red hover:font-medium">
-							<img src="./icons/log-out.svg" alt="" />
+						<Link onClick={logout}
+						className="flex gap-[1rem] hover:text-primary-red hover:font-medium">
+							<img src="/icons/log-out.svg" alt="" />
 							<p>Logout</p>
 						</Link>
 					</li>
 				</ul>
 			</div>
+
 		</aside>
 	)
 };

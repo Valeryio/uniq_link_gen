@@ -45,18 +45,47 @@ const SecondaryHeader = () => {
     return (
         <header className="flex justify-center items-center w-full h-fit py-[1.5rem] px-[2rem] border border-light-purple">
             <Link to="/" className="w-[8rem]">
-                <img src="./logo.svg" alt="" />
+                <img src="../logo.svg" alt="" />
             </Link>
         </header>
     )
 };
 
-const Header = ({type}) => {
+const LoggedHeader = ({data}) => {
+
+    return (
+        <header className="flex bg-white justify-between items-center w-full h-fit py-[1.5rem] px-[2rem] border border-light-purple">
+            <Link to="/app" className="w-[8rem]">
+                <img src="/logo.svg" alt="" />
+            </Link>
+            <div className="flex gap-[2rem] items-center max-w-[16rem] border px-1 " >
+                <Link to="/" className="">
+                    <img src="/icons/bell.svg" alt="" />
+                </Link>
+
+                <div >
+                    <Link to="" className="flex gap-[1rem] items-center ">
+                        <img src="../images/avatar.png" alt="" />
+                        <p>{ data && `${data.name}` || "John Doe"} </p>
+                        <img src="/icons/chevron-down.svg" alt="" />
+                    </Link>
+
+                </div>
+                
+            </div>
+        </header>
+    )
+}
+
+
+const Header = ({type, data}) => {
 
     switch(type) {
         case "secondary":
             return <SecondaryHeader />
-        break;
+
+        case "logged":
+            return <LoggedHeader data={data} />
 
         default:
             return <PrimaryHeader />

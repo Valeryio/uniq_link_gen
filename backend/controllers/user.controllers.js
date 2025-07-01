@@ -94,10 +94,14 @@ const register = async (req, res) => {
 		);
 	}
 
+	console.log("The user : ", req.body, value);
+
 	const userObj = new User({
 		...value,
 		password: await hashModule.hashPassword(req.body.password)
 	});
+
+	console.log("THe user object of : ", userObj);
 
 	userObj.save()
 	.then((docs) => {
@@ -134,8 +138,20 @@ const login = async (req, res) => {
 		return responseHandlers.failResponse(
 			res,
 			"The user is not registered!"
-		);	
+		);
 	}
+
+	let result = await hashModule.compareHashedPassword(value.password, existingUser.password);
+
+	if (!result) {
+
+		console.log("We have : ", existingUser.password, value.password, result);
+		return responseHandlers.failResponse(
+			res,
+			"The password is incorrect!"
+		);
+	}
+
 
 	// Create and use token
 	const token = jwt.sign( {_id: existingUser._id, role: existingUser.role}, process.env.TOKEN_SECRET, { 
@@ -153,6 +169,7 @@ const login = async (req, res) => {
 
 	const userInfos = {
 		id: existingUser._id,
+		name: existingUser.name,
 		email: existingUser.email,
 		role: existingUser.role
 	};

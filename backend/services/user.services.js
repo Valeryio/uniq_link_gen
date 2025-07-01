@@ -80,23 +80,16 @@ const findUserById = async (userId) => {
 const findUserByEmail = async (email) => {
 	try {
 		let existingUser = await User.findOne({email});
-		console.log("The existing : ", existingUser);
+		// console.log("The existing : ", existingUser);
 
-		if (existingUser) {
-			existingUser = reviseUserObject(existingUser);
-		}
+		// if (existingUser) {
+		// 	existingUser = reviseUserObject(existingUser);
+		// }
 		return existingUser || null;
 	} catch (err) {
 		throw new Error(`Error checking existing user: ${err.message}`);
 	}
 };
 
-/*
-const updateUser = async (userId) => {
-	try {
-		let result = await User.find
-	}
-}
-*/
 
 module.exports = { reviseUserObject, findAllUsers, findUserById, findUserByEmail };
