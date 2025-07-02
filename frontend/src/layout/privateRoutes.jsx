@@ -5,12 +5,35 @@ import Sidebar from "@/components/sidebar";
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
 import useAuth from "@/hooks/useAuth";
+import useFieldInfos from "@/hooks/useFieldInfos";
 
 
 const PrivateRoutes = () => {
 
 	const {user, loading} = useAuth();
 	const navigate = useNavigate();
+
+	const { persistFieldsInfos } = useFieldInfos(); 
+
+	// Async function at the top of the app
+	// when the user tries to log in
+	useEffect(() => {
+		const fetchFieldsInfos = async () => {
+			let data = null;
+			try  {
+				data = await fetch("/fieldInfos.json");
+				data = await data.json();
+				persistFieldsInfos(data);
+			} catch (err) {
+				console.log(`Error while fetching the field's data ${err}`);
+			}
+		};
+
+		fetchFieldsInfos();
+
+	}, []);
+
+
 
 	useEffect(() => {
 		if (!user && loading === false) {
@@ -23,9 +46,6 @@ const PrivateRoutes = () => {
 		}
 	}, [user, loading]);
 
-	useEffect(() => {
-		// console.log(user, user.name);
-	}, [loading]);
 
 	if (loading || !user) {
 		return <div className="text-center p-4">Chargement...</div>

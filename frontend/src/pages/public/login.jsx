@@ -7,6 +7,7 @@ import Button from "../../components/ui/button";
 import inputValidators from "../../components/helpers/validators";
 import Alert from "../../components/ui/alert";
 import useAuth from "@/hooks/useAuth";
+import useFieldInfos from "@/hooks/useFieldInfos";
 
 
 /**
@@ -20,7 +21,10 @@ import useAuth from "@/hooks/useAuth";
 const Login = () => {
 
 	const navigate = useNavigate();
-	const {login} = useAuth();
+	const { login } = useAuth();
+
+	
+
 
 	/**
 	 * disabled - Boolean state to enable or disable the submit button

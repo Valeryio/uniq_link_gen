@@ -18,28 +18,23 @@ export const AuthProvider = ({children}) => {
 			}
 
 		} catch (err) {
-			console.log(`Error while getting the local Infos : ${err}`);
+			console.error(`Error while getting the local Infos : ${err}`);
 		} finally {
 			setLoading(false);
 		}
 	}, []);
 
-	// useEffect(() => {
-	// 	console.log("the user  :", user);
-	// }, [user])
-
 
 	const login = (userData) => {
-		// console.log("The user context logIn have been called!");
 		setUser(userData);
 		localStorage.setItem("user", JSON.stringify(userData));
-		// console.log("The user context is setted!");
 	};
 
 	const logout = () => {
 		setUser(null);
 		console.log("The user is disconnected");
 		localStorage.removeItem("user");
+		localStorage.removeItem("fieldsInfos");
 	};
 
 	return (

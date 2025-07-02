@@ -5,15 +5,8 @@ import { useEffect, useState } from "react";
 import FieldPopUp from "@/components/ui/fieldPopPup";
 import FieldInfoButton from "@/components/ui/fieldInfoButton";
 import useAuth from "@/hooks/useAuth";
+import useFieldInfos from "@/hooks/useFieldInfos";
 
-
-let fieldInfos = {};
-try {
-	fieldInfos = await fetch("/fieldInfos.json");
-	fieldInfos = await fieldInfos.json();
-} catch (err) {
-	console.log(`Error while fetching the field's data ${err}`);
-}
 
 
 const AddCard = () => {
@@ -21,8 +14,23 @@ const AddCard = () => {
 	const [cardForm, setCardForm] = useState({});
 	const [show, setShow] = useState(false);
 	const {user} = useAuth("user");
+	const { loading, fieldsInfos } = useFieldInfos(); 
 
-	console.log("The user ", user);
+
+
+	useEffect(() => {
+		if (!fieldsInfos && loading === false) {
+			console.error("Failed to fetch the ressource");
+		}
+
+	}, [loading, fieldsInfos]);
+
+	if (loading) {
+		return  <div className="text-center p-4">Chargement...</div>
+	}
+
+
+
 
 
 	const showPopUp = () => {
@@ -78,7 +86,7 @@ const AddCard = () => {
 					</div>
 
 
-					<Button styleType="secondary" imgSrc="/icons/share-alt.svg" >Partager votre carte</Button>
+					<Button styleType="secondary" imgSrc="/icons/share-alt.svg" >Partagez</Button>
 				</div>
 
 				<div className=" w-full h-fit bg-white rounded-16x flex flex-col gap-[1.5rem]
@@ -102,7 +110,7 @@ const AddCard = () => {
 						<div className=" flex gap-[1rem] flex-wrap">
 
 							{
-								fieldInfos.map(infos => (
+								fieldsInfos.map(infos => (
 									
 									infos.type === "social-network" 
 									?
@@ -125,7 +133,7 @@ const AddCard = () => {
 						<div className=" flex gap-[1rem] flex-wrap">
 
 							{
-								fieldInfos.map(infos => (
+								fieldsInfos.map(infos => (
 									
 									infos.type === "media" 
 									?
