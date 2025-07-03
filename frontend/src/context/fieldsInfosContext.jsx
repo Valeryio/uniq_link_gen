@@ -35,7 +35,7 @@ export const FieldsInfoProvider = ({children}) => {
 	};
 
 	return (
-		<FieldsInfosContext.Provider value={{ loading, fieldsInfos, persistFieldsInfos }}>
+		<FieldsInfosContext.Provider value={{ loading, setLoading,fieldsInfos, persistFieldsInfos }}>
 			{children}
 		</FieldsInfosContext.Provider>
 	)

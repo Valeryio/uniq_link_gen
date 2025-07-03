@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import Button from "./button";
+import useFieldInfos from "@/hooks/useFieldInfos";
 
-const FieldPopUp = ({source}) => {
+const FieldPopUp = ({fieldId = 0}) => {
 
+	const { fieldsInfos } = useFieldInfos();
 	const [close, setClose] = useState(false);
 
 	const handleClose = () => {
@@ -13,9 +15,10 @@ const FieldPopUp = ({source}) => {
 
 
 
+
 	return (
 		<form className={`${!close? "flex" : "hidden"} bg-white p-[1.5rem] shadow-2xl rounded-9x border w-[22rem]
-		absolute h-[20rem] flex-col gap-[1rem] `} >
+		absolute h-[22rem] flex-col gap-[1rem] left-[50%] right-[50%] translate-x-[-50%]`} >
 
 			<div className="flex justify-between" >
 				<h2 className="text-h6 font-semibold" >
@@ -30,10 +33,12 @@ const FieldPopUp = ({source}) => {
 			</div>
 
 			
-			<div className="">
-				<img src={source} alt="" className=""/>
+			<div className="flex border gap-[1rem] w-full border-secondary-purple 
+				outline-primary-purple rounded-[.25rem] px-[.8rem] 
+				py-[.5rem]">
+				<img src={fieldsInfos[fieldId].source} alt="" className=""/>
 				<input type="text" disabled placeholder="Entrez le lien du champ" 
-				className=" border w-full border-secondary-purple outline-primary-purple rounded-[.25rem] px-[.8rem] py-[.5rem]" />
+				className="" value={fieldsInfos[fieldId].fieldName} />
 			</div>
 
 			<p className="text-medium-purple " >
@@ -47,8 +52,8 @@ const FieldPopUp = ({source}) => {
 
 			<div className="flex justify-between " >
 							
-				<Button styleType="secondary"
-					className=""
+				<Button styleType="secondary" className=""
+				type="button" onClick={handleClose}
 				>
 					Annuler
 				</Button>

@@ -12,7 +12,6 @@ const PrivateRoutes = () => {
 
 	const {user, loading} = useAuth();
 	const navigate = useNavigate();
-
 	const { persistFieldsInfos } = useFieldInfos(); 
 
 	// Async function at the top of the app
@@ -52,7 +51,7 @@ const PrivateRoutes = () => {
 	}
 	
 
-	console.log("The user : ", user);
+	// console.log("The user : ", user);
 
 
 	return (
