@@ -2,109 +2,127 @@
   {
     "id": 1,
     "fieldName": "Facebook",
-    "type": "social-network",
+    "tag": "social-network",
+    "type": "link",
     "source": "/icons/colored-facebook.svg"
   },
   {
     "id": 2,
     "fieldName": "Twitter",
-    "type": "social-network",
+    "tag": "social-network",
+    "type": "link",
     "source": "/icons/colored-social_x.svg"
   },
   {
     "id": 3,
     "fieldName": "Tiktok",
-    "type": "social-network",
+    "tag": "social-network",
+    "type": "link",
     "source": "/icons/colored-tiktok.svg"
   },
   {
     "id": 4,
     "fieldName": "Instagram",
-    "type": "social-network",
+    "tag": "social-network",
+    "type": "link",
     "source": "/icons/colored-instagram.svg"
   },
   {
     "id": 5,
     "fieldName": "Threads",
-    "type": "social-network",
+    "tag": "social-network",
+    "type": "link",
     "source": "/icons/colored-threads.svg"
   },
   {
     "id": 6,
     "fieldName": "LinkedIn",
-    "type": "social-network",
+    "tag": "social-network",
+    "type": "link",
     "source": "/icons/colored-linkedin.svg"
   },
   {
     "id": 7,
     "fieldName": "SnapChat",
-    "type": "social-network",
+    "tag": "social-network",
+    "type": "link",
     "source": "/icons/colored-snapchat.svg"
   },
   {
     "id": 8,
     "fieldName": "Discord",
-    "type": "social-network",
+    "tag": "social-network",
+    "type": "link",
     "source": "/icons/colored-discord.svg"
   },
   {
     "id": 9,
     "fieldName": "Github",
-    "type": "social-network",
+    "tag": "social-network",
+    "type": "link",
     "source": "/icons/colored-github.svg"
   },
   {
     "id": 10,
     "fieldName": "Pinterest",
-    "type": "social-network",
+    "tag": "social-network",
+    "type": "link",
     "source": "/icons/colored-pinterest.svg"
   },
   {
     "id": 11,
     "fieldName": "Telegram",
-    "type": "social-network",
+    "tag": "social-network",
+    "type": "link",
     "source": "/icons/colored-telegram.svg"
   },
   {
     "id": 12,
     "fieldName": "Whatsapp",
-    "type": "social-network",
+    "tag": "social-network",
+    "type": "link",
     "source": "/icons/colored-whatsapp.svg"
   },
   {
     "id": 13,
     "fieldName": "Site web",
-    "type": "media",
+    "tag": "media",
+    "type": "",
     "source": "/icons/website.svg"
   },
   {
     "id": 14,
     "fieldName": "Lien",
-    "type": "media",
+    "tag": "media",
+    "type": "",
     "source": "/icons/link.svg"
   },
   {
     "id": 15,
     "fieldName": "PDF",
-    "type": "media",
+    "tag": "media",
+    "type": "",
     "source": "/icons/file.svg"
   },
   {
     "id": 16,
     "fieldName": "PDF",
-    "type": "media",
+    "tag": "media",
+    "type": "",
     "source": "/icons/file.svg"
   },
   {
     "id": 17,
     "fieldName": "Fichiers",
-    "type": "media",
+    "tag": "media",
+    "type": "",
     "source": "/icons/upload.svg"
   },
   {
     "id": 18,
     "fieldName": "Email",
-    "type": "media",
+    "tag": "media",
+    "type": "",
     "source": "/icons/blue-mail-icon.svg"
   }
 ]

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import { useEffect } from "react";
 import useAuth from "@/hooks/useAuth";
 import useFieldInfos from "@/hooks/useFieldInfos";
+import { CardProvider } from "@/context/cardContext";
 
 
 const PrivateRoutes = () => {
@@ -32,8 +33,6 @@ const PrivateRoutes = () => {
 
 	}, []);
 
-
-
 	useEffect(() => {
 		if (!user && loading === false) {
 			console.log("User not exist");
@@ -50,12 +49,8 @@ const PrivateRoutes = () => {
 		return <div className="text-center p-4">Chargement...</div>
 	}
 	
-
-	// console.log("The user : ", user);
-
-
 	return (
-		<>
+		<CardProvider>
 			<div className="flex " >
 				<Sidebar />
 				<div className=" border w-full" >
@@ -63,7 +58,7 @@ const PrivateRoutes = () => {
 					<Outlet />
 				</div>
 			</div>
-		</>
+		</CardProvider>
 	)
 };
 

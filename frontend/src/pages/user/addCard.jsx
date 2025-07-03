@@ -7,6 +7,7 @@ import FieldPopUp from "@/components/ui/fieldPopPup";
 import FieldInfoButton from "@/components/ui/fieldInfoButton";
 import useAuth from "@/hooks/useAuth";
 import useFieldInfos from "@/hooks/useFieldInfos";
+import useCard from "@/hooks/useCard";
 
 
 
@@ -16,8 +17,10 @@ const AddCard = () => {
 	const [fieldId, setFieldId] = useState(0);
 	const [show, setShow] = useState(false);
 	const {user} = useAuth("user");
+	const { cardFormData, setCardFormData } = useCard();
 	const { loading, fieldsInfos } = useFieldInfos(); 
 
+	console.log("Here we got the form data : ", cardFormData);
 
 	useEffect(() => {
 		if (!fieldsInfos && loading === false) {
@@ -32,15 +35,15 @@ const AddCard = () => {
 
 	const showPopUp = () => {
 		setShow(!show);
-		console.log("The field : ", fieldId)
+		console.log("The field : ", fieldId);
 		console.log("Show : ", show);
 	};
 
 	return (
 		<>
-			{ show && <FieldPopUp fieldId={fieldId} />}
 			<div className=" flex justify-between items-center px-[1rem] py-[.5rem]">
 
+				{ show && <FieldPopUp fieldId={fieldId} />}
 				<div className="flex gap-[1rem]">
 				<Link className="text-p text-primary-purple font-semibold border-b">
 						Modifications
@@ -53,11 +56,9 @@ const AddCard = () => {
 				</div>
 			</div>
 
-			<div className="  gap-[2rem]  h-full flex p-[1.5rem] bg-lightest-purple">
-
+			<div className=" gap-[2rem] h-full flex p-[1.5rem] bg-lightest-purple">
 
 				<Card />
-
 
 				<div className=" w-full h-fit bg-white rounded-16x flex flex-col gap-[1.5rem]
 					px-[1rem] py-[1.6rem] border hover:shadow-lg border-light-purple ">
@@ -82,10 +83,13 @@ const AddCard = () => {
 							{
 								fieldsInfos.map(infos => (
 									
-									infos.type === "social-network" 
+									infos.tag === "social-network" 
 									?
 										<FieldInfoButton source={infos.source} key={infos.id}
-										handleClick={showPopUp} hover={() => setFieldId(infos.id - 1)} >
+										handleClick={() => {
+											showPopUp();
+											setFieldId(infos.id - 1);
+										}}>
 											{infos.fieldName}
 										</FieldInfoButton>
 									:
@@ -105,7 +109,7 @@ const AddCard = () => {
 							{
 								fieldsInfos.map(infos => (
 									
-									infos.type === "media" 
+									infos.tag === "media" 
 									?
 										<FieldInfoButton source={infos.source} key={infos.id}
 										handleClick={showPopUp} >
