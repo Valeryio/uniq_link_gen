@@ -1,8 +1,8 @@
 
 const allowedOrigins = [
-	"http://localhost:5173/",
-	"http://localhost:5173/login/",
-	"http://localhost:5173/register/"
+	"http://localhost:5174/",
+	"http://localhost:5174/login/",
+	"http://localhost:5174/register/"
 ];
 
 module.exports = allowedOrigins;
