@@ -1,19 +1,21 @@
 
 import Button from "@/components/ui/button";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import Card from "@/components/card";
 import FieldPopUp from "@/components/ui/fieldPopPup";
 import FieldInfoButton from "@/components/ui/fieldInfoButton";
 import useFieldInfos from "@/hooks/useFieldInfos";
+import useCard from "@/hooks/useCard";
 
 
 const AddCard = () => {
 
+	const navigate = useNavigate();
 	const [fieldId, setFieldId] = useState(0);
 	const [show, setShow] = useState(false);
 	const { loading, fieldsInfos } = useFieldInfos(); 
-
+	const { cardFormData, setCardFormData } = useCard()
 
 	useEffect(() => {
 		if (!fieldsInfos && loading === false) {
@@ -34,20 +36,36 @@ const AddCard = () => {
 		setShow(!show);
 	};
 
+	const handleCardSubmitting = () => {
+
+		if (!cardFormData.elements.length) {
+			alert("Nous ne pouvons pas enregistrer une carte vide. Vous pouvez abandonner la carte !");
+			return;
+		}
+
+		console.log(cardFormData);
+
+	};
+
+	const handleDiscard = () => {
+		navigate("/app/home");
+	}
+
+
 	return (
 		<>
 			<div className=" flex justify-between items-center px-[1rem] py-[.5rem]">
 
-				<FieldPopUp show={show} fieldId={fieldId} closeByParent={closePopUp} />
+				<FieldPopUp show={show} fieldId={fieldId} onClose={closePopUp} />
 				<div className="flex gap-[1rem]">
 				<Link className="text-p text-primary-purple font-semibold border-b">
-						Modifications
+						Création
 				</Link>
 				</div>
 
 				<div className="flex gap-[1rem]">
-					<Button styleType="secondary">Abandonner la carte</Button>
-					<Button type="button">Enregistrer la carte</Button>
+					<Button styleType="secondary" onClick={handleDiscard} >Abandonner la carte</Button>
+					<Button type="button" onClick={handleCardSubmitting} >Enregistrer la carte</Button>
 				</div>
 			</div>
 

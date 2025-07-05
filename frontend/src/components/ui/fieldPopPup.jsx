@@ -8,19 +8,27 @@ import useCard from "@/hooks/useCard";
 const FieldPopUp = ({
 	fieldId = 0,
 	show=true,
-	closeByParent
+	onClose
 }) => {
 
-	const { fieldsInfos } = useFieldInfos();
-	const { cardFormData, setCardFormData } = useCard();
-	const [close, setClose] = useState(false);
 	
+	// Context Global variables
+	const { fieldsInfos } = useFieldInfos();
+	const { setCardFormData } = useCard();
+
+	// Used Hooks
+	const [close, setClose] = useState(false);	
 	const [formData, setFormData] = useState({
 		label: fieldsInfos[fieldId].fieldName,
 		type: fieldsInfos[fieldId].type,
 		value: ""
 	});
 
+
+	/**
+	 * Remount the formData to update the informations in the 
+	 * popUp and get a new field
+	 */
 	useEffect(() => {
 		setFormData({
 			fieldId: fieldId,
@@ -34,9 +42,12 @@ const FieldPopUp = ({
 
 	const handleClose = () => {
 		setClose(!close);
-		closeByParent();
-	}
+		onClose();
+	};
 
+	// The initial state of close is not updated when show
+	// changes. We have to update it to false again to allow
+	// the component to open Up
 	useEffect(() => {
 	 	setClose(false);
 	}, [show]);
@@ -47,7 +58,7 @@ const FieldPopUp = ({
 			...formData,
 			[name]: value
 		});
-	}
+	};
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -58,16 +69,11 @@ const FieldPopUp = ({
 		}));
 	
 		handleClose();
-	}
-
-	useEffect(() => {
-		// console.log("This is the formData : ", formData, cardFormData);
-	}, [cardFormData]);
-
+	};
 
 	return (
 		<form className={`${!close && show ? "flex" : "hidden"} bg-white p-[1.5rem] shadw-2xl rounded-9x border-2 w-[22rem]
-		absolute h-fit flex-col gap-[1rem] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]
+		absolute h-fit z-1 flex-col gap-[1rem] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]
 		shadow-[0px_0px_10000000px_rgba(0,0,0,0.25)]`} >
 
 			<div className="flex justify-between" >

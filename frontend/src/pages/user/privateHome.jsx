@@ -170,7 +170,7 @@ const PrivateHome = () => {
 			</div>
 
 			<div className=" h-[32rem] bg-lightest-purple">
-				<div className=" flex p-[1rem] gap-[2rem] ">
+				<div className=" flex  flex-wrap p-[1rem] gap-[2rem] ">
 					<img src="../images/card-1.png" alt="Contact card" 
 					className="border  border-medium-purple rounded-9x" />
 					<img src="../images/card-2.png" alt="Contact card" 
