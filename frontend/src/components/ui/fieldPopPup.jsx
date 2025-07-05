@@ -23,13 +23,13 @@ const FieldPopUp = ({
 
 	useEffect(() => {
 		setFormData({
+			fieldId: fieldId,
 			label: fieldsInfos[fieldId].fieldName,
 			type: fieldsInfos[fieldId].type,
 			value: ""
 		});
 
 	}, [fieldId]);
-
 
 
 	const handleClose = () => {
@@ -50,7 +50,6 @@ const FieldPopUp = ({
 	}
 
 	const handleSubmit = (event) => {
-
 		event.preventDefault();
 
 		setCardFormData((cardFormData) => ({
@@ -62,8 +61,7 @@ const FieldPopUp = ({
 	}
 
 	useEffect(() => {
-
-		console.log("This is the formData : ", formData, cardFormData);
+		// console.log("This is the formData : ", formData, cardFormData);
 	}, [cardFormData]);
 
 
@@ -94,18 +92,20 @@ const FieldPopUp = ({
 				 />
 			</div>
 
-			<div>
-				{/* <label className="text-medium-purple " >
-					Lien 
-				</label> */}
-				<div className="flex border gap-[1rem] w-full border-secondary-purple 
-					outline-primary-purple rounded-[.25rem] px-[.8rem] text-gray-500
-					py-[.5rem]">
-					<img src={fieldsInfos[13].source} alt="" className=""/>
-					<input type="text" disabled placeholder="Entrez le lien du champ" 
-					className="" name="type" value={"Lien"}/>
+			
+			{/*
+			  (fieldsInfos[fieldId].fieldName != "Lien") &&
+
+				<div>
+					<div className="flex border gap-[1rem] w-full border-secondary-purple 
+						outline-primary-purple rounded-[.25rem] px-[.8rem] text-gray-500
+						py-[.5rem]">
+						<img src={fieldsInfos[13].source} alt="" className=""/>
+						<input type="text" disabled placeholder="Entrez le lien du champ" 
+						className="" name="type" value={"Lien"}/>
+					</div>
 				</div>
-			</div>
+			*/}
 
 
 			<div className="flex flex-col gap-[1rem]">
@@ -113,12 +113,12 @@ const FieldPopUp = ({
 				Ajoutez le lien à enregistrer
 			</label>
 				<input type="text" placeholder="Entrez le lien du champ"  name="value"
-				className=" border w-full border-primary-purple outline-primary-purple
-				rounded-[.25rem] px-[.8rem] py-[.5rem]" onChange={handleChange} />
+				className=" placeholder:text-gray-400 border w-full border-primary-purple outline-primary-purple
+				rounded-[.25rem] px-[.8rem] py-[.5rem]" value={formData.value} onChange={handleChange} />
 			</div>
 
 			<div className="flex justify-between " >
-							
+
 				<Button styleType="secondary" className=""
 				type="button" onClick={handleClose}
 				>

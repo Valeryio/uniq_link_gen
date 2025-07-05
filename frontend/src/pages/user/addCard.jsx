@@ -109,6 +109,7 @@ const AddCard = () => {
 										<FieldInfoButton source={infos.source} key={infos.id}
 										handleClick={() => {
 											openPopUp(infos.id - 1);
+											setFieldId(infos.id - 1);
 										}} >
 											{infos.fieldName}
 										</FieldInfoButton>
