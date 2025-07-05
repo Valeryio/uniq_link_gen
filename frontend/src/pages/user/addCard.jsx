@@ -5,22 +5,15 @@ import { useEffect, useState } from "react";
 import Card from "@/components/card";
 import FieldPopUp from "@/components/ui/fieldPopPup";
 import FieldInfoButton from "@/components/ui/fieldInfoButton";
-import useAuth from "@/hooks/useAuth";
 import useFieldInfos from "@/hooks/useFieldInfos";
-import useCard from "@/hooks/useCard";
-
 
 
 const AddCard = () => {
 
-	const [cardForm, setCardForm] = useState({});
 	const [fieldId, setFieldId] = useState(0);
 	const [show, setShow] = useState(false);
-	const {user} = useAuth("user");
-	const { cardFormData, setCardFormData } = useCard();
 	const { loading, fieldsInfos } = useFieldInfos(); 
 
-	console.log("Here we got the form data : ", cardFormData);
 
 	useEffect(() => {
 		if (!fieldsInfos && loading === false) {
@@ -33,17 +26,19 @@ const AddCard = () => {
 		return  <div className="text-center p-4">Chargement...</div>
 	}
 
-	const showPopUp = () => {
+	const closePopUp = () => {
+		setShow(false)
+	};
+
+	const openPopUp = () => {
 		setShow(!show);
-		console.log("The field : ", fieldId);
-		console.log("Show : ", show);
 	};
 
 	return (
 		<>
 			<div className=" flex justify-between items-center px-[1rem] py-[.5rem]">
 
-				{ show && <FieldPopUp fieldId={fieldId} />}
+				<FieldPopUp show={show} fieldId={fieldId} closeByParent={closePopUp} />
 				<div className="flex gap-[1rem]">
 				<Link className="text-p text-primary-purple font-semibold border-b">
 						Modifications
@@ -87,7 +82,7 @@ const AddCard = () => {
 									?
 										<FieldInfoButton source={infos.source} key={infos.id}
 										handleClick={() => {
-											showPopUp();
+											openPopUp();
 											setFieldId(infos.id - 1);
 										}}>
 											{infos.fieldName}
@@ -112,7 +107,9 @@ const AddCard = () => {
 									infos.tag === "media" 
 									?
 										<FieldInfoButton source={infos.source} key={infos.id}
-										handleClick={showPopUp} >
+										handleClick={() => {
+											openPopUp(infos.id - 1);
+										}} >
 											{infos.fieldName}
 										</FieldInfoButton>
 									:

@@ -1,20 +1,74 @@
 
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "./button";
 import useFieldInfos from "@/hooks/useFieldInfos";
+import useCard from "@/hooks/useCard";
 
-const FieldPopUp = ({fieldId = 0}) => {
+const FieldPopUp = ({
+	fieldId = 0,
+	show=true,
+	closeByParent
+}) => {
 
 	const { fieldsInfos } = useFieldInfos();
+	const { cardFormData, setCardFormData } = useCard();
 	const [close, setClose] = useState(false);
+	
+	const [formData, setFormData] = useState({
+		label: fieldsInfos[fieldId].fieldName,
+		type: fieldsInfos[fieldId].type,
+		value: ""
+	});
+
+	useEffect(() => {
+		setFormData({
+			label: fieldsInfos[fieldId].fieldName,
+			type: fieldsInfos[fieldId].type,
+			value: ""
+		});
+
+	}, [fieldId]);
+
+
 
 	const handleClose = () => {
 		setClose(!close);
+		closeByParent();
 	}
 
+	useEffect(() => {
+	 	setClose(false);
+	}, [show]);
+
+	const handleChange = (event) => {
+		const {name, value} = event.target;
+		setFormData({
+			...formData,
+			[name]: value
+		});
+	}
+
+	const handleSubmit = (event) => {
+
+		event.preventDefault();
+
+		setCardFormData((cardFormData) => ({
+			...cardFormData,
+			elements: [...cardFormData.elements, formData]
+		}));
+	
+		handleClose();
+	}
+
+	useEffect(() => {
+
+		console.log("This is the formData : ", formData, cardFormData);
+	}, [cardFormData]);
+
+
 	return (
-		<form className={`${!close? "flex" : "hidden"} bg-white p-[1.5rem] shadw-2xl rounded-9x border-2 w-[22rem]
+		<form className={`${!close && show ? "flex" : "hidden"} bg-white p-[1.5rem] shadw-2xl rounded-9x border-2 w-[22rem]
 		absolute h-fit flex-col gap-[1rem] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]
 		shadow-[0px_0px_10000000px_rgba(0,0,0,0.25)]`} >
 
@@ -34,31 +88,33 @@ const FieldPopUp = ({fieldId = 0}) => {
 			<div className="flex border gap-[1rem] w-full border-secondary-purple 
 				outline-primary-purple rounded-[.25rem] px-[.8rem] 
 				py-[.5rem]">
-				<img src={fieldsInfos[14].source} alt="" className=""/>
+				<img src={fieldsInfos[fieldId].source} alt="" className=""/>
 				<input type="text" disabled placeholder="Entrez le lien du champ" 
-				className="" name="type" value={"link"} />
+				className="" name="label" value={fieldsInfos[fieldId].fieldName} 
+				 />
 			</div>
 
 			<div>
-				<label className="text-medium-purple " >
+				{/* <label className="text-medium-purple " >
 					Lien 
-				</label>
+				</label> */}
 				<div className="flex border gap-[1rem] w-full border-secondary-purple 
-					outline-primary-purple rounded-[.25rem] px-[.8rem] 
+					outline-primary-purple rounded-[.25rem] px-[.8rem] text-gray-500
 					py-[.5rem]">
-					<img src={fieldsInfos[fieldId].source} alt="" className=""/>
+					<img src={fieldsInfos[13].source} alt="" className=""/>
 					<input type="text" disabled placeholder="Entrez le lien du champ" 
-					className="" name="label" value={fieldsInfos[fieldId].fieldName} />
+					className="" name="type" value={"Lien"}/>
 				</div>
-			</div>a
+			</div>
 
 
 			<div className="flex flex-col gap-[1rem]">
 			<label className="text-medium-purple " >
 				Ajoutez le lien à enregistrer
 			</label>
-				<input type="text" placeholder="Entrez le lien du champ" 
-				className=" border w-full border-primary-purple outline-primary-purple rounded-[.25rem] px-[.8rem] py-[.5rem]" />
+				<input type="text" placeholder="Entrez le lien du champ"  name="value"
+				className=" border w-full border-primary-purple outline-primary-purple
+				rounded-[.25rem] px-[.8rem] py-[.5rem]" onChange={handleChange} />
 			</div>
 
 			<div className="flex justify-between " >
@@ -71,6 +127,7 @@ const FieldPopUp = ({fieldId = 0}) => {
 				
 				<Button size=""
 					className=""
+					onClick={handleSubmit}
 				>
 					Enregistrer le champ
 				</Button>
