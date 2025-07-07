@@ -23,8 +23,6 @@ const Login = () => {
 	const navigate = useNavigate();
 	const { login } = useAuth();
 
-	
-
 
 	/**
 	 * disabled - Boolean state to enable or disable the submit button

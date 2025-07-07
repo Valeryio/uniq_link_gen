@@ -9,8 +9,8 @@ export const CardProvider = ({children}) => {
 
 	const { user } = useAuth();
 	const [cardFormData, setCardFormData] = useState({
-		"title": "Personal",
-		"user_id": `${user.name}`,
+		"title": "",
+		"user_id": `${user.id}`,
 		"elements": [
 		]
 	});

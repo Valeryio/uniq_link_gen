@@ -7,16 +7,37 @@ import FieldPopUp from "@/components/ui/fieldPopPup";
 import FieldInfoButton from "@/components/ui/fieldInfoButton";
 import useFieldInfos from "@/hooks/useFieldInfos";
 import useCard from "@/hooks/useCard";
+import { refactorCardForm } from "@/utils/card.utils";
 
 
+/**
+ * @component Add card
+ * @description - This component manage the globale state of a created
+ * 							card of information, and send them to the backend API.
+ */
 const AddCard = () => {
 
 	const navigate = useNavigate();
-	const [fieldId, setFieldId] = useState(0);
-	const [show, setShow] = useState(false);
 	const { loading, fieldsInfos } = useFieldInfos(); 
 	const { cardFormData, setCardFormData } = useCard()
 
+	/**
+	 * fieldId - Number variable to identify the field id in the table of 
+	 * ressources needed in the information.
+	 */
+	const [fieldId, setFieldId] = useState(0);
+
+	/**
+	 * show - Boolean variable to set the state of the pop up. Open or 
+	 * not.
+	 */
+	const [show, setShow] = useState(false);
+
+	/**
+	 * This block allow the fields ressources to load before the web page
+	 * otherwise, the section with the sources don't display needed
+	 * needed ressources.
+	 */
 	useEffect(() => {
 		if (!fieldsInfos && loading === false) {
 			console.error("Failed to fetch the ressource");
@@ -28,14 +49,30 @@ const AddCard = () => {
 		return  <div className="text-center p-4">Chargement...</div>
 	}
 
+
+	/**
+	 * @function closePopUp
+	 * @description - Close the popUp from the pop up by changing the value
+	 * 							of - show (variable) - to false
+	 */
 	const closePopUp = () => {
 		setShow(false)
 	};
 
+	/**
+	 * @function openPopUp
+	 * @description - Open the popUp from the pop up by changing the value
+	 * 							of - show (variable) - to true
+	 */
 	const openPopUp = () => {
 		setShow(!show);
 	};
 
+	/**
+	 * @function handleCardSubmitting
+	 * @description - Handle the card informations when submitting them, and
+	 * 							send them to the backend.
+	 */
 	const handleCardSubmitting = () => {
 
 		if (!cardFormData.elements.length) {
@@ -43,10 +80,15 @@ const AddCard = () => {
 			return;
 		}
 
-		console.log(cardFormData);
+		refactorCardForm(cardFormData);
 
 	};
 
+	/**
+	 * @function handleDiscard
+	 * @description handle the discard button and redirect the user to the
+	 * 							main page of the application
+	 */
 	const handleDiscard = () => {
 		navigate("/app/home");
 	}
