@@ -1,6 +1,5 @@
 import useAuth from "@/hooks/useAuth";
 import useCard from "@/hooks/useCard";
-import { useState, useEffect } from "react";
 import useFieldInfos from "@/hooks/useFieldInfos";
 
 const DefaultCard = () => {
@@ -44,9 +43,14 @@ const Card = () => {
 	const { cardFormData, setCardFormData } = useCard();
 	let cardElements = [];
 
+	/**
+	 * @function removeElements 
+	 * @description - handle the remove button. Remove an element from 
+	 * 							the temp card built by the user, when adding its 
+	 * 							informations.
+	 * @param {*} id 
+	 */
 	const removeElements = (id) => {
-		// console.log("Let's go to remove : ", id);
-		// console.log("OKAUY : ", cardFormData.elements);
 		let allElements = cardFormData.elements.filter(elements => (elements.fieldId != id));
 		setCardFormData((cardFormData) => (
 			{
@@ -54,11 +58,15 @@ const Card = () => {
 				elements: allElements
 			}
 		))
-		// console.log(allElements);
 	}
 
-
-	// handle the update of the name
+	/**
+	 * @function handleNameChange
+	 * @description - handle the modification of the card name, and
+	 * 							update the name of the personal card at the global
+	 * 							context variable
+	 * @param {*} event 
+	 */
 	const handleNameChange = (event) => {
 		setCardFormData((cardFormData) => ({
 			...cardFormData,
@@ -67,15 +75,10 @@ const Card = () => {
 	);
 	}
 
-	// console.log("new name : ", cardFormData);
-
-
-
 	if (!cardFormData.elements.length) {
 		return <DefaultCard />
 	} else {
 		cardElements = cardFormData.elements;
-		// console.log(" The elements : ", cardElements);
 	}
 
 	return (

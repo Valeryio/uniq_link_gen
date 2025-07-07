@@ -18,4 +18,4 @@ export const refactorCardForm = (cardForm) => {
 		console.log("The new element : ", element);
 		return element;
 	});
-}
+};
