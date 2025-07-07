@@ -16,8 +16,16 @@ const FieldPopUp = ({
 	const { fieldsInfos } = useFieldInfos();
 	const { setCardFormData } = useCard();
 
-	// Used Hooks
-	const [close, setClose] = useState(false);	
+	/**
+	 * close - Boolean variable to set the state of the pop up. Open or 
+	 * not. It's an intern control variable for the pop up!
+	 */
+	const [close, setClose] = useState(false);
+
+	/**
+	 * formData - contains all the data of each input field for the form
+	 * in the popUp
+	 */
 	const [formData, setFormData] = useState({
 		label: fieldsInfos[fieldId].fieldName,
 		type: fieldsInfos[fieldId].type,
@@ -40,18 +48,30 @@ const FieldPopUp = ({
 	}, [fieldId]);
 
 
+	/**
+	 * @function handleClose
+	 * @description - close the popUp from the intern close button
+	 */
 	const handleClose = () => {
 		setClose(!close);
 		onClose();
 	};
 
-	// The initial state of close is not updated when show
-	// changes. We have to update it to false again to allow
-	// the component to open Up
+	/**
+	 * The initial state of close is not updated when 
+	 * show changes. We have to update it to false again 
+	 * to allow the component to open Up !
+	 */
 	useEffect(() => {
 	 	setClose(false);
 	}, [show]);
 
+	/**
+	 * @function handleChange
+	 * @description - handle the changes in the main input
+	 * 							field of the popUp
+	 * @param {*} event 
+	 */
 	const handleChange = (event) => {
 		const {name, value} = event.target;
 		setFormData({
@@ -60,6 +80,13 @@ const FieldPopUp = ({
 		});
 	};
 
+	/**
+	 * @function handleSubmit
+	 * @description - handle the submit button and add the informations
+	 * 							contained in the form data in the global context 
+	 * 							variable to fill the card's element attribute
+	 * @param {*} event 
+	 */
 	const handleSubmit = (event) => {
 		event.preventDefault();
 

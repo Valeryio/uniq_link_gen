@@ -5,6 +5,13 @@ import { useState, createContext } from "react";
 
 export const CardContext = createContext(null);
 
+/**
+ * @component CardProvider
+ * @description - provide a general context to handle the data
+ * 							of a specific form for the user's cards.
+ * @param {*} param0 
+ * @returns a provider
+ */
 export const CardProvider = ({children}) => {
 
 	const { user } = useAuth();
