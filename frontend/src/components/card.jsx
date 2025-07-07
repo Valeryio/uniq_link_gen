@@ -107,7 +107,7 @@ const Card = () => {
 							outline-primary-purple rounded-[.25rem] px-[.8rem] text-gray-500
 							py-[.5rem]">
 								<img src={fieldsInfos[element.fieldId].source} alt="" className=""/>
-								<a href={`https://${element.value}`} target="_blank" rel="noopener noreferrer">{element.value}</a>
+								<a href={`${element.value}`} target="_blank" rel="noopener noreferrer">{element.value}</a>
 							</div>
 
 							<button onClick={() => {

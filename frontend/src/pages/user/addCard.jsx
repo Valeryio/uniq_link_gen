@@ -72,8 +72,9 @@ const AddCard = () => {
 	 * @function handleCardSubmitting
 	 * @description - Handle the card informations when submitting them, and
 	 * 							send them to the backend.
+	 * @param {*} e
 	 */
-	const handleCardSubmitting = () => {
+	const handleCardSubmitting = async (e) => {
 
 		if (!cardFormData.elements.length) {
 			alert("Nous ne pouvons pas enregistrer une carte vide. Vous pouvez abandonner la carte !");
@@ -81,6 +82,26 @@ const AddCard = () => {
 		}
 
 		refactorCardForm(cardFormData);
+
+		console.log("After all : ", cardFormData);
+
+		try {
+
+			let response = await fetch(`http://${import.meta.env.VITE_BACKEND_API}/cards/add`, {
+				method: "POST",
+				headers: {
+					"content-type": "application/json"
+				},
+				body: JSON.stringify(cardFormData),
+				credentials: "include"
+			});
+
+			response = await response.json();
+			console.log("THE RESPONSE : ", response);
+
+		} catch (err) {
+			console.error("Error while creating the new cards");
+		}
 
 	};
 

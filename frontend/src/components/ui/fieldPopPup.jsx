@@ -11,7 +11,6 @@ const FieldPopUp = ({
 	onClose
 }) => {
 
-	
 	// Context Global variables
 	const { fieldsInfos } = useFieldInfos();
 	const { setCardFormData } = useCard();
@@ -124,22 +123,6 @@ const FieldPopUp = ({
 				className="" name="label" value={fieldsInfos[fieldId].fieldName} 
 				 />
 			</div>
-
-			
-			{/*
-			  (fieldsInfos[fieldId].fieldName != "Lien") &&
-
-				<div>
-					<div className="flex border gap-[1rem] w-full border-secondary-purple 
-						outline-primary-purple rounded-[.25rem] px-[.8rem] text-gray-500
-						py-[.5rem]">
-						<img src={fieldsInfos[13].source} alt="" className=""/>
-						<input type="text" disabled placeholder="Entrez le lien du champ" 
-						className="" name="type" value={"Lien"}/>
-					</div>
-				</div>
-			*/}
-
 
 			<div className="flex flex-col gap-[1rem]">
 			<label className="text-medium-purple " >

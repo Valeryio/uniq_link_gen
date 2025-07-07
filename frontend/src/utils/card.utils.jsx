@@ -15,7 +15,7 @@ export const refactorCardForm = (cardForm) => {
 	}
 	cardForm.elements = cardForm.elements.filter((element) => {
 		delete element.fieldId;
-		console.log("The new element : ", element);
+		// console.log("The new element : ", element);
 		return element;
 	});
 };
