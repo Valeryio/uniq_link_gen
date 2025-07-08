@@ -12,7 +12,7 @@ const joi = require("joi");
 const validateCard = (card) => {
 	const cardElementValidationSchema = joi.object({
 		label: joi.string().required(),
-		type: joi.string().valid("firstName", "lastName", "phone", "email", "file")
+		type: joi.string().valid("firstName", "lastName", "phone", "email", "file", "link")
 		.required(),
 		value: joi.alternatives().try(joi.string(), joi.number(), joi.object(), joi.array())
 	});

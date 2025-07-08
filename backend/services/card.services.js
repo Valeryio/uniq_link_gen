@@ -1,6 +1,7 @@
 
 
 const Card = require("../models/card.model");
+
 const findById = async (cardId) => {	
 	try {
 		const result = await Card.findOne({_id: cardId});
@@ -19,7 +20,17 @@ const findAll = async () => {
 	} catch (err) {
 		throw new Error(err.message);
 	}
-}
+};
+
+const findByUser = async (userId) => {
+	try {
+		const result = await Card.find({user_id: userId});
+		console.log(" the docs : ",result);
+		return result;
+	} catch (err) {
+		throw new Error(err.message);
+	}
+};
 
 
-module.exports = {findAll, findById};
+module.exports = {findAll, findById, findByUser};

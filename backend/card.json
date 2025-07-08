@@ -1,0 +1,118 @@
+[
+  {
+    "title": "Carte de John Doe",
+    "user_id": "60f6a2c4b6e89c42d8f0a5a1",
+    "elements": [
+      {
+        "label": "Prénom",
+        "type": "firstName",
+        "value": "John"
+      },
+      {
+        "label": "Nom",
+        "type": "lastName",
+        "value": "Doe"
+      },
+      {
+        "label": "Téléphone",
+        "type": "phone",
+        "value": "+33612345678"
+      }
+    ]
+  },
+  {
+    "title": "Profil de Sarah Lee",
+    "user_id": "60f6a2c4b6e89c42d8f0a5a2",
+    "elements": [
+      {
+        "label": "Pays",
+        "type": "country",
+        "value": "France"
+      },
+      {
+        "label": "Email pro",
+        "type": "email",
+        "value": "sarah.lee@entreprise.com"
+      },
+      {
+        "label": "LinkedIn",
+        "type": "link",
+        "value": "https://www.linkedin.com/in/sarahlee"
+      }
+    ]
+  },
+  {
+    "title": "Carte de l'entreprise Alpha",
+    "user_id": "60f6a2c4b6e89c42d8f0a5a3",
+    "elements": [
+      {
+        "label": "Email contact",
+        "type": "email",
+        "value": "contact@alpha.io"
+      },
+      {
+        "label": "Site Web",
+        "type": "link",
+        "value": "https://alpha.io"
+      },
+      {
+        "label": "Fichier de présentation",
+        "type": "file",
+        "value": {
+          "name": "pitch.pdf",
+          "url": "https://cdn.alpha.io/files/pitch.pdf"
+        }
+      }
+    ]
+  },
+  {
+    "title": "Carte perso de Linson",
+    "user_id": "60f6a2c4b6e89c42d8f0a5a4",
+    "elements": [
+      {
+        "label": "Téléphone",
+        "type": "phone",
+        "value": "+22990112233"
+      },
+      {
+        "label": "Github",
+        "type": "link",
+        "value": "https://github.com/linsondmt"
+      },
+      {
+        "label": "CV",
+        "type": "file",
+        "value": {
+          "name": "cv_linson.pdf",
+          "url": "https://cv-storage.com/linson/cv_linson.pdf"
+        }
+      }
+    ]
+  },
+  {
+    "title": "Carte d'Inès Dupont",
+    "user_id": "60f6a2c4b6e89c42d8f0a5a5",
+    "elements": [
+      {
+        "label": "Prénom",
+        "type": "firstName",
+        "value": "Inès"
+      },
+      {
+        "label": "Nom",
+        "type": "lastName",
+        "value": "Dupont"
+      },
+      {
+        "label": "Email",
+        "type": "email",
+        "value": "ines.dupont@email.com"
+      },
+      {
+        "label": "Pays",
+        "type": "country",
+        "value": "Belgique"
+      }
+    ]
+  }
+]

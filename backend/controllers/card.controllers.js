@@ -59,6 +59,33 @@ const getCard = async (req, res) => {
 };
 
 /**
+ * get all the cards of a specific user
+ * @param {*} req 
+ * @param {*} res 
+ */
+const getUserCard = async (req, res) => {
+
+	const userId = req.params.id;
+
+	try {
+		const result = await services.findByUser(userId);
+		console.log("The result : ", result);
+		return responseHandlers.successResponse(
+			res,
+			"User's card retrieved successfully!",
+			result
+		);
+	} catch(err) {
+		console.error(err);
+		return responseHandlers.errorResponse(
+			res,
+			err
+		);
+	}
+
+};
+
+/**
  * @function addCard - add a new card in the database
  * @param {*} req - express request object
  * @param {*} res - express response object
@@ -69,6 +96,7 @@ const addCard = async (req, res) => {
 	const {error, value} = validators.validateCard(req.body)
 
 	if (error) {
+		// console.log("Error : ", error.details[0].message);
 		return responseHandlers.failResponse(
 			res,
 			error.details[0].message
@@ -77,6 +105,7 @@ const addCard = async (req, res) => {
 	
 	const card = new Card({...value});
 
+	console.log("New card : ", card);
 	card.save()
 	.then((docs) => {
 		console.log("New card added successfully!");
@@ -171,4 +200,4 @@ const removeCard = async (req, res) => {
 
 
 
-module.exports = {getAllCards, getCard, addCard, updateCard, removeCard};
+module.exports = {getAllCards, getCard, getUserCard, addCard, updateCard, removeCard};
