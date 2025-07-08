@@ -11,6 +11,7 @@ const PrivateHome = () => {
 	const { user } = useAuth();
 	const { fieldsInfos } = useFieldInfos();
 	const [savedCard, setSavedCard] = useState([]);
+	const [update, setUpdate] = useState(false);
 	const cardLink = `http://${import.meta.env.VITE_BACKEND_API}/cards/`;
 
 
@@ -32,7 +33,6 @@ const PrivateHome = () => {
 
 				let result = [];
 
-				// console.log(response);
 				if (response) {
 					result.push(...response);
 					setSavedCard(result)
@@ -48,7 +48,48 @@ const PrivateHome = () => {
 	fetchCard();
 
 
-}, []);
+	}, [update]);
+
+
+	const copyLink = async (e) => {
+
+		e.preventDefault();
+		console.log(e.target.href);
+		e.target.textContent = "Copie effectuée !"
+		await navigator.clipboard.writeText(e.target.href);
+
+		if (navigator.clipboard) {
+			console.log("ClipBoard available !");
+		}
+
+		setTimeout(() => {
+			e.target.textContent = "Copier le lien"
+		}, 2000)
+
+	}
+
+
+	const removeElements = async (id) => {
+		console.log("TO remove", id);
+
+		try {
+			let response = await fetch(`http://${import.meta.env.VITE_BACKEND_API}/cards/${id}`,
+			{
+				method: "DELETE",
+				credentials: "include"
+			});
+
+			response = await response.json();
+			console.log(response);
+
+		} catch (err) {
+			console.error(`Error while deleting the card : ${err}`);
+		}
+
+		setUpdate(!update);
+
+	};
+
 
 	useEffect(() => {
 
@@ -82,51 +123,57 @@ const PrivateHome = () => {
 							savedCard.map(card => (
 							<div key={card._id} className="w-[16rem] overflow-auto max-h-[16rem] cursor-pointer rounded-[4px] border-2
 							  hover:shadow-lg bg-white " >
-								<div className=" p-[1rem] bg-[#1e1a78]">
+								<div className=" p-[1rem] bg-[#1e1a78] flex justify-between items-center ">
 									<h3 className="text-white" >
 										{card.title }
 									</h3>
+
+									
+									<button onClick={() => {
+										removeElements(card._id);
+									}} className="p-[.5rem] bg-white hover:bg-red-100 rounded-[.25rem] cursor-pointer " >
+										<img src="/icons/trash.svg" className="opacity-50 h-[1.5rem] hover:opacity-100 " />
+									</button>
 								</div>
 
 								{
 									card.elements.map(element => (
 
-										<div key={element._id} className=" border h-[80%] basis-auto border-red-400 p-[1rem] flex flex-col justify-between "> 
+										<div key={element._id} className=" border basis-auto border-red-400 p-[1rem] flex flex-col justify-between "> 
 											<p className="text-black " >
 											{element.label}
 											{console.log(element.value)}
 											</p>
 
-											<a href={`${element.value}`} target="_blank" rel="noopener noreferrer"
+											<a href={`https://${element.value}`} target="_blank" rel="noopener noreferrer"
 											className="text-blue-500 text-underline text-italic " >
 												Lien vers le site
 											</a>
-
-											<button className="px-[1rem] grow-0 shrink-0 py-[1rem] border 
-											 cursor-pointer bg-[#048aea] rounded-[6px] " >
-												{/* Partager */}
-
-												<a href={cardLink + card._id} target="_blank" rel="noopener noreferrer"
-												className=" text-underline text-italic " >
-													Lien vers le site
-												</a>
-
-											</button>
-
 											
+										</div>
+									))
+								}
+
 											<button className="px-[1rem] grow-0 shrink-0 py-[1rem] border 
 											 cursor-pointer bg-[#048aea] rounded-[6px] " >
 												{/* Partager */}
 
 												<Link to={`/card/${card._id}`} target="_blank"
 												className=" text-underline text-italic " >
-													Envoyer
+													Consulter la carte
 												</Link>
 
 											</button>
-										</div>
-									))
-								}
+
+											<button >
+
+												<a href={`/card/${card._id}`} target="_blank"
+												className="px-[1rem] grow-0 shrink-0 py-[1rem] border 
+											 cursor-pointer bg-[#048aea] rounded-[6px] " onClick={copyLink} >
+													Partager la carte
+												</a>
+
+											</button>
 
 							</div>
 							))

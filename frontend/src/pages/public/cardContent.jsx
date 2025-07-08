@@ -79,11 +79,11 @@ const CardContent = () => {
 
 					{
 						card.elements.map( element => (
-							<div key={element._id} >
+							<div key={element._id} className=" flex py-[.5rem] gap-[1rem] " >
 								<img src={FIELD_TYPE_CONFIG[`${element.label.toLowerCase()}`].source}
 								alt="" />
 
-								<a href={`${element.value}`} target="_blank" rel="noopener noreferrer"
+								<a href={`https://${element.value}`} target="_blank" rel="noopener noreferrer"
 								className="text-blue-500 text-underline text-italic " >
 									{element.value}
 								</a>
