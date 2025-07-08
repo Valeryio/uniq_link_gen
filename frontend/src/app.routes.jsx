@@ -13,6 +13,7 @@ import Dashboard from "./pages/user/dashboard";
 import SuccessfullSignUp from "./pages/public/successfulSignUp";
 import ModifyCard from "./pages/user/modifyCard";
 import AddCard from "./pages/user/addCard";
+import CardContent from "./pages/public/cardContent";
 
 
 const AppRoutes = () => {
@@ -28,6 +29,8 @@ const AppRoutes = () => {
 					<Route path="contact" element={<Contact />} ></Route>
 					<Route path="login" element={<Login />} ></Route>
 					<Route path="register" element={<Register />} ></Route>
+					<Route path="card/" element={<CardContent />} ></Route>
+					<Route path="card/:cardId" element={<CardContent />} ></Route>
 					<Route path="successfullSignUp" element={<SuccessfullSignUp />} ></Route>
 				</Route>
 				

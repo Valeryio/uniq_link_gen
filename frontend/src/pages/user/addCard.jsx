@@ -8,6 +8,7 @@ import FieldInfoButton from "@/components/ui/fieldInfoButton";
 import useFieldInfos from "@/hooks/useFieldInfos";
 import useCard from "@/hooks/useCard";
 import { refactorCardForm } from "@/utils/card.utils";
+import useAuth from "@/hooks/useAuth";
 
 
 /**
@@ -18,6 +19,7 @@ import { refactorCardForm } from "@/utils/card.utils";
 const AddCard = () => {
 
 	const navigate = useNavigate();
+	const { user } = useAuth();
 	const { loading, fieldsInfos } = useFieldInfos(); 
 	const { cardFormData, setCardFormData } = useCard()
 
@@ -103,6 +105,16 @@ const AddCard = () => {
 			console.error("Error while creating the new cards");
 		}
 
+		// Set the card context to the default value
+		setCardFormData({
+			"title": "",
+			"user_id": `${user.id}`,
+			"elements": [
+			]
+		});
+		
+		navigate("/app/home");
+
 	};
 
 	/**
@@ -117,7 +129,7 @@ const AddCard = () => {
 
 	return (
 		<>
-			<div className=" flex justify-between items-center px-[1rem] py-[.5rem]">
+			<div className=" flex h-full justify-between items-center px-[1rem] py-[.5rem]">
 
 				<FieldPopUp show={show} fieldId={fieldId} onClose={closePopUp} />
 				<div className="flex gap-[1rem]">

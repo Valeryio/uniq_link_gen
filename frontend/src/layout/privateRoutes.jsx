@@ -51,7 +51,7 @@ const PrivateRoutes = () => {
 	
 	return (
 		<CardProvider>
-			<div className="flex " >
+			<div className="flex h-[100%] border-2 border-red-600" >
 				<Sidebar />
 				<div className=" border w-full" >
 					<Header type={"logged"} data={user} />
