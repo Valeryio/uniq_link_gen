@@ -80,7 +80,7 @@ const PrivateHome = () => {
 						savedCard && savedCard != [] ?
 						
 							savedCard.map(card => (
-							<div key={card._id} className="w-[16rem] min-h-[16rem] cursor-pointer rounded-[4px] border-2
+							<div key={card._id} className="w-[16rem] overflow-auto max-h-[16rem] cursor-pointer rounded-[4px] border-2
 							  hover:shadow-lg bg-white " >
 								<div className=" p-[1rem] bg-[#1e1a78]">
 									<h3 className="text-white" >

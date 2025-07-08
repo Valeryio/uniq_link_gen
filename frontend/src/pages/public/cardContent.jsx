@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { FIELD_TYPE_CONFIG } from "@/fieldTypeConfig";
 
 
 const CardContent = () => {
@@ -21,8 +22,10 @@ const CardContent = () => {
 
 	useEffect(() => {
 		console.log(card);
+		console.log(card.elements);
+		console.log("DATA : ", FIELD_TYPE_CONFIG[`${"Facebook".toLowerCase()}`].source)
 
-		if (card) {
+		if (card && card.elements) {
 			setLoading(false);
 		}
 
@@ -65,9 +68,30 @@ const CardContent = () => {
 
 	return (
 		<div className=" flex justify-center items-center h-full ">
-			<div className=" border " >
-				{card.title}
-				This is the card Content
+			<div className=" border min-h-[16rem] w-[20rem] " >
+				<div className=" p-[1.5rem] bg-[#1e1a78]">
+					<h3 className="text-white" >
+						{card.title }
+					</h3>
+				</div>
+
+				<div  className="p-[1.5rem] " >
+
+					{
+						card.elements.map( element => (
+							<div key={element._id} >
+								<img src={FIELD_TYPE_CONFIG[`${element.label.toLowerCase()}`].source}
+								alt="" />
+
+								<a href={`${element.value}`} target="_blank" rel="noopener noreferrer"
+								className="text-blue-500 text-underline text-italic " >
+									{element.value}
+								</a>
+							</div>
+						))
+					}
+
+				</div>
 			</div>
 		</div>
 	)

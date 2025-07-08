@@ -129,7 +129,7 @@ const AddCard = () => {
 
 	return (
 		<>
-			<div className=" flex h-full justify-between items-center px-[1rem] py-[.5rem]">
+			<div className=" flex justify-between items-center px-[1rem] py-[.5rem]">
 
 				<FieldPopUp show={show} fieldId={fieldId} onClose={closePopUp} />
 				<div className="flex gap-[1rem]">
