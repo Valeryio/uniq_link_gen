@@ -58,7 +58,7 @@ const Card = () => {
 				elements: allElements
 			}
 		))
-	}
+	};
 
 	/**
 	 * @function handleNameChange

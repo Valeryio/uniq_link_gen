@@ -7,6 +7,7 @@ import useCard from "@/hooks/useCard";
 
 const FieldPopUp = ({
 	fieldId = 0,
+	label="",
 	show=true,
 	onClose
 }) => {

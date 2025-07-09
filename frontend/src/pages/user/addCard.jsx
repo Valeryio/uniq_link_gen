@@ -131,7 +131,7 @@ const AddCard = () => {
 		<>
 			<div className=" flex justify-between items-center px-[1rem] py-[.5rem]">
 
-				<FieldPopUp show={show} fieldId={fieldId} onClose={closePopUp} />
+				<FieldPopUp show={show} fieldId={fieldId} label={""} onClose={closePopUp} />
 				<div className="flex gap-[1rem]">
 				<Link className="text-p text-primary-purple font-semibold border-b">
 						Création

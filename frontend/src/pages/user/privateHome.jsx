@@ -1,20 +1,21 @@
 import useAuth from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
 import Button from "../../components/ui/button";
-import { Link } from "react-router-dom";
-import useFieldInfos from "@/hooks/useFieldInfos";
-import Card from "@/components/card";
+import { Link, useNavigate } from "react-router-dom";
+import useCard from "@/hooks/useCard";
 
 
 const PrivateHome = () => {
 
 	const { user } = useAuth();
-	const { fieldsInfos } = useFieldInfos();
+	const navigate = useNavigate();
+	const { cardFormData, setCardFormData } = useCard();
 	const [savedCard, setSavedCard] = useState([]);
 	const [update, setUpdate] = useState(false);
 	const cardLink = `http://${import.meta.env.VITE_BACKEND_API}/cards/`;
 
 
+	// Fetch the user's card from the database
 	useEffect(() => {
 
 		const fetchCard = async () => {
@@ -28,14 +29,13 @@ const PrivateHome = () => {
 
 				response = await response.json();
 				response = response.data;
+				let userCards = [];
 
 				console.log("La reponse directe : ", response);
 
-				let result = [];
-
 				if (response) {
-					result.push(...response);
-					setSavedCard(result)
+					userCards.push(...response);
+					setSavedCard(userCards)
 				} else {
 					setSavedCard([]);
 				}
@@ -69,8 +69,33 @@ const PrivateHome = () => {
 	}
 
 
+	const modifyCard = (card) => {
+
+		// e.preventDefault();
+		// console.log("NOus avons actuellement : ", card,)
+	
+		// console.log("NOus avons : ", cardFormData);
+
+		setCardFormData(card);
+		navigate("/app/card/add");
+	
+	};
+
+	useEffect(() => {
+		
+		console.log("NOus avons : ", cardFormData);
+
+
+	}, [cardFormData]);
+	
+
+	/**
+	 * @function removeElements
+	 * @description - remove a specific card from the database
+	 * @param {*} id 
+	 */
 	const removeElements = async (id) => {
-		console.log("TO remove", id);
+		// console.log("TO remove", id);
 
 		try {
 			let response = await fetch(`http://${import.meta.env.VITE_BACKEND_API}/cards/${id}`,
@@ -121,7 +146,7 @@ const PrivateHome = () => {
 						savedCard && savedCard != [] ?
 						
 							savedCard.map(card => (
-							<div key={card._id} className="w-[16rem] overflow-auto max-h-[16rem] cursor-pointer rounded-[4px] border-2
+							<div key={card._id} className="w-[16rem] h-fit cursor-pointer rounded-[4px] border-2
 							  hover:shadow-lg bg-white " >
 								<div className=" p-[1rem] bg-[#1e1a78] flex justify-between items-center ">
 									<h3 className="text-white" >
@@ -136,44 +161,57 @@ const PrivateHome = () => {
 									</button>
 								</div>
 
-								{
-									card.elements.map(element => (
+								<div className=" p-[.5rem] ">
+									{
+										card.elements.map(element => (
 
-										<div key={element._id} className=" border basis-auto border-red-400 p-[1rem] flex flex-col justify-between "> 
-											<p className="text-black " >
-											{element.label}
-											{console.log(element.value)}
-											</p>
+											<div key={element._id} className=" border basis-auto p-[.5rem] 
+											flex flex-col justify-between "> 
+												<p className="text-black " >
+												{element.label}
+												{console.log(element.value)}
+												</p>
 
-											<a href={`https://${element.value}`} target="_blank" rel="noopener noreferrer"
-											className="text-blue-500 text-underline text-italic " >
-												Lien vers le site
-											</a>
-											
-										</div>
-									))
-								}
-
-											<button className="px-[1rem] grow-0 shrink-0 py-[1rem] border 
-											 cursor-pointer bg-[#048aea] rounded-[6px] " >
-												{/* Partager */}
-
-												<Link to={`/card/${card._id}`} target="_blank"
-												className=" text-underline text-italic " >
-													Consulter la carte
-												</Link>
-
-											</button>
-
-											<button >
-
-												<a href={`/card/${card._id}`} target="_blank"
-												className="px-[1rem] grow-0 shrink-0 py-[1rem] border 
-											 cursor-pointer bg-[#048aea] rounded-[6px] " onClick={copyLink} >
-													Partager la carte
+												<a href={`https://${element.value}`} target="_blank" rel="noopener noreferrer"
+												className="text-blue-500 text-underline text-italic " >
+													Lien vers le site
 												</a>
+												
+											</div>
+										))
+									}
+								</div>
 
-											</button>
+								<div className=" p-[.5rem] border flex flex-col gap-[1rem] ">
+
+									<button className="px-[1rem] grow-0 shrink-0 py-[.8rem] border 
+									 cursor-pointer border-[#048aea] rounded-[32px] " >
+										<Link to={`/card/${card._id}`} target="_blank"
+										className=" text-underline text-italic " >
+											Consulter la carte
+										</Link>
+									</button>
+
+									<button >
+										<a href={`/card/${card._id}`} target="_blank"
+										className="px-[1rem] block grow-0 shrink-0 py-[1rem] border 
+									 cursor-pointer border-[#048aea] rounded-[32px] " onClick={copyLink} >
+											Partager la carte
+										</a>
+									</button>
+
+									
+									<button >
+										<a href={`/card/${card._id}`} target="_blank"
+										className="px-[1rem] block grow-0 shrink-0 py-[1rem] border 
+									 cursor-pointer border-[#048aea] rounded-[32px] " onClick={(e) => {
+										e.preventDefault()
+										modifyCard(card);
+									 }} >
+											Modifier la carte
+										</a>
+									</button>
+								</div>
 
 							</div>
 							))
