@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 import Card from "@/components/card";
 import FieldPopUp from "@/components/ui/fieldPopPup";
 import FieldInfoButton from "@/components/ui/fieldInfoButton";
-import useFieldInfos from "@/hooks/useFieldInfos";
 import useCard from "@/hooks/useCard";
 import { refactorCardForm } from "@/utils/card.utils";
 import useAuth from "@/hooks/useAuth";
+import { FIELD_TYPE_CONFIG } from "@/fieldTypeConfig";
 
 
 /**
@@ -20,8 +20,11 @@ const AddCard = () => {
 
 	const navigate = useNavigate();
 	const { user } = useAuth();
-	const { loading, fieldsInfos } = useFieldInfos(); 
 	const { cardFormData, setCardFormData } = useCard()
+
+	// Convert the global object to an array of fields informations
+	const fieldsInfos = Object.values(FIELD_TYPE_CONFIG);
+
 
 	/**
 	 * fieldId - Number variable to identify the field id in the table of 
@@ -34,23 +37,6 @@ const AddCard = () => {
 	 * not.
 	 */
 	const [show, setShow] = useState(false);
-
-	/**
-	 * This block allow the fields ressources to load before the web page
-	 * otherwise, the section with the sources don't display needed
-	 * needed ressources.
-	 */
-	useEffect(() => {
-		if (!fieldsInfos && loading === false) {
-			console.error("Failed to fetch the ressource");
-		}
-
-	}, [loading, fieldsInfos]);
-
-	if (loading) {
-		return  <div className="text-center p-4">Chargement...</div>
-	}
-
 
 	/**
 	 * @function closePopUp
@@ -131,7 +117,7 @@ const AddCard = () => {
 		<>
 			<div className=" flex justify-between items-center px-[1rem] py-[.5rem]">
 
-				<FieldPopUp show={show} fieldId={fieldId} label={""} onClose={closePopUp} />
+				<FieldPopUp show={show} fieldId={fieldId} onClose={closePopUp} />
 				<div className="flex gap-[1rem]">
 				<Link className="text-p text-primary-purple font-semibold border-b">
 						Création
@@ -177,6 +163,7 @@ const AddCard = () => {
 										handleClick={() => {
 											openPopUp();
 											setFieldId(infos.id - 1);
+											setLabel(infos.fieldName);
 										}}>
 											{infos.fieldName}
 										</FieldInfoButton>

@@ -2,19 +2,18 @@
 
 import { useState, useEffect } from "react";
 import Button from "./button";
-import useFieldInfos from "@/hooks/useFieldInfos";
 import useCard from "@/hooks/useCard";
+import { FIELD_TYPE_CONFIG } from "@/fieldTypeConfig";
 
 const FieldPopUp = ({
 	fieldId = 0,
-	label="",
 	show=true,
 	onClose
 }) => {
 
 	// Context Global variables
-	const { fieldsInfos } = useFieldInfos();
 	const { setCardFormData } = useCard();
+	const fieldsInfos = Object.values(FIELD_TYPE_CONFIG);
 
 	/**
 	 * close - Boolean variable to set the state of the pop up. Open or 
@@ -31,7 +30,6 @@ const FieldPopUp = ({
 		type: fieldsInfos[fieldId].type,
 		value: ""
 	});
-
 
 	/**
 	 * Remount the formData to update the informations in the 
