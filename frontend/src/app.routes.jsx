@@ -9,7 +9,7 @@ import Contact from "./pages/public/contact";
 import Login from "./pages/public/login";
 import Register from "./pages/public/register";
 import PrivateHome from "./pages/user/privateHome";
-import Dashboard from "./pages/user/dashboard";
+// import Dashboard from "./pages/user/dashboard";
 import SuccessfullSignUp from "./pages/public/successfulSignUp";
 import AddCard from "./pages/user/addCard";
 import CardContent from "./pages/public/cardContent";
