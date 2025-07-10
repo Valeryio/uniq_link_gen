@@ -1,6 +1,6 @@
 
 import Button from "@/components/ui/button";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import Card from "@/components/card";
 import FieldPopUp from "@/components/ui/fieldPopPup";
@@ -20,7 +20,8 @@ const AddCard = () => {
 
 	const navigate = useNavigate();
 	const { user } = useAuth();
-	const { cardFormData, setCardFormData } = useCard()
+	const location = useLocation();
+	const { cardFormData, setCardFormData } = useCard();
 
 	// Convert the global object to an array of fields informations
 	const fieldsInfos = Object.values(FIELD_TYPE_CONFIG);
@@ -56,6 +57,7 @@ const AddCard = () => {
 		setShow(!show);
 	};
 
+
 	/**
 	 * @function handleCardSubmitting
 	 * @description - Handle the card informations when submitting them, and
@@ -68,11 +70,73 @@ const AddCard = () => {
 			alert("Nous ne pouvons pas enregistrer une carte vide. Vous pouvez abandonner la carte !");
 			return;
 		}
-
 		refactorCardForm(cardFormData);
 
-		console.log("After all : ", cardFormData);
 
+		// Verify if the card exist in case of modification
+
+			if (location.state  && location.state.action) {
+				console.log("MODIFICATIONNNNNNNN");
+				try {
+
+					let response = await fetch(`http://${import.meta.env.VITE_BACKEND_API}/cards/${cardFormData._id}`, {
+						method: "PUT",
+						headers: {
+							"content-type": "application/json"
+						},
+						body: JSON.stringify(cardFormData),
+						credentials: "include"
+					});
+
+					response = await response.json();
+					console.log("THE RESPONSE : ", response);
+
+				} catch (err) {
+					console.error("Error while updating the new cards");
+				}
+			} else {
+				try {
+					let response = await fetch(`http://${import.meta.env.VITE_BACKEND_API}/cards/add`, {
+						method: "POST",
+						headers: {
+							"content-type": "application/json"
+						},
+						body: JSON.stringify(cardFormData),
+						credentials: "include"
+					});
+
+					response = await response.json();
+					console.log("THE RESPONSE : ", response);
+
+				} catch (err) {
+					console.error("Error while creating the new cards");
+				}
+			}
+
+
+				/////UPDATE EXISTING CARD
+		/*
+		try {
+
+			let response = await fetch(`http://${import.meta.env.VITE_BACKEND_API}/cards/add`, {
+				method: "UPDATE",
+				headers: {
+					"content-type": "application/json"
+				},
+				body: JSON.stringify(cardFormData),
+				credentials: "include"
+			});
+
+			response = await response.json();
+			console.log("THE RESPONSE : ", response);
+
+		} catch (err) {
+			console.error("Error while creating the new cards");
+		}
+		*/
+
+		/////CREATE NEW CARD
+/*
 		try {
 
 			let response = await fetch(`http://${import.meta.env.VITE_BACKEND_API}/cards/add`, {
@@ -90,6 +154,7 @@ const AddCard = () => {
 		} catch (err) {
 			console.error("Error while creating the new cards");
 		}
+*/
 
 		// Set the card context to the default value
 		setCardFormData({
@@ -109,6 +174,12 @@ const AddCard = () => {
 	 * 							main page of the application
 	 */
 	const handleDiscard = () => {
+		setCardFormData({
+			"title": "",
+			"user_id": `${user.id}`,
+			"elements": [
+			]
+		});
 		navigate("/app/home");
 	}
 
@@ -120,7 +191,13 @@ const AddCard = () => {
 				<FieldPopUp show={show} fieldId={fieldId} onClose={closePopUp} />
 				<div className="flex gap-[1rem]">
 				<Link className="text-p text-primary-purple font-semibold border-b">
-						Création
+						
+						{
+							location.state  && location.state.action ?
+								"Modification"
+							:
+								"Création"
+						}
 				</Link>
 				</div>
 

@@ -1,7 +1,7 @@
 import useAuth from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
 import Button from "../../components/ui/button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import useCard from "@/hooks/useCard";
 
 
@@ -13,6 +13,7 @@ const PrivateHome = () => {
 	const [savedCard, setSavedCard] = useState([]);
 	const [update, setUpdate] = useState(false);
 	const cardLink = `http://${import.meta.env.VITE_BACKEND_API}/cards/`;
+
 
 
 	// Fetch the user's card from the database
@@ -50,7 +51,6 @@ const PrivateHome = () => {
 
 	}, [update]);
 
-
 	const copyLink = async (e) => {
 
 		e.preventDefault();
@@ -68,7 +68,6 @@ const PrivateHome = () => {
 
 	}
 
-
 	const modifyCard = (card) => {
 
 		// e.preventDefault();
@@ -77,13 +76,17 @@ const PrivateHome = () => {
 		// console.log("NOus avons : ", cardFormData);
 
 		setCardFormData(card);
-		navigate("/app/card/add");
+		navigate("/app/card/modify", {
+			state: {
+				action: "modify"
+			}
+		});
 	
 	};
 
 	useEffect(() => {
 		
-		console.log("NOus avons : ", cardFormData);
+		// console.log("NOus avons : ", cardFormData);
 
 
 	}, [cardFormData]);
@@ -118,7 +121,7 @@ const PrivateHome = () => {
 
 	useEffect(() => {
 
-		console.log("La sauvegarde : ", savedCard);
+		// console.log("La sauvegarde : ", savedCard);
 	}, [savedCard]);
 
 	return (
@@ -169,7 +172,7 @@ const PrivateHome = () => {
 											flex flex-col justify-between "> 
 												<p className="text-black " >
 												{element.label}
-												{console.log(element.value)}
+												{/* {console.log(element.value)} */}
 												</p>
 
 												<a href={`https://${element.value}`} target="_blank" rel="noopener noreferrer"
@@ -201,15 +204,13 @@ const PrivateHome = () => {
 									</button>
 
 									
-									<button >
-										<a href={`/card/${card._id}`} target="_blank"
-										className="px-[1rem] block grow-0 shrink-0 py-[1rem] border 
-									 cursor-pointer border-[#048aea] rounded-[32px] " onClick={(e) => {
+									<button className="px-[1rem] block grow-0 shrink-0 py-[1rem] border 
+									 cursor-pointer border-[#048aea] rounded-[32px] " 
+										 onClick={(e) => {
 										e.preventDefault()
 										modifyCard(card);
 									 }} >
 											Modifier la carte
-										</a>
 									</button>
 								</div>
 

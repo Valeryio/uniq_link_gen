@@ -99,15 +99,8 @@ export const FIELD_TYPE_CONFIG = {
     type: "",
     source: "/icons/link.svg"
   },
-  pdf1: {
+  pdf: {
     id: 15,
-    fieldName: "PDF",
-    tag: "media",
-    type: "",
-    source: "/icons/file.svg"
-  },
-  pdf2: {
-    id: 16,
     fieldName: "PDF",
     tag: "media",
     type: "",

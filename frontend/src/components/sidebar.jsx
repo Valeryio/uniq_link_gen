@@ -24,7 +24,7 @@ const Sidebar = () => {
 						</li>
 
 						<li className="">
-							<Link className="flex gap-[1rem]" to="card" >
+							<Link className="flex gap-[1rem]" to="card/modify" >
 								<img src="/icons/layer.svg" alt="" />
 								<p>Cards</p>
 							</Link>

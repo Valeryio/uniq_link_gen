@@ -1,6 +1,8 @@
 import useAuth from "@/hooks/useAuth";
 import useCard from "@/hooks/useCard";
+import { useEffect } from "react";
 import useFieldInfos from "@/hooks/useFieldInfos";
+import { FIELD_TYPE_CONFIG } from "@/fieldTypeConfig";
 
 const DefaultCard = () => {
 
@@ -39,9 +41,19 @@ const DefaultCard = () => {
 const Card = () => {
 
 	const {user} = useAuth();
-	const { fieldsInfos } = useFieldInfos();
+	const fieldsInfos = Object.values(FIELD_TYPE_CONFIG);
 	const { cardFormData, setCardFormData } = useCard();
 	let cardElements = [];
+
+	useEffect(() => {
+		console.log("LES FIELDS : ", fieldsInfos);
+	}, []);
+
+	
+	useEffect(() => {
+		console.log("NOus avons cardformdata depuis card : ", cardFormData);
+
+	}, [cardFormData]);
 
 	/**
 	 * @function removeElements 
@@ -75,10 +87,12 @@ const Card = () => {
 	);
 	}
 
+
 	if (!cardFormData.elements.length) {
 		return <DefaultCard />
 	} else {
 		cardElements = cardFormData.elements;
+		console.log("Nous avons les cardELEMENTS : ", cardFormData.elements.length, cardElements);
 	}
 
 	return (
@@ -97,21 +111,20 @@ const Card = () => {
 			</div>
 
 			<div className=" flex flex-col w-full gap-[1rem] px-[1rem] py-[1.6rem] text-[.9rem] font-light " >
-
 				{
 					cardElements.map((element) => (
 						<div className="flex w-full gap-[1rem] border-secondary-purple 
-							outline-primary-purple rounded-[.25rem]" key={`${fieldsInfos[element.fieldId].source}`} >
+							outline-primary-purple rounded-[.25rem]" key={`${FIELD_TYPE_CONFIG[`${element.label.toLowerCase()}`].source}`} >
 
 							<div className="flex w-full border gap-[1rem] border-secondary-purple 
 							outline-primary-purple rounded-[.25rem] px-[.8rem] text-gray-500
 							py-[.5rem]">
-								<img src={fieldsInfos[element.fieldId].source} alt="" className=""/>
+								<img src={FIELD_TYPE_CONFIG[`${element.label.toLowerCase()}`].source} alt="" className=""/> 
 								<a href={`${element.value}`} target="_blank" rel="noopener noreferrer">{element.value}</a>
 							</div>
 
 							<button onClick={() => {
-								removeElements(element.fieldId);
+								removeElements(FIELD_TYPE_CONFIG[`${element.label.toLowerCase()}`]);
 							}} className="p-[.5rem] hover:bg-red-100 rounded-[.25rem] cursor-pointer " >
 								<img src="/icons/trash.svg" className="opacity-50 h-[1.5rem] hover:opacity-100 " />
 							</button>
@@ -128,12 +141,9 @@ const Card = () => {
 				<div>
 					<input type="text" placeholder="Entrez le nom de la carte"  name="value"
 					className=" text-center placeholder:text-gray-400 outline-primary-purple
-					rounded-[.25rem] px-[.5rem] py-[.1rem]" onChange={handleNameChange} />
+					rounded-[.25rem] px-[.5rem] py-[.1rem]" value={cardFormData.title} onChange={handleNameChange} />
 				</div>
 
-				{/* <p className="text-medium-purple" >
-					{date.toLocaleDateString()}
-				</p> */}
 			</div>
 
 		</div>

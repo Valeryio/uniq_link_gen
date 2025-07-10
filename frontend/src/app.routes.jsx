@@ -37,8 +37,8 @@ const AppRoutes = () => {
 				<Route path="/app" element={<PrivateRoutes />} >
 					<Route index element={<PrivateHome />} ></Route>
 					<Route path="home" element={<PrivateHome />} ></Route>
-					<Route path="card" element={<ModifyCard />} ></Route>
-					<Route path="card/add" element={<AddCard />} ></Route>
+					<Route path="card/modify/" element={<AddCard />} ></Route>
+					<Route path="card/add/" element={<AddCard />} ></Route>
 					<Route path="dashboard" element={<Dashboard />} ></Route>
 				</Route>
 				
