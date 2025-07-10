@@ -59,12 +59,9 @@ const LoggedHeader = ({data}) => {
                 <img src="/logo.svg" alt="" />
             </Link>
             <div className="flex gap-[2rem] items-center max-w-[16rem] border px-1 " >
-                <Link to="/" className="">
-                    <img src="/icons/bell.svg" alt="" />
-                </Link>
 
                 <div >
-                    <Link to="" className="flex gap-[1rem] items-center ">
+                    <Link to="/app/user" className="flex gap-[1rem] items-center ">
                         <img src="../images/avatar.png" alt="" />
                         <p>{ data && `${data.name}` || "John Doe"} </p>
                         <img src="/icons/chevron-down.svg" alt="" />

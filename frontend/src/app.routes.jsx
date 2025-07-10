@@ -9,11 +9,11 @@ import Contact from "./pages/public/contact";
 import Login from "./pages/public/login";
 import Register from "./pages/public/register";
 import PrivateHome from "./pages/user/privateHome";
-// import Dashboard from "./pages/user/dashboard";
 import SuccessfullSignUp from "./pages/public/successfulSignUp";
 import AddCard from "./pages/user/addCard";
-import CardContent from "./pages/public/cardContent";
+import ShowCard from "./pages/public/showCard";
 import PageNotFound from "./pages/public/pageNotFound";
+import Profil from "./pages/user/profil";
 
 
 const AppRoutes = () => {
@@ -28,17 +28,16 @@ const AppRoutes = () => {
 					<Route path="contact" element={<Contact />} ></Route>
 					<Route path="login" element={<Login />} ></Route>
 					<Route path="register" element={<Register />} ></Route>
-					<Route path="card/" element={<CardContent />} ></Route>
-					<Route path="card/:cardId" element={<CardContent />} ></Route>
+					<Route path="card/:cardId" element={<ShowCard />} ></Route>
 					<Route path="successfullSignUp" element={<SuccessfullSignUp />} ></Route>
 				</Route>
 				
 				<Route path="/app" element={<PrivateRoutes />} >
 					<Route index element={<PrivateHome />} ></Route>
+					<Route path="user" element={<Profil />} ></Route>
 					<Route path="home" element={<PrivateHome />} ></Route>
-					<Route path="card/modify/" element={<AddCard />} ></Route>
 					<Route path="card/add/" element={<AddCard />} ></Route>
-					{/* <Route path="dashboard" element={<Dashboard />} ></Route> */}
+					<Route path="card/modify/" element={<AddCard />} ></Route>
 				</Route>
 				
 				<Route path="/app/admin" element={<AdminRoutes />} >

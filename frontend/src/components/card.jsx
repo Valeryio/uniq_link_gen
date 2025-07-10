@@ -1,7 +1,7 @@
+
+import {v4 as uuidv4} from "uuid";
 import useAuth from "@/hooks/useAuth";
 import useCard from "@/hooks/useCard";
-import { useEffect } from "react";
-import {v4 as uuidv4} from "uuid";
 import { FIELD_TYPE_CONFIG } from "@/fieldTypeConfig";
 
 const DefaultCard = () => {
@@ -41,7 +41,7 @@ const DefaultCard = () => {
 const Card = () => {
 
 	const {user} = useAuth();
-	const fieldsInfos = Object.values(FIELD_TYPE_CONFIG);
+	// const fieldsInfos = Object.values(FIELD_TYPE_CONFIG);
 	const { cardFormData, setCardFormData } = useCard();
 	let cardElements = [];
 
@@ -54,7 +54,6 @@ const Card = () => {
 	 * @param {*} id 
 	 */
 	const removeElements = (value) => {
-		console.log("VOici : ", cardFormData);
 		let allElements = cardFormData.elements.filter(elements => (elements.value != value));
 		setCardFormData((cardFormData) => (
 			{
@@ -84,14 +83,12 @@ const Card = () => {
 		return <DefaultCard />
 	} else {
 		cardElements = cardFormData.elements;
-		console.log("Nous avons les cardELEMENTS : ", cardFormData.elements.length, cardElements);
 	}
 
 	return (
 		
 		<div className=" cursor-pointer w-[32rem] overflow-hidden h-fit bg-white flex flex-col rounded-16x
 			gap-[1.5rem] items-center border hover:shadow-lg border-light-purple px-[.5rem] py-[.5rem]">
-			{/* <img src="/images/card_banner.jpg" className="max-w-[100%]" alt="" /> */}
 
 			<div className="flex w-full justify-between px-[.5rem] " >
 				<p className=" text-[.8rem] font-medium text-gray-600 " >
@@ -116,10 +113,7 @@ const Card = () => {
 							</div>
 
 							<button onClick={() => {
-								console.log(FIELD_TYPE_CONFIG[`${element.label.toLowerCase()}`]);
-								
 								removeElements(element.value);
-								// removeElements(FIELD_TYPE_CONFIG[`${element.label.toLowerCase()}`]);
 							}} className="p-[.5rem] hover:bg-red-100 rounded-[.25rem] cursor-pointer " >
 								<img src="/icons/trash.svg" className="opacity-50 h-[1.5rem] hover:opacity-100 " />
 							</button>

@@ -9,7 +9,7 @@ const PrivateHome = () => {
 
 	const { user } = useAuth();
 	const navigate = useNavigate();
-	const { cardFormData, setCardFormData } = useCard();
+	const { setCardFormData } = useCard();
 	const [savedCard, setSavedCard] = useState([]);
 	const [update, setUpdate] = useState(false);
 	const CARDAPI = `${import.meta.env.VITE_BACKEND_CARDS_API}`;
@@ -73,8 +73,7 @@ const PrivateHome = () => {
 		setTimeout(() => {
 			e.target.textContent = "Copier le lien"
 		}, 2000)
-
-	}
+	};
 
 	/**
 	 * @function modifyCard

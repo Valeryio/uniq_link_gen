@@ -4,8 +4,7 @@ import { useParams } from "react-router";
 import { FIELD_TYPE_CONFIG } from "@/fieldTypeConfig";
 
 
-const CardContent = () => {
-
+const ShowCard = () => {
 
 	const { cardId } = useParams();
 	const [loading, setLoading] = useState(true);
@@ -95,7 +94,6 @@ const CardContent = () => {
 			</div>
 		</div>
 	)
-
 };
 
-export default CardContent;
+export default ShowCard;
