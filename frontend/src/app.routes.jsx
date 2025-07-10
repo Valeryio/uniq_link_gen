@@ -14,6 +14,7 @@ import SuccessfullSignUp from "./pages/public/successfulSignUp";
 import ModifyCard from "./pages/user/modifyCard";
 import AddCard from "./pages/user/addCard";
 import CardContent from "./pages/public/cardContent";
+import PageNotFound from "./pages/public/pageNotFound";
 
 
 const AppRoutes = () => {
@@ -45,6 +46,8 @@ const AppRoutes = () => {
 				<Route path="/app/admin" element={<AdminRoutes />} >
 					<Route path="home" element={<Home />} ></Route>
 				</Route>
+
+				<Route path="*" element={<PageNotFound />} />
 
 			</Routes>
 		</BrowserRouter>
