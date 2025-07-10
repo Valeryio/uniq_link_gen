@@ -11,14 +11,12 @@ import Register from "./pages/public/register";
 import PrivateHome from "./pages/user/privateHome";
 import Dashboard from "./pages/user/dashboard";
 import SuccessfullSignUp from "./pages/public/successfulSignUp";
-import ModifyCard from "./pages/user/modifyCard";
 import AddCard from "./pages/user/addCard";
 import CardContent from "./pages/public/cardContent";
 import PageNotFound from "./pages/public/pageNotFound";
 
 
 const AppRoutes = () => {
-
 	return (
 
 		<BrowserRouter>
@@ -40,7 +38,7 @@ const AppRoutes = () => {
 					<Route path="home" element={<PrivateHome />} ></Route>
 					<Route path="card/modify/" element={<AddCard />} ></Route>
 					<Route path="card/add/" element={<AddCard />} ></Route>
-					<Route path="dashboard" element={<Dashboard />} ></Route>
+					{/* <Route path="dashboard" element={<Dashboard />} ></Route> */}
 				</Route>
 				
 				<Route path="/app/admin" element={<AdminRoutes />} >

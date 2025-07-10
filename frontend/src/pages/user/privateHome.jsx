@@ -12,17 +12,22 @@ const PrivateHome = () => {
 	const { cardFormData, setCardFormData } = useCard();
 	const [savedCard, setSavedCard] = useState([]);
 	const [update, setUpdate] = useState(false);
-	const cardLink = `http://${import.meta.env.VITE_BACKEND_API}/cards/`;
-
+	const CARDAPI = `${import.meta.env.VITE_BACKEND_CARDS_API}`;
 
 
 	// Fetch the user's card from the database
 	useEffect(() => {
 
+		/**
+		 * @function fetchCard
+		 * 
+		 * @description - Fetches all the cards of a specific user from
+		 * 							the database
+		 */
 		const fetchCard = async () => {
 			try {
 				let response = await fetch(
-					`http://${import.meta.env.VITE_BACKEND_API}/cards/user/${user.id}`, 
+					`http://${CARDAPI}/user/${user.id}`, 
 				{
 					method: "GET",
 					credentials: "include"
@@ -31,8 +36,6 @@ const PrivateHome = () => {
 				response = await response.json();
 				response = response.data;
 				let userCards = [];
-
-				// console.log("La reponse directe : ", response);
 
 				if (response) {
 					userCards.push(...response);
@@ -48,9 +51,14 @@ const PrivateHome = () => {
 
 	fetchCard();
 
-
 	}, [update]);
 
+	/**
+	 * @function copyLink
+	 * 
+	 * @description - Copy a card link to the user's clipboard
+	 * @param {*} e 
+	 */
 	const copyLink = async (e) => {
 
 		e.preventDefault();
@@ -68,29 +76,22 @@ const PrivateHome = () => {
 
 	}
 
+	/**
+	 * @function modifyCard
+	 * 
+	 * @description - redirect to the modification page for an
+	 * 							update on a specific card
+	 * @param {*} card 
+	 */
 	const modifyCard = (card) => {
-
-		// e.preventDefault();
-		// console.log("NOus avons actuellement : ", card,)
-	
-		// console.log("NOus avons : ", cardFormData);
 
 		setCardFormData(card);
 		navigate("/app/card/modify", {
 			state: {
 				action: "modify"
 			}
-		});
-	
+		});	
 	};
-
-	useEffect(() => {
-		
-		// console.log("NOus avons : ", cardFormData);
-
-
-	}, [cardFormData]);
-	
 
 	/**
 	 * @function removeElements
@@ -98,31 +99,23 @@ const PrivateHome = () => {
 	 * @param {*} id 
 	 */
 	const removeElements = async (id) => {
-		// console.log("TO remove", id);
 
 		try {
-			let response = await fetch(`http://${import.meta.env.VITE_BACKEND_API}/cards/${id}`,
+			let response = await fetch(`http://${CARDAPI}/${id}`,
 			{
 				method: "DELETE",
 				credentials: "include"
 			});
 
 			response = await response.json();
-			// console.log(response);
 
 		} catch (err) {
 			console.error(`Error while deleting the card : ${err}`);
 		}
 
 		setUpdate(!update);
-
 	};
 
-
-	useEffect(() => {
-
-		// console.log("La sauvegarde : ", savedCard);
-	}, [savedCard]);
 
 	return (
 		<div className=" flex flex-col h-[89%] border border-green-500" >
@@ -142,12 +135,12 @@ const PrivateHome = () => {
 
 			</div>
 
-			<div className=" border h-full border-yellow-400 bg-lightest-purple">
+			<div className=" border h-[100%] border-yellow-400 bg-lightest-purple">
 				<div className=" flex  flex-wrap p-[1rem] gap-[2rem] ">
 
 					{
-						savedCard && savedCard != [] ?
-						
+						savedCard.length
+						?
 							savedCard.map(card => (
 							<div key={card._id} className="w-[16rem] h-fit cursor-pointer rounded-[4px] border-2
 							  hover:shadow-lg bg-white " >
@@ -172,7 +165,6 @@ const PrivateHome = () => {
 											flex flex-col justify-between "> 
 												<p className="text-black " >
 												{element.label}
-												{/* {console.log(element.value)} */}
 												</p>
 
 												<a href={`https://${element.value}`} target="_blank" rel="noopener noreferrer"
@@ -186,7 +178,6 @@ const PrivateHome = () => {
 								</div>
 
 								<div className=" p-[.5rem] border flex flex-col gap-[1rem] ">
-
 									<button className="px-[1rem] grow-0 shrink-0 py-[.8rem] border 
 									 cursor-pointer border-[#048aea] rounded-[32px] " >
 										<Link to={`/card/${card._id}`} target="_blank"
@@ -203,7 +194,6 @@ const PrivateHome = () => {
 										</a>
 									</button>
 
-									
 									<button className="px-[1rem] block grow-0 shrink-0 py-[1rem] border 
 									 cursor-pointer border-[#048aea] rounded-[32px] " 
 										 onClick={(e) => {
@@ -218,14 +208,12 @@ const PrivateHome = () => {
 							))
 
 						:
-							<div>
+							<div className=" text-[4rem]  ">
 								Vous n'avez aucune information a partager !
 							</div>
 					}
 
-
 				</div>
-
 
 			</div>
 		</div>

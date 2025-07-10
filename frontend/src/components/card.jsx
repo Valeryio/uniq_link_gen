@@ -2,7 +2,6 @@ import useAuth from "@/hooks/useAuth";
 import useCard from "@/hooks/useCard";
 import { useEffect } from "react";
 import {v4 as uuidv4} from "uuid";
-import useFieldInfos from "@/hooks/useFieldInfos";
 import { FIELD_TYPE_CONFIG } from "@/fieldTypeConfig";
 
 const DefaultCard = () => {
@@ -45,11 +44,7 @@ const Card = () => {
 	const fieldsInfos = Object.values(FIELD_TYPE_CONFIG);
 	const { cardFormData, setCardFormData } = useCard();
 	let cardElements = [];
-	
-	useEffect(() => {
-		// console.log("Nous avons cardformdata depuis card : ", cardFormData);
 
-	}, [cardFormData]);
 
 	/**
 	 * @function removeElements 

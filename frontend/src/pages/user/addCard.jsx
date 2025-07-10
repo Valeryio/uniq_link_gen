@@ -22,6 +22,7 @@ const AddCard = () => {
 	const { user } = useAuth();
 	const location = useLocation();
 	const { cardFormData, setCardFormData } = useCard();
+	const CARDAPI = `${import.meta.env.VITE_BACKEND_CARDS_API}`;
 
 	// Convert the global object to an array of fields informations
 	const fieldsInfos = Object.values(FIELD_TYPE_CONFIG);
@@ -74,12 +75,10 @@ const AddCard = () => {
 
 
 		// Verify if the card exist in case of modification
-
 			if (location.state  && location.state.action) {
-				console.log("MODIFICATIONNNNNNNN");
 				try {
 
-					let response = await fetch(`http://${import.meta.env.VITE_BACKEND_API}/cards/${cardFormData._id}`, {
+					let response = await fetch(`http://${CARDAPI}/${cardFormData._id}`, {
 						method: "PUT",
 						headers: {
 							"content-type": "application/json"
@@ -89,14 +88,15 @@ const AddCard = () => {
 					});
 
 					response = await response.json();
-					console.log("THE RESPONSE : ", response);
 
 				} catch (err) {
 					console.error("Error while updating the new cards");
 				}
 			} else {
+			
+			// Create a new card if the card doesn't exist
 				try {
-					let response = await fetch(`http://${import.meta.env.VITE_BACKEND_API}/cards/add`, {
+					let response = await fetch(`http://${CARDAPI}/add`, {
 						method: "POST",
 						headers: {
 							"content-type": "application/json"
@@ -106,55 +106,11 @@ const AddCard = () => {
 					});
 
 					response = await response.json();
-					console.log("THE RESPONSE : ", response);
 
 				} catch (err) {
 					console.error("Error while creating the new cards");
 				}
 			}
-
-
-				/////UPDATE EXISTING CARD
-		/*
-		try {
-
-			let response = await fetch(`http://${import.meta.env.VITE_BACKEND_API}/cards/add`, {
-				method: "UPDATE",
-				headers: {
-					"content-type": "application/json"
-				},
-				body: JSON.stringify(cardFormData),
-				credentials: "include"
-			});
-
-			response = await response.json();
-			console.log("THE RESPONSE : ", response);
-
-		} catch (err) {
-			console.error("Error while creating the new cards");
-		}
-		*/
-
-		/////CREATE NEW CARD
-/*
-		try {
-
-			let response = await fetch(`http://${import.meta.env.VITE_BACKEND_API}/cards/add`, {
-				method: "POST",
-				headers: {
-					"content-type": "application/json"
-				},
-				body: JSON.stringify(cardFormData),
-				credentials: "include"
-			});
-
-			response = await response.json();
-			console.log("THE RESPONSE : ", response);
-
-		} catch (err) {
-			console.error("Error while creating the new cards");
-		}
-*/
 
 		// Set the card context to the default value after the creation
 		// of a new card
