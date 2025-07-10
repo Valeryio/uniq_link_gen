@@ -1,7 +1,7 @@
 import useAuth from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
 import Button from "../../components/ui/button";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useCard from "@/hooks/useCard";
 
 
@@ -32,7 +32,7 @@ const PrivateHome = () => {
 				response = response.data;
 				let userCards = [];
 
-				console.log("La reponse directe : ", response);
+				// console.log("La reponse directe : ", response);
 
 				if (response) {
 					userCards.push(...response);
@@ -108,7 +108,7 @@ const PrivateHome = () => {
 			});
 
 			response = await response.json();
-			console.log(response);
+			// console.log(response);
 
 		} catch (err) {
 			console.error(`Error while deleting the card : ${err}`);

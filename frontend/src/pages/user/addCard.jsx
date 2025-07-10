@@ -156,7 +156,8 @@ const AddCard = () => {
 		}
 */
 
-		// Set the card context to the default value
+		// Set the card context to the default value after the creation
+		// of a new card
 		setCardFormData({
 			"title": "",
 			"user_id": `${user.id}`,

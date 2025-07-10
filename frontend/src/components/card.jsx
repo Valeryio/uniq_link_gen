@@ -1,6 +1,7 @@
 import useAuth from "@/hooks/useAuth";
 import useCard from "@/hooks/useCard";
 import { useEffect } from "react";
+import {v4 as uuidv4} from "uuid";
 import useFieldInfos from "@/hooks/useFieldInfos";
 import { FIELD_TYPE_CONFIG } from "@/fieldTypeConfig";
 
@@ -44,14 +45,9 @@ const Card = () => {
 	const fieldsInfos = Object.values(FIELD_TYPE_CONFIG);
 	const { cardFormData, setCardFormData } = useCard();
 	let cardElements = [];
-
-	useEffect(() => {
-		console.log("LES FIELDS : ", fieldsInfos);
-	}, []);
-
 	
 	useEffect(() => {
-		console.log("NOus avons cardformdata depuis card : ", cardFormData);
+		// console.log("Nous avons cardformdata depuis card : ", cardFormData);
 
 	}, [cardFormData]);
 
@@ -62,8 +58,9 @@ const Card = () => {
 	 * 							informations.
 	 * @param {*} id 
 	 */
-	const removeElements = (id) => {
-		let allElements = cardFormData.elements.filter(elements => (elements.fieldId != id));
+	const removeElements = (value) => {
+		console.log("VOici : ", cardFormData);
+		let allElements = cardFormData.elements.filter(elements => (elements.value != value));
 		setCardFormData((cardFormData) => (
 			{
 				...cardFormData,
@@ -114,7 +111,7 @@ const Card = () => {
 				{
 					cardElements.map((element) => (
 						<div className="flex w-full gap-[1rem] border-secondary-purple 
-							outline-primary-purple rounded-[.25rem]" key={`${FIELD_TYPE_CONFIG[`${element.label.toLowerCase()}`].source}`} >
+							outline-primary-purple rounded-[.25rem]" key={`${FIELD_TYPE_CONFIG[`${element.label.toLowerCase()}`].id}`+uuidv4()} >
 
 							<div className="flex w-full border gap-[1rem] border-secondary-purple 
 							outline-primary-purple rounded-[.25rem] px-[.8rem] text-gray-500
@@ -124,7 +121,10 @@ const Card = () => {
 							</div>
 
 							<button onClick={() => {
-								removeElements(FIELD_TYPE_CONFIG[`${element.label.toLowerCase()}`]);
+								console.log(FIELD_TYPE_CONFIG[`${element.label.toLowerCase()}`]);
+								
+								removeElements(element.value);
+								// removeElements(FIELD_TYPE_CONFIG[`${element.label.toLowerCase()}`]);
 							}} className="p-[.5rem] hover:bg-red-100 rounded-[.25rem] cursor-pointer " >
 								<img src="/icons/trash.svg" className="opacity-50 h-[1.5rem] hover:opacity-100 " />
 							</button>
