@@ -4,7 +4,7 @@ const cors = require("cors");
 const path = require("path");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
-const corsOptions = require("./config/allowedOrigins"); 
+const corsOptions = require("./config/corsOptions"); 
 
 // Loading the environment files
 dotenv.config();

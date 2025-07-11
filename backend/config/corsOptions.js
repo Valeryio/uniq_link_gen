@@ -1,5 +1,12 @@
 
-const allowedOrigins = required("./allowedOrigins");
+
+const allowedOrigins = [
+  "154.72.118.26:5174",
+	"http://localhost:5174/",
+	"http://localhost:5174/login/",
+	"http://localhost:5174/register/",
+	"https://uniq-link-gen-frontend.onrender.com"
+];
 
 const corsOptions = {
 	origin: (origin, callback) => {
@@ -10,7 +17,6 @@ const corsOptions = {
 		}
 	},
 	credentials: true,
-	optionsSuccessStatus: 200
 };
 
 module.exports = corsOptions;
