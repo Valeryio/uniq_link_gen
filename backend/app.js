@@ -17,12 +17,7 @@ require("./models/dbConfig");
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-  origin: [
-    "156.0.213.45:5174",
-    "154.72.118.26:5174"
-  ]
-}));
+app.use(cors(corsOptions));
 /*
 app.use(cors({
   origin: "http://localhost:5174",
