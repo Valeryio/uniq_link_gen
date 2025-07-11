@@ -17,10 +17,13 @@ require("./models/dbConfig");
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
+/*
 app.use(cors({
   origin: "http://localhost:5174",
   credentials: true
 }));
+*/
 
 app.use("/", express.static(path.join(__dirname, "/public")));
 
