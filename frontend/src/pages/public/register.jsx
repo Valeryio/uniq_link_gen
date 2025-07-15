@@ -217,9 +217,9 @@ const Register = () => {
 			[name]: value
 		});
 
-		console.log("We have : ", e.target.name);
+		// console.log("We have : ", e.target.name);
 
-		console.log("This is the formData : ", formData);
+		// console.log("This is the formData : ", formData);
 	}
 
 	const handleSelect = (e) => {
@@ -229,7 +229,7 @@ const Register = () => {
 				...formData,
 			[name]: value
 		});
-		console.log("This is the select formData : ", formData);
+		// console.log("This is the select formData : ", formData);
 	}
 
 
@@ -260,6 +260,7 @@ const Register = () => {
 				navigate("/successfullSignUp");
 			} else {
 				const result = await response.json();
+				console.log("The result : ", result);
 				alert(`Failed : ${result.message}`);
 				navigate("/register");
 			}

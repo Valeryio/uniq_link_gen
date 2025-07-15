@@ -207,7 +207,7 @@ const PrivateHome = () => {
 							))
 
 						:
-							<div className=" text-[4rem]  ">
+							<div className=" text-[2rem]  ">
 								Vous n'avez aucune information a partager !
 							</div>
 					}

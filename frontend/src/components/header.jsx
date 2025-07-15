@@ -9,22 +9,27 @@ const PrimaryHeader = () => {
                 <Link to="/" className="w-[8rem]">
                     <img src="./logo.svg" alt="" />
                 </Link>
-                <nav className="">
-                    <ul className="flex items-center gap-[1rem]">
-                        <li className=" hover:text-primary-purple hover:font-medium "> 
-                            <Link to="/" >Accueil</Link>
-                        </li>
-                        <li className=" hover:text-primary-purple hover:font-medium ">
-                            <Link to="/about" >À propos</Link>
-                        </li>
-                        <li className=" hover:text-primary-purple hover:font-medium ">
-                            <Link to="/contact" >Contact</Link>
-                        </li>
-                    </ul>
-                </nav>
             </div>
 
-            <div className="flex items-center gap-[2rem]">
+            <nav className=" hidden
+            
+            sm:block ">
+                <ul className="flex flex-wrap items-center gap-[1rem]">
+                    <li className=" hover:text-primary-purple hover:font-medium "> 
+                        <Link to="/" >Accueil</Link>
+                    </li>
+                    <li className=" hover:text-primary-purple hover:font-medium ">
+                        <Link to="/about" >À propos</Link>
+                    </li>
+                    <li className=" hover:text-primary-purple hover:font-medium ">
+                        <Link to="/contact" >Contact</Link>
+                    </li>
+                </ul>
+            </nav>
+
+            <div className=" hidden 
+            
+                sm:flex flex-wrap items-center gap-[2rem]">
                 <Link to="/login" >
                     <Button styleType="secondary" >Connexion</Button>
                 </Link>
@@ -32,6 +37,16 @@ const PrimaryHeader = () => {
                     <Button>Inscription</Button>
                 </Link>
             </div>
+
+            <div className="flex gap-[2rem] items-center max-w-[16rem]  px-1 " >
+              <a className="flex gap-[1rem] cursor-pointer 
+            
+                sm:hidden " >
+
+                <img src="/icons/menu.svg" alt="" />
+              </a>
+            </div>
+
 		</header>
     )  
 };
