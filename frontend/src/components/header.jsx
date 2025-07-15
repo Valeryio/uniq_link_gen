@@ -38,10 +38,11 @@ const PrimaryHeader = () => {
                 </Link>
             </div>
 
-            <div className="flex gap-[2rem] items-center max-w-[16rem]  px-1 " >
-              <a className="flex gap-[1rem] cursor-pointer 
+            <div className="flex gap-[2rem] items-center max-w-[16rem] px-1 
             
-                sm:hidden " >
+            sm:hidden 
+            " >
+              <a className="flex gap-[1rem] cursor-pointer " >
 
                 <img src="/icons/menu.svg" alt="" />
               </a>

@@ -18,13 +18,19 @@
 	--color-primary-green: #078C64;
 	--font-sans: Roboto, ui-sans-serif, system-ui, sans-serif, "Segoe UI Symbol";
 
-	--text-h1: 52px;
+	--text-lg-h1: 52px;
+	--text-md-h1: 40px;
+	--text-sm-h1: 32px;
 	--text-h2: 48px;
+	--text-md-h2: 40px;
+	--text-sm-h2: 28px;
 	--text-h3: ;
 	--text-h4: ;
 	--text-h5: 24px;
 	--text-h6: 20px;
 	--text-p: 18px;
+	
+	--text-sm-p: 16px;
 	--text-input: 0.9rem;
 	--text-input-error: 0.8rem;
 	--text-tagline: 16px;
