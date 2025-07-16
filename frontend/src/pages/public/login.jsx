@@ -169,7 +169,6 @@ const Login = () => {
 			response = await response.json();
 
 				// console.log(response);
-
 			if (response.success) {
 				login(response.data);
 				navigate("/app/home");
