@@ -2,6 +2,7 @@
 import Button from "./ui/button";
 import { Link } from "react-router";
 import { useState } from "react";
+import useAuth from "@/hooks/useAuth";
 import ModalParent from "./modalParent";
 
 const PrimaryHeader = () => {
@@ -117,13 +118,81 @@ const SecondaryHeader = () => {
 };
 
 const LoggedHeader = ({data}) => {
+    
+	const { logout } = useAuth();
+
+	/**
+	 * show - Boolean variable to set the state of the pop up. Open or 
+	 * not.
+	 */
+	const [show, setShow] = useState(false);
+
+	/**
+	 * close - Boolean variable to set the state of the pop up. Open or 
+	 * not. It's an intern control variable for the pop up!
+	 */
+	const [close, setClose] = useState(false);
+
+
+	/**
+	 * @function openPopUp
+	 * @description - Open the popUp from the pop up by changing the value
+	 * 							of - show (variable) - to true
+	 */
+	const openPopUp = () => {
+		setShow(!show);
+	};
+
+  /**
+	 * @function closePopUp
+	 * @description - Close the popUp from the pop up by changing the value
+	 * 							of - show (variable) - to false
+	 */
+	const closePopUp = () => {
+		setShow(false)
+	};
 
     return (
         <header className="flex bg-white justify-between items-center w-full h-fit py-[1.5rem] px-[2rem] border border-light-purple">
             <Link to="/app" className="w-[8rem]">
                 <img src="/logo.svg" alt="" />
             </Link>
-            <div className="flex gap-[2rem] items-center max-w-[16rem] border px-1 " >
+
+            <ModalParent  show={show} onClose={closePopUp} >
+                <ul className='w-full flex flex-col gap-[1rem] ' >
+                    <li className='border py-[1rem] px-[.5rem] ' >
+                        <Link className="flex gap-[1rem]" to="home">
+                            <img src="/icons/home.svg" alt="" />
+                            <p>Accueil</p>
+                        </Link>
+                    </li>
+                    <li className='border py-[1rem] px-[.5rem] ' >
+                        <Link className="flex gap-[1rem]" to="card/modify" >
+                            <img src="/icons/layer.svg" alt="" />
+                            <p>Cartes</p>
+                        </Link>
+                    </li>
+                    <li className='border py-[1rem] px-[.5rem] ' >
+                    <a href="" className=' text-center ' > Partager </a>
+                    </li>
+                    <Link to="/app/user" className=" border py-[1rem] px-[.5rem] flex gap-[1rem] items-center ">
+                        <img src="../images/avatar.png" alt="" />
+                        <p> Profil : { data && `${data.name}` || "John Doe"} </p>
+                    </Link>
+                    <Link onClick={logout} className="flex gap-[1rem] hover:text-primary-red hover:font-medium border py-[1rem] px-[.5rem]">
+                        <img src="/icons/log-out.svg" alt="" />
+                        <p>Logout</p>
+                    </Link>
+                </ul>
+            </ModalParent>
+
+
+            <button className="flex sm:hidden gap-[1rem] cursor-pointer" 
+            onClick={openPopUp} type="button" >
+                <img src="/icons/menu.svg" alt="" />
+            </button>
+
+            <div className=" hidden md:flex gap-[2rem] items-center max-w-[16rem] border px-1 " >
 
                 <div >
                     <Link to="/app/user" className="flex gap-[1rem] items-center ">
@@ -133,7 +202,7 @@ const LoggedHeader = ({data}) => {
                     </Link>
 
                 </div>
-                
+            
             </div>
         </header>
     )

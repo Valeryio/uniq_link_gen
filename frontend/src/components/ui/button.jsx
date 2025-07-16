@@ -19,7 +19,7 @@ const Button = ({
 	let btnSize = "";
 
 	// Define the differents size of buttons
-	let largeBtn = "w-full";
+	let largeBtn = "w-full min-w-[18rem] ";
 	let smallBtn = "w-fit";
 
 	// Define the differents styles of buttons

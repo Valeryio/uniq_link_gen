@@ -117,16 +117,17 @@ const PrivateHome = () => {
 
 
 	return (
-		<div className=" flex flex-col h-[89%] border border-green-500" >
-			<div className=" flex justify-between items-center px-[1rem] py-[.5rem]">
+		<div className=" flex h-full flex-col overflow-auto border" >
+			<div className=" md:flex-row flex flex-col flex-wrap gap-[1rem] justify-between
+			items-center px-[1rem] py-[1rem]">
 				<p className="text-p text-medium-purple">
-						Total :
+						Nombre de cartes actuelles :
 					<span className=" text-dark-purple ml-1">
-						{savedCard.length || 0} cards
+						{savedCard.length || 0} cartes
 					</span>
 				</p>
 	
-				<Link to="/app/card/add" >
+				<Link to="/app/card/add" className="" >
 					<Button addIcon={true} imgSrc={"../icons/list-plus.svg"} >
 						Ajouter une nouvelle information
 					</Button>
@@ -134,8 +135,8 @@ const PrivateHome = () => {
 
 			</div>
 
-			<div className=" border h-[100%] border-yellow-400 bg-lightest-purple">
-				<div className=" flex  flex-wrap p-[1rem] gap-[2rem] ">
+			<div className=" flex flex-wrap gap-[2rem] py-[2rem] px-[1rem] overflow-auto
+			 bg-lightest-purple">
 
 					{
 						savedCard.length
@@ -207,14 +208,21 @@ const PrivateHome = () => {
 							))
 
 						:
-							<div className=" text-[2rem]  ">
-								Vous n'avez aucune information a partager !
+							<div className=" p-[1rem] flex flex-col gap-[1.5rem] ">
+
+								<h3 className=" text-center text-[1.5rem] font-semibold opacity-80 text-gray-600 " >
+									Aucune carte d'informations à
+									partager !
+								</h3>
+
+								<img src="./images/no_card_inf.jpg" alt="" 
+								className="border rounded-2xl" />
+								
 							</div>
 					}
 
 				</div>
 
-			</div>
 		</div>
 	)
 };

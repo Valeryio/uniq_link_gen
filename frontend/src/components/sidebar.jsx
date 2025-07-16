@@ -7,7 +7,7 @@ const Sidebar = () => {
 	const { logout } = useAuth();
 
 	return (
-		<aside className="flex flex-col px-[1rem] py-[2rem] justify-between min-w-[10rem] w-[14rem]" >
+		<aside className="hidden md:flex  flex-col px-[1rem] py-[2rem] justify-between min-w-[10rem] w-[14rem]" >
 
 			<div className="flex flex-col  border border-red-600 gap-[2rem]" >
 				<button className="cursor-pointer" >
