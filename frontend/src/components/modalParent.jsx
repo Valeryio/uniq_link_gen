@@ -38,15 +38,17 @@ const ModalParent = ({
 
 
 	return (
-		<div className={`${!close && show ? "flex" : "hidden"}  items-end bg-white shadw-2xl 
+		<div className={`${!close && show ? "flex" : "hidden"}  items-center bg-white shadw-2xl 
 			rounded-xl border-1 max-w-[20rem] w-full z-10 fixed flex-col gap-[1rem] left-[50%]  
 			translate-x-[-50%] bottom-0 shadow-[0px_00px_0px_10000000px_rgba(0,0,0,0.55)]
 			top-[5rem] p-[1rem] h-fit `}
 		>
 
-      <button className="cursor-pointer hover:opacity-50 " type="button" onClick={handleClose} >
-        <img src="/icons/cross-x.svg" alt="" />
-      </button>
+			<div className="flex justify-end w-full">
+				<button className="cursor-pointer hover:opacity-50 " type="button" onClick={handleClose} >
+					<img src="/icons/cross-x.svg" alt="" />
+				</button>
+			</div>
 
 
 		{children}

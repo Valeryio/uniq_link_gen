@@ -261,7 +261,7 @@ const Register = () => {
 				navigate("/successfullSignUp");
 			} else {
 				const result = await response.json();
-				console.log("The result : ", result);
+				console.log("The Linson28!result : ", result);
 				alert(`Failed : ${result.message}`);
 				navigate("/register");
 			}

@@ -5,9 +5,8 @@ import Header from "../../components/header";
 import { useState, useEffect } from "react";
 import Button from "../../components/ui/button";
 import inputValidators from "../../components/helpers/validators";
-import Alert from "../../components/ui/alert";
 import useAuth from "@/hooks/useAuth";
-import useFieldInfos from "@/hooks/useFieldInfos";
+import ModalParent from "@/components/modalParent";
 
 
 /**
@@ -23,6 +22,39 @@ const Login = () => {
 	const navigate = useNavigate();
 	const { login } = useAuth();
 
+	const [loginErrorMessages, setLoginErrorMessages] = useState("");
+
+	/**
+	 * show - Boolean variable to set the state of the pop up. Open or 
+	 * not.
+	 */
+	const [show, setShow] = useState(false);
+
+	/**
+	 * close - Boolean variable to set the state of the pop up. Open or 
+	 * not. It's an intern control variable for the pop up!
+	 */
+	const [close, setClose] = useState(false);
+
+
+	/**
+	 * @function openPopUp
+	 * @description - Open the popUp from the pop up by changing the value
+	 * 							of - show (variable) - to true
+	 */
+	const openPopUp = () => {
+		setShow(!show);
+	};
+
+  /**
+	 * @function closePopUp
+	 * @description - Close the popUp from the pop up by changing the value
+	 * 							of - show (variable) - to false
+	 */
+	const closePopUp = () => {
+		setShow(false);
+		navigate("/app/home");
+	};
 
 	/**
 	 * disabled - Boolean state to enable or disable the submit button
@@ -135,14 +167,23 @@ const Login = () => {
 			// console.log(response.headers["Authorization"]);
 
 			response = await response.json();
-			console.log(response);
 
-			login(response.data);
-			navigate("/app/home");
+				// console.log(response);
+
+			if (response.success) {
+				login(response.data);
+				navigate("/app/home");
+			} else {
+				// console.log(response.data);
+				setLoginErrorMessages("Vous avez entré un mot de passe qui est incorrect !");
+				openPopUp();
+			}
 
 		} catch (err) {
 
 			// console.error(`Error while getting the user : ${err}`);
+			setLoginErrorMessages(" Difficultés a recevoir les données de l'utilisateur ! Réessayez ultérieurement !")
+			openPopUp();
 			return err;
 		}
 	};
@@ -201,6 +242,22 @@ const Login = () => {
 				</div>
 
 			</section>
+
+			<ModalParent show={show} onClose={closePopUp} >
+				<div className=" flex flex-col border gap-[1rem] items-center 
+				p-[1rem] " >
+
+						<p className=" text-center "
+						>
+							{loginErrorMessages}
+						</p>
+
+						<Button onClick={closePopUp} > Fermer </Button>
+				</div>
+			</ModalParent>
+
+
+
 		</>
 	)
 };
