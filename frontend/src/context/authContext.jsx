@@ -19,7 +19,7 @@ export const AuthProvider = ({children}) => {
 			}
 
 		} catch (err) {
-			console.error(`Error while getting the local Infos : ${err}`);
+			// console.error(`Error while getting the local Infos : ${err}`);
 		} finally {
 			setLoading(false);
 		}
@@ -33,7 +33,7 @@ export const AuthProvider = ({children}) => {
 
 	const logout = () => {
 		setUser(null);
-		console.log("The user is disconnected");
+		// console.log("The user is disconnected");
 		localStorage.removeItem("user");
 		localStorage.removeItem("fieldsInfos");
 	};

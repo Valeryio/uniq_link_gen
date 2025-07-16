@@ -167,7 +167,6 @@ const Login = () => {
 			// console.log(response.headers["Authorization"]);
 
 			response = await response.json();
-
 				// console.log(response);
 			if (response.success) {
 				login(response.data);
@@ -179,7 +178,6 @@ const Login = () => {
 			}
 
 		} catch (err) {
-
 			// console.error(`Error while getting the user : ${err}`);
 			setLoginErrorMessages(" Difficultés a recevoir les données de l'utilisateur ! Réessayez ultérieurement !")
 			openPopUp();
@@ -243,7 +241,7 @@ const Login = () => {
 			</section>
 
 			<ModalParent show={show} onClose={closePopUp} >
-				<div className=" flex flex-col border gap-[1rem] items-center 
+				<div className=" flex flex-col gap-[1rem] items-center 
 				p-[1rem] " >
 
 						<p className=" text-center "
