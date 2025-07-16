@@ -153,14 +153,21 @@ const Login = () => {
 
 			<section className=" p-[2rem] h-full gap-[2rem] flex justify-center" >
 
-				<form action="" className=" w-[24rem] hover:shadow-lg border border-lightest-purple flex flex-col gap-[1rem] 
-					px-[2rem] p-[1rem] rounded-[8px] ">
+				<form action="" className="w-[24rem] hover:shadow-lg border border-lightest-purple flex flex-col gap-[1rem] 
+					px-[2rem] py-[2rem] rounded-[8px] h-fit ">
 
 					<div className="flex flex-col gap-[.5rem]">
-						<h2 className="font-semibold text-[40px] text-center">
+						<h2 className="font-semibold text-sm-h1 text-center
+						leading-[2.5rem]
+				
+						md:text-md-h1 md:leading-[3rem]
+						lg:text-lg-h1 lg:leading-[4rem]
+						">
 							Connexion
 						</h2>
-						<p className=" text-[15px] font-medium">
+						<p className="font-medium text-sm-p text-center font-regular
+							md:text-p md:text-left
+						">
 							Connexion sécurisée à votre espace utilisateur.
 						</p>
 					</div>
@@ -168,14 +175,16 @@ const Login = () => {
 					<FormInput inputType="email" label="Email" required={true} name="email" validated={validated.email}
 					onChange={handleChange} errorMessage={errorMessage.email} value={formData.email} extralabel="" />
 
-					<FormInput inputType="password"  label="Mot de passe" required={true} name="password" validated={validated.password}
+					<FormInput inputType="password" label="Mot de passe" required={true} name="password" validated={validated.password}
 					value={formData.password} extralabel="Mot de passe oublié ?" errorMessage={errorMessage.password} 
 					onChange={handleChange}/>
 
 					<Button size="large" disabled={disabled} type="submit" onClick={handleSubmit} >Connexion</Button>
 					<Button size="large" styleType="secondary" type="submit" >Connexion avec Google</Button>
 
-					<p className="text-[.9rem]" >
+					<p className="text-[.9rem] text-center
+						md:text-left
+					" >
 						Vous n'avez pas de compte ?			
 						<Link to="/register"  className="text-primary-purple underline ml-[.2rem]">
 							Inscription
@@ -184,7 +193,10 @@ const Login = () => {
 
 				</form>
 
-				<div className=" w-[30rem]" >
+				<div className=" hidden w-[30rem]
+
+					md:block
+				" >
 					<img src="./images/login.png" alt="" />
 				</div>
 

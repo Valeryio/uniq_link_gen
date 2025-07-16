@@ -10,11 +10,14 @@ const Footer = () => {
 		>
 
 			<div className="flex justify-between px-[2rem]" >
-        <Link to="/" className="w-[8rem]">
+        <Link to="/" className="w-[8rem] hidden md:block ">
             <img src="./logo.svg" alt="" />
         </Link>
 
-      	<nav className="">
+      	<nav className="
+					hidden
+					md:block
+				">
       	    <ul className="flex items-center gap-[1rem]">
       	        <li className=" hover:text-primary-purple hover:font-medium "> 
       	            <Link to="/" >Accueil</Link>
@@ -39,7 +42,7 @@ const Footer = () => {
 			
 			<hr className=" border-medium-purple" />
 
-			<div className="flex justify-center gap-[1rem]" >
+			<div className="flex flex-wrap justify-center gap-[1rem]" >
 
 				<p>
 					Copyright &copy; All Right Reserved

@@ -2,7 +2,6 @@
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import { Link } from "react-router";
-import Alert from "../../components/ui/alert";
 import Button from "../../components/ui/button";
 
 const Home = () => {
@@ -10,7 +9,6 @@ const Home = () => {
 	return (
 		<>
     <Header />
-
 
 		<section className="flex flex-wrap justify-center gap-[2rem] px-[2rem] py-[3rem]">
 			<div className="flex flex-col flex-wrap gap-[1rem] w-[40rem]">
@@ -35,7 +33,7 @@ const Home = () => {
 				<Button>Commencer</Button>
 			</div>
 
-			<picture className="min-w-[16rem] border " >
+			<picture className="min-w-[16rem] w-[28rem] border " >
 				<img src="./images/1.png" alt="" />
 			</picture>
 		</section>

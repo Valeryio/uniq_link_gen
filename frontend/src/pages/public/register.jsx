@@ -16,9 +16,9 @@ const RegisterFirstStep = ({formData, validated, handleChange, errorMessages}) =
 		<>
 			<StepLoader />
 
-			<div className="border border-gray-200  flex flex-col gap-[1rem] w-[20rem]">
+			<div className=" flex flex-col gap-[1rem] w-[20rem]">
 				<div className="flex flex-col gap-[.5rem]">
-					<h2 className="font-bold text-[27px]">
+					<h2 className="font-bold text-[24px] leading-[2rem] ">
 						Commençons avec votre nom et votre mail !
 					</h2>
 					<p className=" text-[15px] font-medium text-dark-purple">
@@ -26,13 +26,14 @@ const RegisterFirstStep = ({formData, validated, handleChange, errorMessages}) =
 						coordonnées seront sauvegardées !
 					</p>
 				</div>
-				
-			<FormInput label="Entrez votre nom" required={true} type="text" name="name" validated={validated.name}
-			id="name" value={formData.name} errorMessage={errorMessages.name} onChange={handleChange} />
 
-			<FormInput label="Entrez votre mail" required={true} type="email" validated={validated.email} id="email"
-			value={formData.email} errorMessage={errorMessages.email} onChange={handleChange} name="email" />
+				<div className="flex flex-col gap-[.5rem] " >
+					<FormInput label="Entrez votre nom" required={true} type="text" name="name" validated={validated.name}
+					id="name" value={formData.name} errorMessage={errorMessages.name} onChange={handleChange} />
 
+					<FormInput label="Entrez votre mail" required={true} type="email" validated={validated.email} id="email"
+					value={formData.email} errorMessage={errorMessages.email} onChange={handleChange} name="email" />
+					</div>
 			</div>
 		</>
 	)
@@ -44,7 +45,7 @@ const RegisterSecondStep = ({formData, validated, handleChange, errorMessages}) 
 	return (
 		<>
 			<StepLoader step={2} />
-			<div className="border border-gray-200  flex flex-col gap-[1rem] w-[20rem]">
+			<div className="flex flex-col gap-[1rem] w-[20rem]">
 
 			<div className="flex flex-col gap-[.5rem]">
 				<h2 className="font-bold text-[27px]">
@@ -280,10 +281,11 @@ const Register = () => {
 		<>
 			<Header type="secondary" />
 
-			<section className=" p-[2rem] flex border justify-center gap-[2rem]" >
+			<section className=" p-[2rem] flex justify-center gap-[2rem]" >
 
-			<form action=""className="border border-gray-200  flex flex-col gap-[1rem]
-			p-[2rem]">
+			<form action="" className="w-[24rem] hover:shadow-lg border 
+			border-lightest-purple flex flex-col gap-[1rem] px-[2rem] py-[2rem] 
+			rounded-[8px] h-fit " >
 
 				<StepComponent formData={formData} errorMessages={errorMessages} handleSelect={handleSelect} validated={validated} handleChange={handleChange} />
 
@@ -298,7 +300,9 @@ const Register = () => {
 				</div>
 			</form>
 
-				<div className=" w-[30rem]" >
+				<div className=" w-[30rem] hidden
+					md:block
+				" >
 					<img src="./images/login.png" alt="" />
 				</div>
 			</section>
