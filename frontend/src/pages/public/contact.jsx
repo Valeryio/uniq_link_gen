@@ -27,7 +27,7 @@ const Contact = () => {
 		<>
     <Header />
 		
-		<section className="flex items-center gap-[2rem] px-[2rem] py-[3rem]">
+		<section className="flex items-center justify-center gap-[2rem] px-[2rem] py-[3rem]">
 
 			<div className="flex flex-col h-fit gap-[1rem] w-[33rem]">
 

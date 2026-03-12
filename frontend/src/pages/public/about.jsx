@@ -11,19 +11,19 @@ const About = () => {
 		<>
     <Header />
 		
-		<section className="flex items-center gap-[2rem] px-[2rem] py-[3rem]">
+		<section className="flex items-center justify-center gap-[2rem] px-[2rem] py-[3rem]">
 
-			<div className="flex flex-col h-fit gap-[1rem] w-[33rem]">
+			<div className="flex flex-col  h-fit gap-[1rem] w-[33rem]">
 
 				<div className=" ">
-					<p className="text-tagline font-bold">
+					<p className="text-tagline text-center font-bold">
 						Qui sommes-nous ?
 					</p>
 
-					<h1 className="text-h2 font-bold">
+					<h1 className="text-h2 text-center font-bold">
 						À propos de nous
 					</h1>
-					<p className="text-p font-regular max-w-[33rem]">
+					<p className="text-p text-center font-regular max-w-[33rem]">
 						Dans un monde où les connexions sont de plus en plus 
 						numériques, les cartes de visite papier ne suffisent plus.
 						<br /><br />
